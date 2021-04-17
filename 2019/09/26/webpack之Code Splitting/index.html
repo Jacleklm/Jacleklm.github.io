@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>webpack之Code Splitting | Jacleklm</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="应用场景当我们的业务逻辑很大的时候（index.js很大），我们打包生成的文件会很大：用户打开页面要一次性加载这个很大的文件，需要很长的加载时间；当文件有一点点修改，用户又要重新加载这个很大的文件，又需要很长加载时间。所以可以用code splitting（代码分割）把代码分离到不同的 bundle 中，可以实现按需加载或并行加载这些文件，优化加载时间。 实现借用SplitChunksPlugin">
+<meta name="keywords" content="webpack">
+<meta property="og:type" content="article">
+<meta property="og:title" content="webpack之Code Splitting">
+<meta property="og:url" content="http://yoursite.com/2019/09/26/webpack之Code Splitting/index.html">
+<meta property="og:site_name" content="Jacleklm">
+<meta property="og:description" content="应用场景当我们的业务逻辑很大的时候（index.js很大），我们打包生成的文件会很大：用户打开页面要一次性加载这个很大的文件，需要很长的加载时间；当文件有一点点修改，用户又要重新加载这个很大的文件，又需要很长加载时间。所以可以用code splitting（代码分割）把代码分离到不同的 bundle 中，可以实现按需加载或并行加载这些文件，优化加载时间。 实现借用SplitChunksPlugin">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-09-26T15:54:52.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="webpack之Code Splitting">
+<meta name="twitter:description" content="应用场景当我们的业务逻辑很大的时候（index.js很大），我们打包生成的文件会很大：用户打开页面要一次性加载这个很大的文件，需要很长的加载时间；当文件有一点点修改，用户又要重新加载这个很大的文件，又需要很长加载时间。所以可以用code splitting（代码分割）把代码分离到不同的 bundle 中，可以实现按需加载或并行加载这些文件，优化加载时间。 实现借用SplitChunksPlugin">
+  
+    <link rel="alternate" href="/atom.xml" title="Jacleklm" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Jacleklm</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-webpack之Code Splitting" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/09/26/webpack之Code Splitting/" class="article-date">
+  <time datetime="2019-09-26T15:49:21.000Z" itemprop="datePublished">2019-09-26</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Engineering/">Engineering</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      webpack之Code Splitting
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h3><p>当我们的业务逻辑很大的时候（index.js很大），我们打包生成的文件会很大：用户打开页面要一次性加载这个很大的文件，需要很长的加载时间；当文件有一点点修改，用户又要重新加载这个很大的文件，又需要很长加载时间。所以可以用code splitting（代码分割）把代码分离到不同的 bundle 中，可以实现按需加载或并行加载这些文件，优化加载时间。</p>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>借用SplitChunksPlugin，可以实现对同步加载的代码或者异步加载的代码实现代码分割。把spliChunk写在webpack配置文件的optimization配置项中。代码如下</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">optimization: &#123;</span><br><span class="line">  splitChunks: &#123;</span><br><span class="line">    chunks: <span class="string">"async"</span>, </span><br><span class="line">    minSize: <span class="number">30000</span>,</span><br><span class="line">    minChunks: <span class="number">1</span>,  </span><br><span class="line">    maxAsyncRequests: <span class="number">5</span>, </span><br><span class="line">    maxInitialRequests: <span class="number">3</span>, </span><br><span class="line">    automaticNameDelimiter: <span class="string">'~'</span>, </span><br><span class="line">    name: <span class="literal">true</span>,</span><br><span class="line">    cacheGroups: &#123; </span><br><span class="line">      vendors: <span class="literal">false</span>, </span><br><span class="line">      <span class="keyword">default</span>: <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="SplitChunksPlugin配置项详解"><a href="#SplitChunksPlugin配置项详解" class="headerlink" title="SplitChunksPlugin配置项详解"></a>SplitChunksPlugin配置项详解</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">splitChunks: &#123;</span><br><span class="line">  chunks: <span class="string">"async"</span>,  <span class="comment">//  做代码分割的时候只对异步代码生效，也可以是initial（同步）或all</span></span><br><span class="line">  minSize: <span class="number">30000</span>,  <span class="comment">//  引入的库大于这个字节才会做代码分割</span></span><br><span class="line">  minChunks: <span class="number">1</span>,  <span class="comment">//  当一个模块至少被用了x次的时候，就对它进行代码分割</span></span><br><span class="line">  maxAsyncRequests: <span class="number">5</span>,   <span class="comment">//  最多只能对x个库进行代码分割，大于这个数，后面的库就不进行代码分割了</span></span><br><span class="line">  maxInitialRequests: <span class="number">3</span>,   <span class="comment">//  入口文件引入的库/js文件最多只能是这个数才都进行代码分割</span></span><br><span class="line">  automaticNameDelimiter: <span class="string">'~'</span>,   <span class="comment">//  文件名连接符</span></span><br><span class="line">  name: <span class="literal">true</span>,</span><br><span class="line">  cacheGroups: &#123;   <span class="comment">//  对同步的代码分割才会走这个配置项</span></span><br><span class="line">    vendors: <span class="literal">false</span>,   <span class="comment">//  异步的时候用false，同步的时候可用官方文档默认配置；</span></span><br><span class="line">    <span class="comment">//  符合这个方案的打包后文件名前缀是vender~，不符合则是走default方案，可用官方文档默认配置</span></span><br><span class="line">    <span class="keyword">default</span>: <span class="literal">false</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/09/26/webpack之Code Splitting/" data-id="cknluolcs0038zr871z2cc8qc" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webpack/">webpack</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/09/27/webpack之Lazy Loading/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          webpack之Lazy Loading
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/09/26/webpack之Tree Shaking/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">webpack之Tree Shaking</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Basic-knowledge/">Basic knowledge</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Engineering/">Engineering</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/上线部署/">上线部署</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/后端/">后端</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Browser/">Browser</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Computer/">Computer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Data-structure/">Data structure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Interview/">Interview</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Network/">Network</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node/">Node</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Operating-system/">Operating system</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Performance/">Performance</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/">Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web安全/">Web安全</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/上线部署/">上线部署</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/框架/">框架</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/解决方案/">解决方案</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/项目小结/">项目小结</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Browser/" style="font-size: 14px;">Browser</a> <a href="/tags/CSS/" style="font-size: 14px;">CSS</a> <a href="/tags/Computer/" style="font-size: 10px;">Computer</a> <a href="/tags/Data-structure/" style="font-size: 18px;">Data structure</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/Interview/" style="font-size: 10px;">Interview</a> <a href="/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/tags/Network/" style="font-size: 14px;">Network</a> <a href="/tags/Node/" style="font-size: 12px;">Node</a> <a href="/tags/Nodejs/" style="font-size: 12px;">Nodejs</a> <a href="/tags/Operating-system/" style="font-size: 10px;">Operating system</a> <a href="/tags/Performance/" style="font-size: 12px;">Performance</a> <a href="/tags/TypeScript/" style="font-size: 14px;">TypeScript</a> <a href="/tags/Web/" style="font-size: 10px;">Web</a> <a href="/tags/Web安全/" style="font-size: 10px;">Web安全</a> <a href="/tags/webpack/" style="font-size: 20px;">webpack</a> <a href="/tags/上线部署/" style="font-size: 10px;">上线部署</a> <a href="/tags/框架/" style="font-size: 16px;">框架</a> <a href="/tags/解决方案/" style="font-size: 10px;">解决方案</a> <a href="/tags/设计模式/" style="font-size: 10px;">设计模式</a> <a href="/tags/项目小结/" style="font-size: 14px;">项目小结</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/12/09/TypeScript中的内置工具类型及其实现/">TypeScript中的内置工具类型及其实现</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/07/TypeScript中的类型编程/">TypeScript中的类型编程</a>
+          </li>
+        
+          <li>
+            <a href="/2020/11/03/hope statistics puppeteer工具小结/">hope statistics puppeteer 工具小结</a>
+          </li>
+        
+          <li>
+            <a href="/2020/11/03/用 node.js 开发一个可交互的命令行应用/">用 node.js 开发一个可交互的命令行应用</a>
+          </li>
+        
+          <li>
+            <a href="/2020/07/15/《深入浅出Node.js》读书笔记/">《深入浅出Node.js》读书笔记</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 Jacleklm<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

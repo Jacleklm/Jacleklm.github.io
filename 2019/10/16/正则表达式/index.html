@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>正则表达式 | Jacleklm</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="语法/pattern/flags flags g：全局匹配;找到所有匹配，而不是在第一个匹配后停止 i：忽略大小写 m：多行; 将开始和结束字符（^和$）视为在多行上工作（也就是，分别匹配每一行的开始和结束（由 \n 或 \r 分割），而不只是只匹配整个输入字符串的最开始和最末尾处 …  常用字符类别 . ：匹配任意单个字符。例如，/.y/ 匹配 “yes make my day” 中的 “my”">
+<meta name="keywords" content="JavaScript,Data structure">
+<meta property="og:type" content="article">
+<meta property="og:title" content="正则表达式">
+<meta property="og:url" content="http://yoursite.com/2019/10/16/正则表达式/index.html">
+<meta property="og:site_name" content="Jacleklm">
+<meta property="og:description" content="语法/pattern/flags flags g：全局匹配;找到所有匹配，而不是在第一个匹配后停止 i：忽略大小写 m：多行; 将开始和结束字符（^和$）视为在多行上工作（也就是，分别匹配每一行的开始和结束（由 \n 或 \r 分割），而不只是只匹配整个输入字符串的最开始和最末尾处 …  常用字符类别 . ：匹配任意单个字符。例如，/.y/ 匹配 “yes make my day” 中的 “my”">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-10-26T03:33:08.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="正则表达式">
+<meta name="twitter:description" content="语法/pattern/flags flags g：全局匹配;找到所有匹配，而不是在第一个匹配后停止 i：忽略大小写 m：多行; 将开始和结束字符（^和$）视为在多行上工作（也就是，分别匹配每一行的开始和结束（由 \n 或 \r 分割），而不只是只匹配整个输入字符串的最开始和最末尾处 …  常用字符类别 . ：匹配任意单个字符。例如，/.y/ 匹配 “yes make my day” 中的 “my”">
+  
+    <link rel="alternate" href="/atom.xml" title="Jacleklm" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Jacleklm</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-正则表达式" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/10/16/正则表达式/" class="article-date">
+  <time datetime="2019-10-16T08:50:21.000Z" itemprop="datePublished">2019-10-16</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Basic-knowledge/">Basic knowledge</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      正则表达式
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><p>/pattern/flags</p>
+<h4 id="flags"><a href="#flags" class="headerlink" title="flags"></a>flags</h4><ul>
+<li><strong>g</strong>：全局匹配;找到所有匹配，而不是在第一个匹配后停止</li>
+<li>i：忽略大小写</li>
+<li>m：多行; 将开始和结束字符（^和$）视为在多行上工作（也就是，分别匹配每一行的开始和结束（由 \n 或 \r 分割），而不只是只匹配整个输入字符串的最开始和最末尾处</li>
+<li>…</li>
+</ul>
+<h4 id="常用字符类别"><a href="#常用字符类别" class="headerlink" title="常用字符类别"></a>常用字符类别</h4><ul>
+<li>. ：匹配任意单个字符。例如，/.y/ 匹配 “yes make my day” 中的 “my” 和 “ay”，但是不匹配 “yes”</li>
+<li>\d ：匹配任意阿拉伯数字。等价于<code>[0-9]</code>。例如，<code>/\d/</code> 或 <code>/[0-9]/</code> 匹配 “B2 is the suite number.” 中的 ‘2’</li>
+<li>\D ：匹配任意一个不是阿拉伯数字的字符。等价于<code>[^0-9]</code>。例如，<code>/\D/</code> 或 <code>/[^0-9]/</code> 匹配 “B2 is the suite number.” 中的 ‘B’</li>
+<li>\w ：匹配任意来自基本拉丁字母表中的字母数字字符，还包括下划线。例如，/\w/ 匹配 “apple” 中的 ‘a’，”$5.28” 中的 ‘5’ 和 “3D” 中的 ‘3’</li>
+<li>\W ：匹配任意不是基本拉丁字母表中单词（字母数字下划线）字符的字符。例如，/\W/ 匹配 “50%” 中的 ‘%’</li>
+<li>\s ：匹配一个空白符，包括空格、制表符、换页符、换行符</li>
+<li>\S ：匹配一个非空白符</li>
+<li>\ ：按照字面意义解释。例如，* 是一个特殊字符，表示匹配某个字符 0 或多次，如 <code>/a*/</code> 意味着 0 或多个 “a”。 为了匹配字面意义上的 * ，在它前面加上一个反斜杠，例如，<code>/a\*/</code>匹配 ‘a*’</li>
+</ul>
+<h4 id="字符集合"><a href="#字符集合" class="headerlink" title="字符集合"></a>字符集合</h4><ul>
+<li><p><code>[xyz]</code> : 字符集合，匹配集合中的任意一个字符（可以理解为多个 | 连用）。例如，<code>[abcd]</code> 等价于 <code>[a-d]</code>，匹配”brisket”中的’b’和”chop”中的’c’.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 想匹配字符串"Let's take LeetCode contest" 中的 " Let's "</span></span><br><span class="line"><span class="keyword">var</span> str = <span class="string">"Let's take LeetCode contest"</span></span><br><span class="line"><span class="built_in">console</span>.log(str.match(<span class="regexp">/\w+/</span>)[<span class="number">0</span>])  <span class="comment">// Let</span></span><br><span class="line"><span class="built_in">console</span>.log(str.match(<span class="regexp">/[\w']+/</span>)[<span class="number">0</span>])  <span class="comment">// Let's </span></span><br><span class="line"><span class="built_in">console</span>.log(str.match(<span class="regexp">/(\w|')+/</span>)[<span class="number">0</span>])  <span class="comment">// Let's</span></span><br></pre></td></tr></table></figure></li>
+<li><p><code>[^xyz]</code> : 反字符集合</p>
+</li>
+</ul>
+<h4 id="边界"><a href="#边界" class="headerlink" title="边界"></a>边界</h4><ul>
+<li>^ : 匹配输入开始。例如，/^A/ 不匹配 “an A” 中的 “A”，但匹配 “An A” 中的 “A”</li>
+<li>$ : 匹配输入结尾。例如，/t$/ 不匹配 “eater” 中的 “t”，但匹配 “eat” 中的 “t”</li>
+<li>\b : 匹配一个零宽单词边界（zero-width word boundary），如一个字母与一个空格之间。例如，/\bno/ 匹配 “at noon” 中的 “no”，/ly\b/ 匹配 “possibly yesterday.” 中的 “ly”</li>
+<li>\B : 匹配一个零宽非单词边界（zero-width non-word boundary），如两个字母之间或两个空格之间.例如，/\Bon/ 匹配 “at noon” 中的 “on”，/ye\B/ 匹配 “possibly yesterday.” 中的 “ye”</li>
+</ul>
+<h4 id="分组和反向引用（重要）"><a href="#分组和反向引用（重要）" class="headerlink" title="分组和反向引用（重要）"></a>分组和反向引用（重要）</h4><ul>
+<li><p>(x) ：捕获括号，匹配 x 并且捕获匹配项，可以说有<strong>捕获</strong>的功能也有<strong>“边界”</strong>的功能。例如，<code>/(foo)/</code> 匹配且捕获 “foo bar.” 中的 “foo”。被匹配的子字符串可以在结果数组的元素 <code>[1], ..., [n]</code> 中找到，或在被定义的 RegExp 对象的属性 <code>$1, ..., $9</code> 中找到，这种$的语法一般只在replace中用.</p>
+</li>
+<li><p>*PS**：注意是从$1开始的，而不是$0</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> re = <span class="regexp">/(\w+)\s(\w+)/</span>;</span><br><span class="line"><span class="keyword">var</span> str = <span class="string">"John Smith"</span>;</span><br><span class="line"><span class="keyword">var</span> result = re.exec(str)</span><br><span class="line"><span class="keyword">var</span> newstr = str.replace(re, <span class="string">"$2, $1"</span>);</span><br><span class="line"><span class="built_in">console</span>.log(result[<span class="number">0</span>]);  <span class="comment">// John Smith</span></span><br><span class="line"><span class="built_in">console</span>.log(newstr);  <span class="comment">// Smith, John</span></span><br></pre></td></tr></table></figure></li>
+<li><p>\n ：n是一个正整数。反向引用，向正则表达式中第 n 个括号（从左开始数）中匹配的子字符串，<strong>个人理解</strong>（1）是用在有捕获括号的时候，定义$是指向哪个捕获项，就算不写\1也会默认$1是捕获的第一项；（2）可以用这个\1代表第一个捕获项，做一些事，eg. \1+</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> s = <span class="string">'abcabcabcabc'</span></span><br><span class="line"><span class="keyword">var</span> reg = <span class="regexp">/^(\w+)\1+$/</span></span><br><span class="line"><span class="built_in">console</span>.log(reg.test(s))  <span class="comment">// true</span></span><br></pre></td></tr></table></figure></li>
+<li><p><code>(?:x)</code> ：匹配 x 不会捕获匹配项。这被称为非捕获括号（non-capturing parentheses）。匹配项不能够从结果数组的元素 <code>[1], ..., [n]</code> 或已被定义的 RegExp 对象的属性 <code>$1, ..., $9</code> 再次访问到。</p>
+</li>
+</ul>
+<h4 id="数量词"><a href="#数量词" class="headerlink" title="数量词"></a>数量词</h4><ul>
+<li>x* ：匹配前面的模式 x 0 或多次。例如，/bo*/ 匹配 “A ghost booooed” 中的 “boooo”，”A bird warbled” 中的 “b”，但是不匹配 “A goat grunted”</li>
+<li>x+ ：匹配前面的模式 x 1 或多次</li>
+<li><code>x*?</code> ：像上面的 * 和 + 一样匹配前面的模式 x，然而匹配是<strong>最小可能匹配</strong>。例如，/“.*?”/ 匹配 ‘“foo” “bar”‘ 中的 ‘“foo”‘，而 * 后面没有 ? 时匹配 ‘“foo” “bar”</li>
+<li>x? : 匹配前面的模式 x 0 或 1 次。例如，/e?le?/ 匹配 “angel” 中的 “el”，”angle” 中的 “le”</li>
+<li>x(?=y) ：只有当 x 后面紧跟着 y 时，才匹配 x。 例如，/Jack(?=Sprat)/ 只有在 ‘Jack’ 后面紧跟着 ‘Sprat’ 时，才会匹配它。/Jack(?=Sprat|Frost)/ 只有在 ‘Jack’ 后面紧跟着 ‘Sprat’ 或 ‘Frost’ 时，才会匹配它。然而，’Sprat’ 或 ‘Frost’ 都不是匹配结果的一部分</li>
+<li>x(?!y) ：只有当 x 后面不是紧跟着 y 时，才匹配 x</li>
+<li>x|y ：匹配x或y</li>
+</ul>
+<h4 id="在线正则表达式测试"><a href="#在线正则表达式测试" class="headerlink" title="在线正则表达式测试"></a><a href="http://tool.oschina.net/regex/" target="_blank" rel="noopener">在线正则表达式测试</a></h4><h4 id="正则表达式的方法"><a href="#正则表达式的方法" class="headerlink" title="正则表达式的方法"></a>正则表达式的方法</h4><ul>
+<li>对RegExp的方法<ul>
+<li>exec()  一个在字符串中执行查找匹配的RegExp方法，它返回一个数组（未匹配到则返回 null）。语法是 <em>regexp</em>.exec(<em>string</em>)</li>
+<li>test()  一个在字符串中测试是否匹配的RegExp方法，它返回 true 或 false。用于只想知道目标字符串与某个模式是否匹配而不想知文本内容。语法是 <em>regexp</em>.test(<em>string</em>)</li>
+</ul>
+</li>
+<li>对String的方法<ul>
+<li>match()  和exex()其实一毛一样，但语法是<em>string</em>.test(<em>regexp</em>)。一个在字符串中执行查找匹配的String方法，它返回一个数组，在未匹配到时会返回 null</li>
+<li>matchAll  一个在字符串中执行查找所有匹配的String方法，它返回一个迭代器（iterator）</li>
+<li>search    一个在字符串中测试匹配的String方法，它返回匹配到的位置索引，或者在失败时返回-1</li>
+<li>replace    一个在字符串中执行查找匹配的String方法，并且使用替换字符串替换掉匹配到的子字符串</li>
+<li>split    一个使用正则表达式或者一个固定字符串分隔一个字符串，并将分隔后的子字符串存储到数组中的 String 方法</li>
+</ul>
+</li>
+</ul>
+<p>参考资料<br><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/RegExp" target="_blank" rel="noopener">RegExp</a><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Regular_Expressions" target="_blank" rel="noopener">正则表达式</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/10/16/正则表达式/" data-id="cknluoldm004ozr87eq1o0vjs" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Data-structure/">Data structure</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/10/17/计算机组成原理/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          计算机组成原理
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/10/15/JS功能与原理的实现/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">JS功能与原理的实现</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Basic-knowledge/">Basic knowledge</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Engineering/">Engineering</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/上线部署/">上线部署</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/后端/">后端</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Browser/">Browser</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Computer/">Computer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Data-structure/">Data structure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Interview/">Interview</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Network/">Network</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node/">Node</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Operating-system/">Operating system</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Performance/">Performance</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/">Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web安全/">Web安全</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/上线部署/">上线部署</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/框架/">框架</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/解决方案/">解决方案</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/项目小结/">项目小结</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Browser/" style="font-size: 14px;">Browser</a> <a href="/tags/CSS/" style="font-size: 14px;">CSS</a> <a href="/tags/Computer/" style="font-size: 10px;">Computer</a> <a href="/tags/Data-structure/" style="font-size: 18px;">Data structure</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/Interview/" style="font-size: 10px;">Interview</a> <a href="/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/tags/Network/" style="font-size: 14px;">Network</a> <a href="/tags/Node/" style="font-size: 12px;">Node</a> <a href="/tags/Nodejs/" style="font-size: 12px;">Nodejs</a> <a href="/tags/Operating-system/" style="font-size: 10px;">Operating system</a> <a href="/tags/Performance/" style="font-size: 12px;">Performance</a> <a href="/tags/TypeScript/" style="font-size: 14px;">TypeScript</a> <a href="/tags/Web/" style="font-size: 10px;">Web</a> <a href="/tags/Web安全/" style="font-size: 10px;">Web安全</a> <a href="/tags/webpack/" style="font-size: 20px;">webpack</a> <a href="/tags/上线部署/" style="font-size: 10px;">上线部署</a> <a href="/tags/框架/" style="font-size: 16px;">框架</a> <a href="/tags/解决方案/" style="font-size: 10px;">解决方案</a> <a href="/tags/设计模式/" style="font-size: 10px;">设计模式</a> <a href="/tags/项目小结/" style="font-size: 14px;">项目小结</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/12/09/TypeScript中的内置工具类型及其实现/">TypeScript中的内置工具类型及其实现</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/07/TypeScript中的类型编程/">TypeScript中的类型编程</a>
+          </li>
+        
+          <li>
+            <a href="/2020/11/03/hope statistics puppeteer工具小结/">hope statistics puppeteer 工具小结</a>
+          </li>
+        
+          <li>
+            <a href="/2020/11/03/用 node.js 开发一个可交互的命令行应用/">用 node.js 开发一个可交互的命令行应用</a>
+          </li>
+        
+          <li>
+            <a href="/2020/07/15/《深入浅出Node.js》读书笔记/">《深入浅出Node.js》读书笔记</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 Jacleklm<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

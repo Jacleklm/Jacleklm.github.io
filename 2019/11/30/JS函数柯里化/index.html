@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>JS函数柯里化 | Jacleklm</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="定义柯里化是指将一个函数分解为一系列函数的过程，每个函数都只接收一个参数函数柯里化，英语：Currying，高阶函数的一个特殊用法。是把接受多个参数的函数变换成接受一个单一参数（最初函数的第一个参数）的函数，并且返回接受余下的参数而且返回结果的新函数的技术 一个简单的例子: 12345678910function add(a, b) &amp;#123;  return a + b&amp;#125;add(1,">
+<meta name="keywords" content="JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS函数柯里化">
+<meta property="og:url" content="http://yoursite.com/2019/11/30/JS函数柯里化/index.html">
+<meta property="og:site_name" content="Jacleklm">
+<meta property="og:description" content="定义柯里化是指将一个函数分解为一系列函数的过程，每个函数都只接收一个参数函数柯里化，英语：Currying，高阶函数的一个特殊用法。是把接受多个参数的函数变换成接受一个单一参数（最初函数的第一个参数）的函数，并且返回接受余下的参数而且返回结果的新函数的技术 一个简单的例子: 12345678910function add(a, b) &amp;#123;  return a + b&amp;#125;add(1,">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-04-02T15:21:34.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JS函数柯里化">
+<meta name="twitter:description" content="定义柯里化是指将一个函数分解为一系列函数的过程，每个函数都只接收一个参数函数柯里化，英语：Currying，高阶函数的一个特殊用法。是把接受多个参数的函数变换成接受一个单一参数（最初函数的第一个参数）的函数，并且返回接受余下的参数而且返回结果的新函数的技术 一个简单的例子: 12345678910function add(a, b) &amp;#123;  return a + b&amp;#125;add(1,">
+  
+    <link rel="alternate" href="/atom.xml" title="Jacleklm" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Jacleklm</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-JS函数柯里化" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/11/30/JS函数柯里化/" class="article-date">
+  <time datetime="2019-11-30T09:25:21.000Z" itemprop="datePublished">2019-11-30</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/前端/">前端</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      JS函数柯里化
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h1><p>柯里化是指将一个函数分解为一系列函数的过程，每个函数都只接收一个参数<br>函数柯里化，英语：Currying，高阶函数的一个特殊用法。是把接受多个参数的函数变换成接受一个<strong>单一参数</strong>（最初函数的第一个参数）的函数，并且返回接受余下的参数而且返回结果的新函数的技术</p>
+<p>一个简单的例子:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> a + b</span><br><span class="line">&#125;</span><br><span class="line">add(<span class="number">1</span>, <span class="number">5</span>) <span class="comment">// 6</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">curryingadd</span>(<span class="params">x</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">y</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> x + y</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">curryadd(<span class="number">1</span>)(<span class="number">5</span>) <span class="comment">// 6</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="柯里化的用途"><a href="#柯里化的用途" class="headerlink" title="柯里化的用途"></a>柯里化的用途</h1><h2 id="参数复用"><a href="#参数复用" class="headerlink" title="参数复用"></a>参数复用</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 正常正则验证字符串 reg.test(txt)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 函数封装后</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">check</span>(<span class="params">reg, txt</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> reg.test(txt)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">check(<span class="regexp">/\d+/g</span>, <span class="string">'test'</span>) <span class="comment">//false</span></span><br><span class="line">check(<span class="regexp">/[a-z]+/g</span>, <span class="string">'test'</span>) <span class="comment">//true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Currying后</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">curryingCheck</span>(<span class="params">reg</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">txt</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> reg.test(txt)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> hasNumber = curryingCheck(<span class="regexp">/\d+/g</span>)</span><br><span class="line"><span class="keyword">var</span> hasLetter = curryingCheck(<span class="regexp">/[a-z]+/g</span>)</span><br><span class="line"></span><br><span class="line">hasNumber(<span class="string">'test1'</span>) <span class="comment">// true</span></span><br><span class="line">hasNumber(<span class="string">'testtest'</span>) <span class="comment">// false</span></span><br><span class="line">hasLetter(<span class="string">'21212'</span>) <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+
+<p>如果有很多地方都要校验是否有数字，如果用 check 函数，得反复传递第一个参数；curryingCheck 能将第一个参数 reg 进行复用，这样别的地方就能够直接调用 hasNumber，hasLetter 等函数，让参数能够复用，调用起来也更方便</p>
+<h2 id="提前确认"><a href="#提前确认" class="headerlink" title="提前确认"></a>提前确认</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> on = <span class="function"><span class="keyword">function</span>(<span class="params">element, event, handler</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">document</span>.addEventListener) &#123;</span><br><span class="line">    <span class="keyword">if</span> (element &amp;&amp; event &amp;&amp; handler) &#123;</span><br><span class="line">      element.addEventListener(event, handler, <span class="literal">false</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (element &amp;&amp; event &amp;&amp; handler) &#123;</span><br><span class="line">      element.attachEvent(<span class="string">'on'</span> + event, handler)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> on = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">document</span>.addEventListener) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">element, event, handler</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (element &amp;&amp; event &amp;&amp; handler) &#123;</span><br><span class="line">        element.addEventListener(event, handler, <span class="literal">false</span>)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">element, event, handler</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (element &amp;&amp; event &amp;&amp; handler) &#123;</span><br><span class="line">        element.attachEvent(<span class="string">'on'</span> + event, handler)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)()</span><br><span class="line"></span><br><span class="line"><span class="comment">//换一种写法可能比较好理解一点，上面就是把isSupport这个参数给先确定下来了</span></span><br><span class="line"><span class="keyword">var</span> on = <span class="function"><span class="keyword">function</span>(<span class="params">isSupport, element, event, handler</span>) </span>&#123;</span><br><span class="line">  isSupport = isSupport || <span class="built_in">document</span>.addEventListener</span><br><span class="line">  <span class="keyword">if</span> (isSupport) &#123;</span><br><span class="line">    <span class="keyword">return</span> element.addEventListener(event, handler, <span class="literal">false</span>)</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> element.attachEvent(<span class="string">'on'</span> + event, handler)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们在做项目的过程中，封装一些 dom 操作可以说再常见不过，上面第一种写法也是比较常见，但是我们看看第二种写法，它相对一第一种写法就是自执行然后返回一个新的函数，这样其实就是提前确定了会走哪一个方法，避免每次都进行判断</p>
+<h2 id="延迟运行"><a href="#延迟运行" class="headerlink" title="延迟运行"></a>延迟运行</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Function</span>.prototype.bind = <span class="function"><span class="keyword">function</span>(<span class="params">context</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> _this = <span class="keyword">this</span></span><br><span class="line">  <span class="keyword">var</span> args = [...arguments].slice(<span class="number">1</span>)</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> _this.apply(context, args.concat(...arguments))</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>bind 实现的机制就是 Currying，虽然上面这个 bind 有点简单没有考虑所有情况</p>
+<h1 id="柯里化的封装"><a href="#柯里化的封装" class="headerlink" title="柯里化的封装"></a>柯里化的封装</h1><p>其实和之前写的 bind 的实现很像</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 初步封装</span></span><br><span class="line"><span class="keyword">var</span> currying = <span class="function"><span class="keyword">function</span>(<span class="params">fn</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// args 获取第一个方法内的全部参数</span></span><br><span class="line">  <span class="keyword">var</span> args = [...arguments].slice(<span class="number">1</span>)</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 把合并后的参数通过apply作为fn的参数并执行</span></span><br><span class="line">    <span class="keyword">return</span> fn.apply(<span class="keyword">this</span>, args.concat(...arguments))</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样返回的话其实只能多扩展一个参数，currying(a)(b)(c)的情况无法支持，所以需要递归</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 支持多参数传递</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">progressCurrying</span>(<span class="params">fn, ...args</span>) </span>&#123; <span class="comment">// fn 是原本的接受很多个参数的复杂函数</span></span><br><span class="line">  <span class="keyword">var</span> _this = <span class="keyword">this</span></span><br><span class="line">  <span class="keyword">var</span> len = fn.length <span class="comment">// fn.length === fn 原本参数个数</span></span><br><span class="line">  <span class="keyword">var</span> args = args || []</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> _args = [...arguments]</span><br><span class="line">    args.push(...arguments)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果参数个数小于最初的fn.length，则递归调用，继续收集参数</span></span><br><span class="line">    <span class="keyword">if</span> (_args.length &lt; len) &#123;</span><br><span class="line">      <span class="keyword">return</span> progressCurrying.call(_this, fn, _args)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 参数收集完毕，则执行fn</span></span><br><span class="line">    <span class="keyword">return</span> fn.apply(<span class="keyword">this</span>, args)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="一道经典面试题"><a href="#一道经典面试题" class="headerlink" title="一道经典面试题"></a>一道经典面试题</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 实现一个add方法，使计算结果能够满足如下预期：</span></span><br><span class="line">add(<span class="number">1</span>)(<span class="number">2</span>)(<span class="number">3</span>) = <span class="number">6</span></span><br><span class="line">add(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)(<span class="number">4</span>) = <span class="number">10</span></span><br><span class="line">add(<span class="number">1</span>)(<span class="number">2</span>)(<span class="number">3</span>)(<span class="number">4</span>)(<span class="number">5</span>) = <span class="number">15</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 第一次执行时，定义一个数组专门用来存储所有的参数</span></span><br><span class="line">  <span class="keyword">let</span> _args = [...arguments]</span><br><span class="line">  <span class="comment">// 在内部声明一个函数，利用闭包的特性保存_args并收集所有的参数值</span></span><br><span class="line">  <span class="keyword">let</span> _result = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="comment">// 这里不能用箭头函数</span></span><br><span class="line">    _args.push(...arguments)</span><br><span class="line">    <span class="keyword">return</span> _result</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 利用toString隐式转换的特性，当最后执行时隐式转换，并计算最终的值返回</span></span><br><span class="line">  _result.toString = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="comment">// 这里不能用箭头函数</span></span><br><span class="line">    <span class="keyword">return</span> _args.reduce(<span class="function">(<span class="params">acc, curr</span>) =&gt;</span> acc + curr, <span class="number">0</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> _result</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">add(<span class="number">1</span>)(<span class="number">2</span>)(<span class="number">3</span>) <span class="comment">// 6</span></span><br><span class="line">add(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)(<span class="number">4</span>) <span class="comment">// 10</span></span><br><span class="line">add(<span class="number">1</span>)(<span class="number">2</span>)(<span class="number">3</span>)(<span class="number">4</span>)(<span class="number">5</span>) <span class="comment">// 15</span></span><br><span class="line">add(<span class="number">2</span>, <span class="number">6</span>)(<span class="number">1</span>) <span class="comment">// 9</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="toString-或-valueOf-的改写"><a href="#toString-或-valueOf-的改写" class="headerlink" title="toString 或 valueOf 的改写"></a>toString 或 valueOf 的改写</h2><p>上面那道题的的 toString 的改写也是非常有意思的一个知识点</p>
+<p>当变量对象（函数也是对象）遇到一些情况的时候，会偷偷地调用 toString 和 valueOf 方法（隐式调用），那我们就可以改写这两个方法做一些事</p>
+<p><strong>这些情况会触发隐式调用：</strong></p>
+<ul>
+<li>加减乘除</li>
+<li>比较运算符&gt;</li>
+<li>==</li>
+<li>String()</li>
+<li>Number()</li>
+</ul>
+<p>两个都重写的情况：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">  i: <span class="number">10</span>,</span><br><span class="line">  valueOf: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'执行了valueOf()'</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.i + <span class="number">20</span></span><br><span class="line">  &#125;,</span><br><span class="line">  toString: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'执行了toString()'</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.valueOf() + <span class="number">20</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(+obj) <span class="comment">// 执行了valueOf()  30</span></span><br><span class="line"><span class="built_in">console</span>.log(obj &gt; <span class="number">40</span>) <span class="comment">// 执行了valueOf()  false</span></span><br><span class="line"><span class="built_in">console</span>.log(obj == <span class="number">30</span>) <span class="comment">// 执行了valueOf()  true</span></span><br></pre></td></tr></table></figure>
+
+<p>只重写了 toString</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> aa = &#123;</span><br><span class="line">  i: <span class="number">10</span>,</span><br><span class="line">  toString: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'toString'</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.i</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(+aa) <span class="comment">// 10 toString</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">''</span> + aa) <span class="comment">// 10 toString</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">String</span>(aa)) <span class="comment">// 10 toString</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Number</span>(aa)) <span class="comment">// 10 toString</span></span><br><span class="line"><span class="built_in">console</span>.log(aa == <span class="string">'10'</span>) <span class="comment">// true toString</span></span><br></pre></td></tr></table></figure>
+
+<p>只重写了 valueOf</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> aa = &#123;</span><br><span class="line">  i: <span class="number">10</span>,</span><br><span class="line">  valueOf: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'valueOf'</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.i</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(+aa) <span class="comment">// 10 valueOf</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">''</span> + aa) <span class="comment">// 10 valueOf</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">String</span>(aa)) <span class="comment">// [object Object]</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Number</span>(aa)) <span class="comment">// 10 valueOf</span></span><br><span class="line"><span class="built_in">console</span>.log(aa == <span class="string">'10'</span>) <span class="comment">// true valueOf</span></span><br></pre></td></tr></table></figure>
+
+<p>结论：如果只重写了 toString，对象转换时会无视 valueOf 的存在来进行转换。但是，如果只重写了 valueOf 方法，在要转换为字符串的时候会优先考虑 valueOf 方法。在不能调用 toString 的情况下，只能让 valueOf 上阵了<br><strong>当两者都重写的时候，优先 valueOf</strong></p>
+<p>结论二：所以上面那道面试题，是触发了隐式调用，偷偷地执行了重写的toString方法。虽然还是没懂是怎么触发隐式调用的好像都不是我所知的那几种情况0.0</p>
+<p>参考资料<br><a href="https://www.zhangxinxu.com/wordpress/2013/02/js-currying/" target="_blank" rel="noopener">张鑫旭-JS 中的柯里</a><br><a href="https://www.jianshu.com/p/2975c25e4d71" target="_blank" rel="noopener">详解 JS 函数柯里化</a><br><a href="https://www.cnblogs.com/barrior/p/4598354.html" target="_blank" rel="noopener">JavaScript 中 valueOf、toString 的隐式调用</a><br><a href="https://www.cnblogs.com/aNd1coder/archive/2013/03/09/2951959.html" target="_blank" rel="noopener">JavaScript 中 valueOf 函数与 toString 方法深入理解</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/11/30/JS函数柯里化/" data-id="cknluolb8000izr87yuigi3xo" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/01/04/React路由 & Redux/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          React Router &amp; Redux
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/11/26/内存泄露和垃圾回收/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">内存泄露和垃圾回收</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Basic-knowledge/">Basic knowledge</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Engineering/">Engineering</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/上线部署/">上线部署</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/后端/">后端</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Browser/">Browser</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Computer/">Computer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Data-structure/">Data structure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Interview/">Interview</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Network/">Network</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node/">Node</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Operating-system/">Operating system</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Performance/">Performance</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/">Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web安全/">Web安全</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/上线部署/">上线部署</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/框架/">框架</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/解决方案/">解决方案</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/项目小结/">项目小结</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Browser/" style="font-size: 14px;">Browser</a> <a href="/tags/CSS/" style="font-size: 14px;">CSS</a> <a href="/tags/Computer/" style="font-size: 10px;">Computer</a> <a href="/tags/Data-structure/" style="font-size: 18px;">Data structure</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/Interview/" style="font-size: 10px;">Interview</a> <a href="/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/tags/Network/" style="font-size: 14px;">Network</a> <a href="/tags/Node/" style="font-size: 12px;">Node</a> <a href="/tags/Nodejs/" style="font-size: 12px;">Nodejs</a> <a href="/tags/Operating-system/" style="font-size: 10px;">Operating system</a> <a href="/tags/Performance/" style="font-size: 12px;">Performance</a> <a href="/tags/TypeScript/" style="font-size: 14px;">TypeScript</a> <a href="/tags/Web/" style="font-size: 10px;">Web</a> <a href="/tags/Web安全/" style="font-size: 10px;">Web安全</a> <a href="/tags/webpack/" style="font-size: 20px;">webpack</a> <a href="/tags/上线部署/" style="font-size: 10px;">上线部署</a> <a href="/tags/框架/" style="font-size: 16px;">框架</a> <a href="/tags/解决方案/" style="font-size: 10px;">解决方案</a> <a href="/tags/设计模式/" style="font-size: 10px;">设计模式</a> <a href="/tags/项目小结/" style="font-size: 14px;">项目小结</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/12/09/TypeScript中的内置工具类型及其实现/">TypeScript中的内置工具类型及其实现</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/07/TypeScript中的类型编程/">TypeScript中的类型编程</a>
+          </li>
+        
+          <li>
+            <a href="/2020/11/03/hope statistics puppeteer工具小结/">hope statistics puppeteer 工具小结</a>
+          </li>
+        
+          <li>
+            <a href="/2020/11/03/用 node.js 开发一个可交互的命令行应用/">用 node.js 开发一个可交互的命令行应用</a>
+          </li>
+        
+          <li>
+            <a href="/2020/07/15/《深入浅出Node.js》读书笔记/">《深入浅出Node.js》读书笔记</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 Jacleklm<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

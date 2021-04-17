@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>内存泄露和垃圾回收 | Jacleklm</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="什么是内存泄露程序的运行需要内存。只要程序提出要求，操作系统就会给内存。进程应及时释放不再用到的内存。不再用到的内存，没有及时释放，就叫做内存泄漏（memory leak）大多数语言提供自动内存管理，减轻程序员的负担，这被称为垃圾回收机制（garbage collector） 垃圾回收引用计数思想：跟踪记录所有值被引用的次数（阮一峰说引用计数是最常使用的，红宝书说到 2008 年为止标记清除是最常">
+<meta name="keywords" content="JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="内存泄露和垃圾回收">
+<meta property="og:url" content="http://yoursite.com/2019/11/26/内存泄露和垃圾回收/index.html">
+<meta property="og:site_name" content="Jacleklm">
+<meta property="og:description" content="什么是内存泄露程序的运行需要内存。只要程序提出要求，操作系统就会给内存。进程应及时释放不再用到的内存。不再用到的内存，没有及时释放，就叫做内存泄漏（memory leak）大多数语言提供自动内存管理，减轻程序员的负担，这被称为垃圾回收机制（garbage collector） 垃圾回收引用计数思想：跟踪记录所有值被引用的次数（阮一峰说引用计数是最常使用的，红宝书说到 2008 年为止标记清除是最常">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-02-01T08:30:58.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="内存泄露和垃圾回收">
+<meta name="twitter:description" content="什么是内存泄露程序的运行需要内存。只要程序提出要求，操作系统就会给内存。进程应及时释放不再用到的内存。不再用到的内存，没有及时释放，就叫做内存泄漏（memory leak）大多数语言提供自动内存管理，减轻程序员的负担，这被称为垃圾回收机制（garbage collector） 垃圾回收引用计数思想：跟踪记录所有值被引用的次数（阮一峰说引用计数是最常使用的，红宝书说到 2008 年为止标记清除是最常">
+  
+    <link rel="alternate" href="/atom.xml" title="Jacleklm" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Jacleklm</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-内存泄露和垃圾回收" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/11/26/内存泄露和垃圾回收/" class="article-date">
+  <time datetime="2019-11-26T08:50:21.000Z" itemprop="datePublished">2019-11-26</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/前端/">前端</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      内存泄露和垃圾回收
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="什么是内存泄露"><a href="#什么是内存泄露" class="headerlink" title="什么是内存泄露"></a>什么是内存泄露</h2><p>程序的运行需要内存。只要程序提出要求，操作系统就会给内存。进程应及时释放不再用到的内存。<strong>不再用到的内存，没有及时释放</strong>，就叫做<strong>内存泄漏</strong>（memory leak）<br>大多数语言提供自动内存管理，减轻程序员的负担，这被称为<strong>垃圾回收机制</strong>（garbage collector）</p>
+<h2 id="垃圾回收"><a href="#垃圾回收" class="headerlink" title="垃圾回收"></a>垃圾回收</h2><h3 id="引用计数"><a href="#引用计数" class="headerlink" title="引用计数"></a>引用计数</h3><p><strong>思想：跟踪记录所有值被引用的次数</strong><br>（阮一峰说引用计数是最常使用的，红宝书说到 2008 年为止标记清除是最常用的）<br>JS 引擎有一张”引用表”，保存了内存里面所有的资源（通常是各种<strong>值</strong>，比如数组）的引用次数。<strong>如果一个值的引用次数是 0，就表示这个值不再用到了，因此可以将这块内存释放</strong><br>如果一个值不再需要了，引用数却不为 0，垃圾回收机制无法释放这块内存，从而导致内存泄漏</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>];</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"hello world"</span>);</span><br><span class="line"></span><br><span class="line">arr = <span class="literal">null</span>;</span><br></pre></td></tr></table></figure>
+
+<p>上面代码中，数组[1, 2, 3, 4]是一个值，会占用内存。变量 arr 是仅有的对这个值的引用，因此引用次数为 1。尽管后面的代码没有用到 arr，它还是会持续占用内存<br>可以<strong>手动解除引用</strong>：让变量 = null。则数值这个值就能被垃圾回收机制释放了</p>
+<h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><p><strong>循环引用的情况</strong>，eg. 对象 A 包含一个指向对象 B 的指针，而对象 B 中也包含一个指向 A 的指针。采用引用计数策略时，函数执行后，两个对象还将继续存在，因为<strong>它们的引用次数永远不会为 0</strong>。</p>
+<h3 id="标记清除"><a href="#标记清除" class="headerlink" title="标记清除"></a>标记清除</h3><p>思路：给当前不使用的值加上标记，然后再回收其内存<br>只有在环境中的变量及被环境中的变量引用的变量（闭包）标记</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> a = <span class="number">10</span>; <span class="comment">//被标记"进入环境"</span></span><br><span class="line">  <span class="keyword">var</span> b = <span class="string">"hello"</span>; <span class="comment">//被标记"进入环境"</span></span><br><span class="line">&#125;</span><br><span class="line">test(); <span class="comment">//执行完毕后之后，a和b又被标记"离开环境"，被回收</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="常见-JavaScript-内存泄露"><a href="#常见-JavaScript-内存泄露" class="headerlink" title="常见 JavaScript 内存泄露"></a>常见 JavaScript 内存泄露</h2><h3 id="意外的全局变量"><a href="#意外的全局变量" class="headerlink" title="意外的全局变量"></a>意外的全局变量</h3><p>eg. 如下代码，这种生命方式等于 <code>this.bar=.....</code>，函数独立调用的话 this 为 window，所以 bar 是全局变量</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">arg</span>) </span>&#123;</span><br><span class="line">  bar = <span class="string">"this is a hidden global variable"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>JavaScript 文件头部加上 ‘use strict’，可以避免此类错误发生</p>
+</blockquote>
+<p>但是其实我们自己设全局变量也是有风险的，因为全局变量被认为的不可回收的（标记清除机制无法清除，因为全局环境到最后才会销毁）。如果必须使用全局变量存储大量数据时，确保用完以后把它设置为 null</p>
+<h3 id="被遗忘的-setInterval-或回调函数"><a href="#被遗忘的-setInterval-或回调函数" class="headerlink" title="被遗忘的 setInterval 或回调函数"></a>被遗忘的 setInterval 或回调函数</h3><p>用完 setInterval 记得 clearInterval</p>
+<h3 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h3><p>不解释</p>
+<h2 id="内存泄漏的识别方法"><a href="#内存泄漏的识别方法" class="headerlink" title="内存泄漏的识别方法"></a>内存泄漏的识别方法</h2><h3 id="Chrome-浏览器"><a href="#Chrome-浏览器" class="headerlink" title="Chrome 浏览器"></a>Chrome 浏览器</h3><p>控制台-profiles</p>
+<h3 id="Node"><a href="#Node" class="headerlink" title="Node"></a>Node</h3><p>process.memoryUsage()，返回一个对象，包含了 Node 进程的内存占用信息</p>
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><ol>
+<li>找到问题后手动释放内存</li>
+<li>使用两种新的数据结构：WeakSet 和 WeakMap。它们对于值的引用都是不计入垃圾回收机制</li>
+</ol>
+<p>参考资料</p>
+<p>《Javascript 高级程序设计》</p>
+<p><a href="http://www.ruanyifeng.com/blog/2017/04/memory-leak.html" target="_blank" rel="noopener">阮一峰-JavaScript 内存泄漏教程</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/11/26/内存泄露和垃圾回收/" data-id="cknluolcx003ezr87z3kslumj" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/11/30/JS函数柯里化/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          JS函数柯里化
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/11/25/浏览器兼容性/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">浏览器兼容性</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Basic-knowledge/">Basic knowledge</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Engineering/">Engineering</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/上线部署/">上线部署</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/后端/">后端</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Browser/">Browser</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Computer/">Computer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Data-structure/">Data structure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Interview/">Interview</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Network/">Network</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node/">Node</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Operating-system/">Operating system</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Performance/">Performance</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/">Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web安全/">Web安全</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/上线部署/">上线部署</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/框架/">框架</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/解决方案/">解决方案</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/项目小结/">项目小结</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Browser/" style="font-size: 14px;">Browser</a> <a href="/tags/CSS/" style="font-size: 14px;">CSS</a> <a href="/tags/Computer/" style="font-size: 10px;">Computer</a> <a href="/tags/Data-structure/" style="font-size: 18px;">Data structure</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/Interview/" style="font-size: 10px;">Interview</a> <a href="/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/tags/Network/" style="font-size: 14px;">Network</a> <a href="/tags/Node/" style="font-size: 12px;">Node</a> <a href="/tags/Nodejs/" style="font-size: 12px;">Nodejs</a> <a href="/tags/Operating-system/" style="font-size: 10px;">Operating system</a> <a href="/tags/Performance/" style="font-size: 12px;">Performance</a> <a href="/tags/TypeScript/" style="font-size: 14px;">TypeScript</a> <a href="/tags/Web/" style="font-size: 10px;">Web</a> <a href="/tags/Web安全/" style="font-size: 10px;">Web安全</a> <a href="/tags/webpack/" style="font-size: 20px;">webpack</a> <a href="/tags/上线部署/" style="font-size: 10px;">上线部署</a> <a href="/tags/框架/" style="font-size: 16px;">框架</a> <a href="/tags/解决方案/" style="font-size: 10px;">解决方案</a> <a href="/tags/设计模式/" style="font-size: 10px;">设计模式</a> <a href="/tags/项目小结/" style="font-size: 14px;">项目小结</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/12/09/TypeScript中的内置工具类型及其实现/">TypeScript中的内置工具类型及其实现</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/07/TypeScript中的类型编程/">TypeScript中的类型编程</a>
+          </li>
+        
+          <li>
+            <a href="/2020/11/03/hope statistics puppeteer工具小结/">hope statistics puppeteer 工具小结</a>
+          </li>
+        
+          <li>
+            <a href="/2020/11/03/用 node.js 开发一个可交互的命令行应用/">用 node.js 开发一个可交互的命令行应用</a>
+          </li>
+        
+          <li>
+            <a href="/2020/07/15/《深入浅出Node.js》读书笔记/">《深入浅出Node.js》读书笔记</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 Jacleklm<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

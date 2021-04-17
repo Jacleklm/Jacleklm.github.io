@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>用 node.js 开发一个可交互的命令行应用 | Jacleklm</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="原生 node 用 process.argv 直接读取 process.stdin.on 劫持输入 readline 模块 进行逐行读取。该模块提供了一个接口，用于一次一行地读取可读流（例如 process.stdin）中的数据12345678910111213141516171819202122const app = require(&apos;./app&apos;)const readline = requir">
+<meta name="keywords" content="Node">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用 node.js 开发一个可交互的命令行应用">
+<meta property="og:url" content="http://yoursite.com/2020/11/03/用 node.js 开发一个可交互的命令行应用/index.html">
+<meta property="og:site_name" content="Jacleklm">
+<meta property="og:description" content="原生 node 用 process.argv 直接读取 process.stdin.on 劫持输入 readline 模块 进行逐行读取。该模块提供了一个接口，用于一次一行地读取可读流（例如 process.stdin）中的数据12345678910111213141516171819202122const app = require(&apos;./app&apos;)const readline = requir">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-11-03T10:38:42.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="用 node.js 开发一个可交互的命令行应用">
+<meta name="twitter:description" content="原生 node 用 process.argv 直接读取 process.stdin.on 劫持输入 readline 模块 进行逐行读取。该模块提供了一个接口，用于一次一行地读取可读流（例如 process.stdin）中的数据12345678910111213141516171819202122const app = require(&apos;./app&apos;)const readline = requir">
+  
+    <link rel="alternate" href="/atom.xml" title="Jacleklm" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Jacleklm</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-用 node.js 开发一个可交互的命令行应用" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/11/03/用 node.js 开发一个可交互的命令行应用/" class="article-date">
+  <time datetime="2020-11-03T15:02:21.000Z" itemprop="datePublished">2020-11-03</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Engineering/">Engineering</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      用 node.js 开发一个可交互的命令行应用
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="原生-node"><a href="#原生-node" class="headerlink" title="原生 node"></a>原生 node</h1><ul>
+<li>用 process.argv 直接读取</li>
+<li>process.stdin.on 劫持输入</li>
+<li><a href="http://nodejs.cn/api/readline.html" target="_blank" rel="noopener">readline</a> 模块 进行逐行读取。该模块提供了一个接口，用于一次一行地读取可读流（例如 <code>process.stdin</code>）中的数据<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> app = <span class="built_in">require</span>(<span class="string">'./app'</span>)</span><br><span class="line"><span class="keyword">const</span> readline = <span class="built_in">require</span>(<span class="string">'readline'</span>);</span><br><span class="line"><span class="keyword">const</span> rl = readline.createInterface(&#123;</span><br><span class="line">  input: process.stdin,</span><br><span class="line">  output: process.stdout</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">rl.question(<span class="string">'请输入当前的年份和月份，然后按回车键。eg: 202010. '</span>, (month) =&gt; &#123;</span><br><span class="line">  rl.question(<span class="string">'请输入本月小结会的月份和日期，然后按回车键。eg: 1130. '</span>, (date) =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'数据统计中, 请勿触碰键盘...'</span>);</span><br><span class="line">    app(month, date);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 一旦调用此代码，Node.js 应用程序将不会终止，直到 readline.Interface 关闭（ rl.close() ），因为接口在 input 流上等待接收数据</span></span><br><span class="line">    <span class="comment">// rl.close();</span></span><br><span class="line"></span><br><span class="line">    rl.on(<span class="string">'close'</span>, () =&gt; &#123; <span class="comment">// close事件，ctrl + C 也会触发。详见 http://nodejs.cn/api/readline.html</span></span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">"Goodbye 👋"</span>);</span><br><span class="line">      <span class="comment">// exit the process</span></span><br><span class="line">      process.exit(<span class="number">0</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">    </span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="借助-prompt-包"><a href="#借助-prompt-包" class="headerlink" title="借助 prompt 包"></a>借助 prompt 包</h1><p>如果你 打算在Node.js中构建可靠的CLI工具，则 <a href="https://www.npmjs.com/package/prompt" target="_blank" rel="noopener">prompt</a> 可能是一个很好的选择。比readline更好用。<br>能像处理页面表单一样处理命令行输入</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> prompt = <span class="built_in">require</span>(<span class="string">'prompt'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// start the prompt</span></span><br><span class="line">prompt.start();</span><br><span class="line"><span class="comment">// define properties schemavar schema = &#123;</span></span><br><span class="line">    properties: &#123;</span><br><span class="line">        name: &#123;</span><br><span class="line">            pattern: <span class="regexp">/^[a-zA-Z\s\-]+$/</span>,</span><br><span class="line">            message: <span class="string">'Name must be only letters, spaces, or dashes'</span>,</span><br><span class="line">            required: <span class="literal">true</span></span><br><span class="line">        &#125;,</span><br><span class="line">        password: &#123;</span><br><span class="line">            hidden: <span class="literal">true</span>  <span class="comment">// 这里能隐藏密码</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ask user for the input</span></span><br><span class="line">prompt.get(schema, (err, result) =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (err) &#123;</span><br><span class="line">        <span class="keyword">throw</span> err;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// print user credentials</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`<span class="subst">$&#123;result.name&#125;</span> / <span class="subst">$&#123;result.password&#125;</span>`</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>借助 Commander 包<br>这个感觉更像是封装命令行命令了，不仅仅是初始化时读取输入<br>代码:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> program = <span class="built_in">require</span>(<span class="string">'commander'</span>);</span><br><span class="line">program</span><br><span class="line">  .version(<span class="string">'0.0.1'</span>)  <span class="comment">// node index --version 或 node index -V 能打印出我们定义的版本号。相当于 -V 和 -h 是自带的，其他的可以通过 .option() 来自定义</span></span><br><span class="line">  .option(<span class="string">'-l, --list [list]'</span>, <span class="string">'list of customers in CSV file'</span>) <span class="comment">// 自定义的</span></span><br><span class="line">  .parse(process.argv)</span><br><span class="line"><span class="built_in">console</span>.log(program.list);</span><br></pre></td></tr></table></figure>
+
+<p>执行：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt; node index --version 或 node index -V 能打印出我们定义的版本号</span><br><span class="line"><span class="number">0.0</span><span class="number">.1</span></span><br><span class="line"></span><br><span class="line">&gt; node index --help</span><br><span class="line">Usage: index [options]</span><br><span class="line">Options:</span><br><span class="line">  -V, --version      output the version number</span><br><span class="line">  -l, --list [list]  list <span class="keyword">of</span> customers <span class="keyword">in</span> CSV file</span><br><span class="line">  -h, --help         display help <span class="keyword">for</span> command</span><br></pre></td></tr></table></figure>
+
+<p>参考资料<br><a href="https://blog.csdn.net/ccf19881030/article/details/109111128" target="_blank" rel="noopener">如何从Node.js中的命令行读取输入</a><br><a href="https://juejin.im/entry/6844903474316967950" target="_blank" rel="noopener">用 node.js 开发一个可交互的命令行应用: commander</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/11/03/用 node.js 开发一个可交互的命令行应用/" data-id="cknluoldv005bzr87fonbrram" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Node/">Node</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/11/03/hope statistics puppeteer工具小结/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          hope statistics puppeteer 工具小结
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/07/15/《深入浅出Node.js》读书笔记/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">《深入浅出Node.js》读书笔记</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Basic-knowledge/">Basic knowledge</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Engineering/">Engineering</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/上线部署/">上线部署</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/后端/">后端</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Browser/">Browser</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Computer/">Computer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Data-structure/">Data structure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Interview/">Interview</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Network/">Network</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node/">Node</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Operating-system/">Operating system</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Performance/">Performance</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/">Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web安全/">Web安全</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/上线部署/">上线部署</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/框架/">框架</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/解决方案/">解决方案</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/项目小结/">项目小结</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Browser/" style="font-size: 14px;">Browser</a> <a href="/tags/CSS/" style="font-size: 14px;">CSS</a> <a href="/tags/Computer/" style="font-size: 10px;">Computer</a> <a href="/tags/Data-structure/" style="font-size: 18px;">Data structure</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/Interview/" style="font-size: 10px;">Interview</a> <a href="/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/tags/Network/" style="font-size: 14px;">Network</a> <a href="/tags/Node/" style="font-size: 12px;">Node</a> <a href="/tags/Nodejs/" style="font-size: 12px;">Nodejs</a> <a href="/tags/Operating-system/" style="font-size: 10px;">Operating system</a> <a href="/tags/Performance/" style="font-size: 12px;">Performance</a> <a href="/tags/TypeScript/" style="font-size: 14px;">TypeScript</a> <a href="/tags/Web/" style="font-size: 10px;">Web</a> <a href="/tags/Web安全/" style="font-size: 10px;">Web安全</a> <a href="/tags/webpack/" style="font-size: 20px;">webpack</a> <a href="/tags/上线部署/" style="font-size: 10px;">上线部署</a> <a href="/tags/框架/" style="font-size: 16px;">框架</a> <a href="/tags/解决方案/" style="font-size: 10px;">解决方案</a> <a href="/tags/设计模式/" style="font-size: 10px;">设计模式</a> <a href="/tags/项目小结/" style="font-size: 14px;">项目小结</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/12/09/TypeScript中的内置工具类型及其实现/">TypeScript中的内置工具类型及其实现</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/07/TypeScript中的类型编程/">TypeScript中的类型编程</a>
+          </li>
+        
+          <li>
+            <a href="/2020/11/03/hope statistics puppeteer工具小结/">hope statistics puppeteer 工具小结</a>
+          </li>
+        
+          <li>
+            <a href="/2020/11/03/用 node.js 开发一个可交互的命令行应用/">用 node.js 开发一个可交互的命令行应用</a>
+          </li>
+        
+          <li>
+            <a href="/2020/07/15/《深入浅出Node.js》读书笔记/">《深入浅出Node.js》读书笔记</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 Jacleklm<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

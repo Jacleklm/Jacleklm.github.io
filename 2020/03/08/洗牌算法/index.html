@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>洗牌算法 | Jacleklm</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="如何真正的打乱数组?  12let arr = [1, 2, 3]arr.sort(() =&amp;gt; Math.random() - 0.5)  上述代码看似可以打乱，但是不是真正的打乱。做下测试： 1234567891011121314151617181920212223242526const RandomShuffle = (arr) =&amp;gt; &amp;#123;  return arr.sor">
+<meta name="keywords" content="Data structure">
+<meta property="og:type" content="article">
+<meta property="og:title" content="洗牌算法">
+<meta property="og:url" content="http://yoursite.com/2020/03/08/洗牌算法/index.html">
+<meta property="og:site_name" content="Jacleklm">
+<meta property="og:description" content="如何真正的打乱数组?  12let arr = [1, 2, 3]arr.sort(() =&amp;gt; Math.random() - 0.5)  上述代码看似可以打乱，但是不是真正的打乱。做下测试： 1234567891011121314151617181920212223242526const RandomShuffle = (arr) =&amp;gt; &amp;#123;  return arr.sor">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/img/%E6%B4%97%E7%89%8C%E7%AE%97%E6%B3%95/%E6%B4%97%E7%89%8C%E7%AE%97%E6%B3%95.png">
+<meta property="og:updated_time" content="2020-03-08T08:47:12.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="洗牌算法">
+<meta name="twitter:description" content="如何真正的打乱数组?  12let arr = [1, 2, 3]arr.sort(() =&amp;gt; Math.random() - 0.5)  上述代码看似可以打乱，但是不是真正的打乱。做下测试： 1234567891011121314151617181920212223242526const RandomShuffle = (arr) =&amp;gt; &amp;#123;  return arr.sor">
+<meta name="twitter:image" content="http://yoursite.com/img/%E6%B4%97%E7%89%8C%E7%AE%97%E6%B3%95/%E6%B4%97%E7%89%8C%E7%AE%97%E6%B3%95.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Jacleklm" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Jacleklm</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-洗牌算法" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/03/08/洗牌算法/" class="article-date">
+  <time datetime="2020-03-08T05:50:21.000Z" itemprop="datePublished">2020-03-08</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Basic-knowledge/">Basic knowledge</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      洗牌算法
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>如何真正的打乱数组?</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line">arr.sort(<span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">Math</span>.random() - <span class="number">0.5</span>)</span><br></pre></td></tr></table></figure>
+
+<p>上述代码看似可以打乱，但是不是真正的打乱。做下测试：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> RandomShuffle = <span class="function">(<span class="params">arr</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> arr.sort(<span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">Math</span>.random() - <span class="number">0.5</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> testResult = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">let</span> times = <span class="number">100000</span></span><br><span class="line">  <span class="keyword">let</span> res = &#123;&#125;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; times; i++) &#123;</span><br><span class="line">    <span class="keyword">let</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line">    RandomShuffle(arr)</span><br><span class="line">    <span class="keyword">let</span> key = <span class="built_in">JSON</span>.stringify(arr)</span><br><span class="line">    res[key] ? res[key]++ : (res[key] = <span class="number">1</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 为了方便展示，转换成百分比</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> key <span class="keyword">in</span> res) &#123;</span><br><span class="line">    res[key] = (res[key] / times) * <span class="number">100</span> + <span class="string">'%'</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">console</span>.log(res)</span><br><span class="line">&#125;</span><br><span class="line">testResult()</span><br><span class="line"><span class="comment">// 结果</span></span><br><span class="line">[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]: <span class="string">"37.66%"</span></span><br><span class="line">[<span class="number">2</span>,<span class="number">1</span>,<span class="number">3</span>]: <span class="string">"12.57%"</span></span><br><span class="line">[<span class="number">1</span>,<span class="number">3</span>,<span class="number">2</span>]: <span class="string">"6.109%"</span></span><br><span class="line">[<span class="number">3</span>,<span class="number">1</span>,<span class="number">2</span>]: <span class="string">"6.343999999999999%"</span></span><br><span class="line">[<span class="number">2</span>,<span class="number">3</span>,<span class="number">1</span>]: <span class="string">"6.22%"</span></span><br><span class="line">[<span class="number">3</span>,<span class="number">2</span>,<span class="number">1</span>]: <span class="string">"31.097%"</span></span><br></pre></td></tr></table></figure>
+
+<p>可以看出末尾数字是 3 的概率为 50%，而不是想象中的 33%。原因是因为 sort 函数底层是使用插入排序实现的。所以初始为[1,2,3]的时候，插入排序从 2 开始，和前面做比较，此时有 50%的几率顺序 50%的几率逆序，所以[1,2,3][2,1,3]出现几率都为 50%。接下来的操作如下图所示：<br><img src="/img/%E6%B4%97%E7%89%8C%E7%AE%97%E6%B3%95/%E6%B4%97%E7%89%8C%E7%AE%97%E6%B3%95.png"></p>
+<blockquote>
+<p>Knuth-Durstenfeld 洗牌算法</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> KnuthDurstenfeldShuffle = <span class="function"><span class="params">arr</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = arr.length - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">    <span class="keyword">let</span> randomIndex = <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random() * (i + <span class="number">1</span>))</span><br><span class="line">    <span class="comment">// 用结构赋值两项交换之前最好加 ;</span></span><br><span class="line">    ;[arr[i], arr[randomIndex]] = [arr[randomIndex], arr[i]]</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> arr</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>思路：</p>
+<ul>
+<li>选取数组(长度 n)中最后一个元素(arr[length-1])，将其与 n 个元素中的任意一个交换，此时最后一个元素已经确定</li>
+<li>选取倒数第二个元素(arr[length-2])，将其与 n-1 个元素中的任意一个交换</li>
+<li>重复第 1 2 步，直到剩下 1 个元素为止</li>
+</ul>
+<blockquote>
+<p>Fisher-Yates 洗牌算法</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 似乎有误</span></span><br><span class="line"><span class="keyword">const</span> FisherYatesShuffle = <span class="function"><span class="params">arr</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">let</span> result = [];</span><br><span class="line">  <span class="keyword">while</span> (arr.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> randomIndex = <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random() * arr.length)</span><br><span class="line">    result.push(arr[randomIndex])</span><br><span class="line">    arr.splice(randomIndex, <span class="number">1</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 结果</span></span><br><span class="line">[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]: <span class="string">"16.646%"</span></span><br><span class="line">[<span class="number">1</span>,<span class="number">3</span>,<span class="number">2</span>]: <span class="string">"16.633%"</span></span><br><span class="line">[<span class="number">2</span>,<span class="number">1</span>,<span class="number">3</span>]: <span class="string">"16.55%"</span></span><br><span class="line">[<span class="number">2</span>,<span class="number">3</span>,<span class="number">1</span>]: <span class="string">"16.787%"</span></span><br><span class="line">[<span class="number">3</span>,<span class="number">1</span>,<span class="number">2</span>]: <span class="string">"16.662%"</span></span><br><span class="line">[<span class="number">3</span>,<span class="number">2</span>,<span class="number">1</span>]: <span class="string">"16.722%"</span></span><br></pre></td></tr></table></figure>
+
+<p>思路：</p>
+<ul>
+<li>从还没处理的数组（假如还剩 n 个）中，产生一个[0, n]之间的随机数 random</li>
+<li>从剩下的 n 个元素中把第 random 个元素取出到新数组中</li>
+<li>删除原数组第 random 个元素</li>
+<li>重复第 2 3 步直到所有元素取完</li>
+<li>最终返回一个新的打乱的数组</li>
+</ul>
+<p>参考资料<br><a href="https://dannykbsoul.github.io/2020/03/03/%E6%B4%97%E7%89%8C%E7%AE%97%E6%B3%95/" target="_blank" rel="noopener">洗牌算法</a><br><a href="https://coolshell.cn/articles/8593.html" target="_blank" rel="noopener">如何测试洗牌程序</a><br><a href="https://github.com/ccforward/cc/issues/44" target="_blank" rel="noopener">洗牌算法(shuffle)的 js 实现</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/03/08/洗牌算法/" data-id="cknluoldt0054zr87prx53phc" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Data-structure/">Data structure</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/04/14/TypeScript基础语法小结/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          TypeScript基础语法小结
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/02/27/博客项目上线部署/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">博客项目上线部署总结</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Basic-knowledge/">Basic knowledge</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Engineering/">Engineering</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/上线部署/">上线部署</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/后端/">后端</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Browser/">Browser</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Computer/">Computer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Data-structure/">Data structure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Interview/">Interview</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Network/">Network</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node/">Node</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Operating-system/">Operating system</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Performance/">Performance</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/">Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web安全/">Web安全</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/上线部署/">上线部署</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/框架/">框架</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/解决方案/">解决方案</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/项目小结/">项目小结</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Browser/" style="font-size: 14px;">Browser</a> <a href="/tags/CSS/" style="font-size: 14px;">CSS</a> <a href="/tags/Computer/" style="font-size: 10px;">Computer</a> <a href="/tags/Data-structure/" style="font-size: 18px;">Data structure</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/Interview/" style="font-size: 10px;">Interview</a> <a href="/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/tags/Network/" style="font-size: 14px;">Network</a> <a href="/tags/Node/" style="font-size: 12px;">Node</a> <a href="/tags/Nodejs/" style="font-size: 12px;">Nodejs</a> <a href="/tags/Operating-system/" style="font-size: 10px;">Operating system</a> <a href="/tags/Performance/" style="font-size: 12px;">Performance</a> <a href="/tags/TypeScript/" style="font-size: 14px;">TypeScript</a> <a href="/tags/Web/" style="font-size: 10px;">Web</a> <a href="/tags/Web安全/" style="font-size: 10px;">Web安全</a> <a href="/tags/webpack/" style="font-size: 20px;">webpack</a> <a href="/tags/上线部署/" style="font-size: 10px;">上线部署</a> <a href="/tags/框架/" style="font-size: 16px;">框架</a> <a href="/tags/解决方案/" style="font-size: 10px;">解决方案</a> <a href="/tags/设计模式/" style="font-size: 10px;">设计模式</a> <a href="/tags/项目小结/" style="font-size: 14px;">项目小结</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/12/09/TypeScript中的内置工具类型及其实现/">TypeScript中的内置工具类型及其实现</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/07/TypeScript中的类型编程/">TypeScript中的类型编程</a>
+          </li>
+        
+          <li>
+            <a href="/2020/11/03/hope statistics puppeteer工具小结/">hope statistics puppeteer 工具小结</a>
+          </li>
+        
+          <li>
+            <a href="/2020/11/03/用 node.js 开发一个可交互的命令行应用/">用 node.js 开发一个可交互的命令行应用</a>
+          </li>
+        
+          <li>
+            <a href="/2020/07/15/《深入浅出Node.js》读书笔记/">《深入浅出Node.js》读书笔记</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 Jacleklm<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
