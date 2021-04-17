@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2021-01-31T06:17:52.152Z</updated>
+  <updated>2021-04-17T15:01:40.189Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>解决hexo g生成index.html为空的问题</title>
+    <link href="http://yoursite.com/2021/04/17/%E8%A7%A3%E5%86%B3hexo%20g%E7%94%9F%E6%88%90index.html%E4%B8%BA%E7%A9%BA%E7%9A%84%E9%97%AE%E9%A2%98/"/>
+    <id>http://yoursite.com/2021/04/17/%E8%A7%A3%E5%86%B3hexo%20g%E7%94%9F%E6%88%90index.html%E4%B8%BA%E7%A9%BA%E7%9A%84%E9%97%AE%E9%A2%98/</id>
+    <published>2021-04-17T12:33:46.000Z</published>
+    <updated>2021-04-17T15:01:40.189Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>最近一段时间博客通过域名访问的方式一直访问为空白页面，我以为是github的问题过段时间就好了，就没太管，后来一直没恢复，于是查了下是什么原因。刚开始以为是githubpage的问题，往这个方向折腾了好久没啥结果… 不过也知道到了 <code>username.github.io</code> 下可以通过路由的方式部署多个项目，问题没解决不过也没白折腾吧。</p><h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>最终发现是之前没管的hexo的循环依赖问题：<br><code>hexo -s</code>预览博客的时候出现循环引用的报错：<code>hexo (node:7801) Warning: Accessing non-existent property &#39;filename&#39;...</code>。目前社区上认为是node版本较新导致了，回退node版本即可。于是安装了<code>n</code>进行node版本管理。(回退到 v12.16.2 就没问题了) </p><blockquote><p>用 nvm 管理 node 版本也可</p></blockquote><h1 id="n的常用命令"><a href="#n的常用命令" class="headerlink" title="n的常用命令"></a>n的常用命令</h1><ul><li><p>利用 n 下载所需node: <code>$ n 版本号</code></p></li><li><p>下载最新版本: <code>$ n latest</code></p></li><li><p>下载稳定版: <code>$ n stable</code></p></li><li><p>删除某个版本: <code>$ n rm 4.4.4</code></p></li><li><p>查看当前 node 版本: <code>$ node -v</code></p></li><li><p>切换版本</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ n</span><br><span class="line">  <span class="number">6.9</span><span class="number">.4</span></span><br><span class="line">ο <span class="number">7.4</span><span class="number">.0</span></span><br><span class="line">  <span class="number">4.4</span><span class="number">.4</span></span><br></pre></td></tr></table></figure></li><li><p>以指定的版本来执行脚本: <code>$ n use 7.4.0 index.js</code>ç</p></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;背景&quot;&gt;&lt;a href=&quot;#背景&quot; class=&quot;headerlink&quot; title=&quot;背景&quot;&gt;&lt;/a&gt;背景&lt;/h1&gt;&lt;p&gt;最近一段时间博客通过域名访问的方式一直访问为空白页面，我以为是github的问题过段时间就好了，就没太管，后来一直没恢复，于是查了下是什么原
+      
+    
+    </summary>
+    
+    
+      <category term="前端" scheme="http://yoursite.com/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+      <category term="工具" scheme="http://yoursite.com/tags/%E5%B7%A5%E5%85%B7/"/>
+    
+  </entry>
   
   <entry>
     <title>TypeScript中的内置工具类型及其实现</title>
@@ -505,32 +531,6 @@
       
       
         &lt;h1 id=&quot;定义&quot;&gt;&lt;a href=&quot;#定义&quot; class=&quot;headerlink&quot; title=&quot;定义&quot;&gt;&lt;/a&gt;定义&lt;/h1&gt;&lt;p&gt;柯里化是指将一个函数分解为一系列函数的过程，每个函数都只接收一个参数&lt;br&gt;函数柯里化，英语：Currying，高阶函数的一个特殊用法。是把
-      
-    
-    </summary>
-    
-    
-      <category term="前端" scheme="http://yoursite.com/categories/%E5%89%8D%E7%AB%AF/"/>
-    
-    
-      <category term="JavaScript" scheme="http://yoursite.com/tags/JavaScript/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>内存泄露和垃圾回收</title>
-    <link href="http://yoursite.com/2019/11/26/%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2%E5%92%8C%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/"/>
-    <id>http://yoursite.com/2019/11/26/%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2%E5%92%8C%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/</id>
-    <published>2019-11-26T08:50:21.000Z</published>
-    <updated>2020-02-01T08:30:58.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="什么是内存泄露"><a href="#什么是内存泄露" class="headerlink" title="什么是内存泄露"></a>什么是内存泄露</h2><p>程序的运行需要内存。只要程序提出要求，操作系统就会给内存。进程应及时释放不再用到的内存。<strong>不再用到的内存，没有及时释放</strong>，就叫做<strong>内存泄漏</strong>（memory leak）<br>大多数语言提供自动内存管理，减轻程序员的负担，这被称为<strong>垃圾回收机制</strong>（garbage collector）</p><h2 id="垃圾回收"><a href="#垃圾回收" class="headerlink" title="垃圾回收"></a>垃圾回收</h2><h3 id="引用计数"><a href="#引用计数" class="headerlink" title="引用计数"></a>引用计数</h3><p><strong>思想：跟踪记录所有值被引用的次数</strong><br>（阮一峰说引用计数是最常使用的，红宝书说到 2008 年为止标记清除是最常用的）<br>JS 引擎有一张”引用表”，保存了内存里面所有的资源（通常是各种<strong>值</strong>，比如数组）的引用次数。<strong>如果一个值的引用次数是 0，就表示这个值不再用到了，因此可以将这块内存释放</strong><br>如果一个值不再需要了，引用数却不为 0，垃圾回收机制无法释放这块内存，从而导致内存泄漏</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>];</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"hello world"</span>);</span><br><span class="line"></span><br><span class="line">arr = <span class="literal">null</span>;</span><br></pre></td></tr></table></figure><p>上面代码中，数组[1, 2, 3, 4]是一个值，会占用内存。变量 arr 是仅有的对这个值的引用，因此引用次数为 1。尽管后面的代码没有用到 arr，它还是会持续占用内存<br>可以<strong>手动解除引用</strong>：让变量 = null。则数值这个值就能被垃圾回收机制释放了</p><h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><p><strong>循环引用的情况</strong>，eg. 对象 A 包含一个指向对象 B 的指针，而对象 B 中也包含一个指向 A 的指针。采用引用计数策略时，函数执行后，两个对象还将继续存在，因为<strong>它们的引用次数永远不会为 0</strong>。</p><h3 id="标记清除"><a href="#标记清除" class="headerlink" title="标记清除"></a>标记清除</h3><p>思路：给当前不使用的值加上标记，然后再回收其内存<br>只有在环境中的变量及被环境中的变量引用的变量（闭包）标记</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> a = <span class="number">10</span>; <span class="comment">//被标记"进入环境"</span></span><br><span class="line">  <span class="keyword">var</span> b = <span class="string">"hello"</span>; <span class="comment">//被标记"进入环境"</span></span><br><span class="line">&#125;</span><br><span class="line">test(); <span class="comment">//执行完毕后之后，a和b又被标记"离开环境"，被回收</span></span><br></pre></td></tr></table></figure><h2 id="常见-JavaScript-内存泄露"><a href="#常见-JavaScript-内存泄露" class="headerlink" title="常见 JavaScript 内存泄露"></a>常见 JavaScript 内存泄露</h2><h3 id="意外的全局变量"><a href="#意外的全局变量" class="headerlink" title="意外的全局变量"></a>意外的全局变量</h3><p>eg. 如下代码，这种生命方式等于 <code>this.bar=.....</code>，函数独立调用的话 this 为 window，所以 bar 是全局变量</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">arg</span>) </span>&#123;</span><br><span class="line">  bar = <span class="string">"this is a hidden global variable"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><blockquote><p>JavaScript 文件头部加上 ‘use strict’，可以避免此类错误发生</p></blockquote><p>但是其实我们自己设全局变量也是有风险的，因为全局变量被认为的不可回收的（标记清除机制无法清除，因为全局环境到最后才会销毁）。如果必须使用全局变量存储大量数据时，确保用完以后把它设置为 null</p><h3 id="被遗忘的-setInterval-或回调函数"><a href="#被遗忘的-setInterval-或回调函数" class="headerlink" title="被遗忘的 setInterval 或回调函数"></a>被遗忘的 setInterval 或回调函数</h3><p>用完 setInterval 记得 clearInterval</p><h3 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h3><p>不解释</p><h2 id="内存泄漏的识别方法"><a href="#内存泄漏的识别方法" class="headerlink" title="内存泄漏的识别方法"></a>内存泄漏的识别方法</h2><h3 id="Chrome-浏览器"><a href="#Chrome-浏览器" class="headerlink" title="Chrome 浏览器"></a>Chrome 浏览器</h3><p>控制台-profiles</p><h3 id="Node"><a href="#Node" class="headerlink" title="Node"></a>Node</h3><p>process.memoryUsage()，返回一个对象，包含了 Node 进程的内存占用信息</p><h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><ol><li>找到问题后手动释放内存</li><li>使用两种新的数据结构：WeakSet 和 WeakMap。它们对于值的引用都是不计入垃圾回收机制</li></ol><p>参考资料</p><p>《Javascript 高级程序设计》</p><p><a href="http://www.ruanyifeng.com/blog/2017/04/memory-leak.html" target="_blank" rel="noopener">阮一峰-JavaScript 内存泄漏教程</a></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;什么是内存泄露&quot;&gt;&lt;a href=&quot;#什么是内存泄露&quot; class=&quot;headerlink&quot; title=&quot;什么是内存泄露&quot;&gt;&lt;/a&gt;什么是内存泄露&lt;/h2&gt;&lt;p&gt;程序的运行需要内存。只要程序提出要求，操作系统就会给内存。进程应及时释放不再用到的内存。&lt;stron
       
     
     </summary>
