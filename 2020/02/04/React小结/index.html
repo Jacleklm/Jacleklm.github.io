@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>React基本原理 &amp; 一些特性 &amp; 性能优化 | Jacleklm</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="基本原理Virtual Dom虚拟 DOM 本质上是 JavaScript 对象,是对真实 DOM 的抽象，状态变更时，通过 diff 算法计算出记录新树和旧树的差异，最后把差异更新到真正的 dom 中 虚拟 DOM 的实现相较于 DOM 来说，操作 JS 对象会快很多，并且我们也可以通过 JS 来模拟 DOM 12345678910const ul &#x3D; &amp;#123;  tag: &amp;#x27;ul">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React基本原理 &amp; 一些特性 &amp; 性能优化">
+<meta property="og:url" content="http://example.com/2020/02/04/React%E5%B0%8F%E7%BB%93/index.html">
+<meta property="og:site_name" content="Jacleklm">
+<meta property="og:description" content="基本原理Virtual Dom虚拟 DOM 本质上是 JavaScript 对象,是对真实 DOM 的抽象，状态变更时，通过 diff 算法计算出记录新树和旧树的差异，最后把差异更新到真正的 dom 中 虚拟 DOM 的实现相较于 DOM 来说，操作 JS 对象会快很多，并且我们也可以通过 JS 来模拟 DOM 12345678910const ul &#x3D; &amp;#123;  tag: &amp;#x27;ul">
+<meta property="og:locale">
+<meta property="og:image" content="http://example.com/img/React%E5%8E%9F%E7%90%86/%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png">
+<meta property="article:published_time" content="2020-02-04T06:50:21.000Z">
+<meta property="article:modified_time" content="2023-09-17T14:00:22.869Z">
+<meta property="article:author" content="Jacleklm">
+<meta property="article:tag" content="框架">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/React%E5%8E%9F%E7%90%86/%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Jacleklm" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Jacleklm</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Suche"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Suche"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-React小结" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/02/04/React%E5%B0%8F%E7%BB%93/" class="article-date">
+  <time class="dt-published" datetime="2020-02-04T06:50:21.000Z" itemprop="datePublished">2020-02-04</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      React基本原理 &amp; 一些特性 &amp; 性能优化
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h1><h2 id="Virtual-Dom"><a href="#Virtual-Dom" class="headerlink" title="Virtual Dom"></a>Virtual Dom</h2><p>虚拟 DOM 本质上是 JavaScript 对象,是对真实 DOM 的抽象，状态变更时，通过 diff 算法计算出记录新树和旧树的差异，最后把差异更新到真正的 dom 中</p>
+<h3 id="虚拟-DOM-的实现"><a href="#虚拟-DOM-的实现" class="headerlink" title="虚拟 DOM 的实现"></a>虚拟 DOM 的实现</h3><p>相较于 DOM 来说，<strong>操作 JS 对象会快很多</strong>，并且我们也可以通过 JS 来模拟 DOM</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> ul = &#123;</span><br><span class="line">  <span class="attr">tag</span>: <span class="string">&#x27;ul&#x27;</span>,</span><br><span class="line">  <span class="attr">props</span>: &#123;</span><br><span class="line">    <span class="attr">class</span>: <span class="string">&#x27;list&#x27;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">children</span>: &#123;</span><br><span class="line">    <span class="attr">tag</span>: <span class="string">&#x27;li&#x27;</span>,</span><br><span class="line">    <span class="attr">children</span>: <span class="string">&#x27;1&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上述代码对应的 DOM 就是</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;ul <span class="keyword">class</span>=<span class="string">&quot;list&quot;</span>&gt;</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">li</span>&gt;</span>1<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line">&lt;/ul&gt;</span><br></pre></td></tr></table></figure>
+
+<p>那么既然 DOM 可以通过 <strong>JS 对象来模拟</strong>，反之也可以<strong>通过 JS 对象来渲染出对应的 DOM</strong>。难点在于如何<strong>判断新旧两个 JS 对象的最小差异</strong>并且<strong>实现局部更新</strong> DOM。这就需要 Diff 算法了</p>
+<h3 id="虚拟-DOM-真的能提升性能吗？"><a href="#虚拟-DOM-真的能提升性能吗？" class="headerlink" title="虚拟 DOM 真的能提升性能吗？"></a>虚拟 DOM 真的能提升性能吗？</h3><p>使用虚拟 DOM，<strong>在 DOM 阶段操作少了通讯的确是变高效了，但代价是在 JS 阶段需要完成额外的工作</strong>（diff 计算），这项额外的工作是需要耗时的！<br>虚拟 DOM<strong>并不是说比原生 DOM API 的操作快，而是说不管数据怎么变化，都可以以最小的代价来进行更新 DOM</strong>。在每个点上，其实用手工的原生方法会比 diff 好很多。比如说仅仅是修改了一个属性，需要整体重绘吗？显然这不是虚拟 DOM 提出来的意义。框架的意义在于掩盖底层的 DOM 操作，用更声明式的方式来描述，从而让代码更容易维护。</p>
+<h2 id="diff-算法"><a href="#diff-算法" class="headerlink" title="diff 算法"></a>diff 算法</h2><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/20346379">详解</a><br>首先 DOM 是一个多叉树的结构，如果需要完整的对比两颗树的差异，那么需要的时间复杂度会是 O(n3)。React 团队优化了算法，实现了 O(n) 的复杂度来对比差异。 实现 O(n) 复杂度的关键就是<strong>只对比同层的节点，而不是跨层对比</strong>，这也是考虑到在实际业务中很少会去跨层的移动 DOM 元素。 所以判断差异的算法就分为了两步</p>
+<ul>
+<li>首先从上至下，从左往右遍历对象，也就是树的深度遍历，这一步中会给每个节点添加索引 ，便于最后渲染差异</li>
+<li>一旦节点有子元素，就去判断子元素是否有不同</li>
+</ul>
+<p>在第一步算法中，需要判断新旧节点的 tagName 是否相同，如果不相同的话就代表节点被替换了。如果没有更改 tagName 的话，就需要判断是否有子元素，有的话就进行第二步算法。<br>在第二步算法中，需要判断原本的列表中是否有节点被移除，在新的列表中需要判断是否有新的节点加入，还需要判断节点是否有移动。<br>举个例子来说，假设页面中只有一个列表，我们对列表中的元素进行了变更</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 假设这里模拟一个 ul，其中包含了 5 个 li</span></span><br><span class="line">;[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>][</span><br><span class="line">  <span class="comment">// 这里替换上面的 li</span></span><br><span class="line">  (<span class="number">1</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">4</span>)</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>从上述例子中，我们一眼就可以看出先前的 ul 中的第三个 li 被移除了，四五替换了位置。<br>那么在实际的算法中，我们如何去识别改动的是哪个节点呢？这就引入了 key 这个属性。<strong>这个属性是用来给每一个节点打标志的，用于判断是否是同一个节点</strong>。<br>当然在判断以上差异的过程中，我们还需要判断节点的属性是否有变化等等。<br>当我们判断出以上的差异后，就可以把这些差异记录下来。当对比完两棵树以后，就可以通过差异去局部更新 DOM，实现性能的最优化。</p>
+<h2 id="如何正确使用key"><a href="#如何正确使用key" class="headerlink" title="如何正确使用key"></a><a target="_blank" rel="noopener" href="http://www.conardli.top/blog/article/React%E6%B7%B1%E5%85%A5%E7%B3%BB%E5%88%97/React%E4%B8%ADkey%E7%9A%84%E6%AD%A3%E7%A1%AE%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F.html#_1-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8key">如何正确使用key</a></h2><h2 id="生命周期管理"><a href="#生命周期管理" class="headerlink" title="生命周期管理"></a>生命周期管理</h2><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/36062486">详解</a><br><img src="/img/React%E5%8E%9F%E7%90%86/%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png"><br>React 16.8 +的生命周期分为三个阶段,分别是挂载阶段、更新阶段、卸载阶段</p>
+<h3 id="挂载阶段"><a href="#挂载阶段" class="headerlink" title="挂载阶段:"></a>挂载阶段:</h3><ul>
+<li>constructor: 构造函数，最先被执行,我们通常在构造函数里初始化 state 对象或者给自定义方法绑定 this</li>
+<li>getDerivedStateFromProps: static getDerivedStateFromProps(nextProps, prevState),这是个静态方法,当我们接收到新的属性想去修改我们 state，可以使用 getDerivedStateFromProps</li>
+<li>render: render 函数是纯函数，只返回需要渲染的东西，不应该包含其它的业务逻辑,可以返回原生的 DOM、React 组件、Fragment、Portals、字符串和数字、Boolean 和 null 等内容</li>
+<li>componentDidMount: 组件装载之后调用，此时我们可以获取到 DOM 节点并操作，比如对 canvas，svg 的操作，<strong>服务器请求，订阅</strong>都可以写在这个里面，但是记得在 componentWillUnmount 中取消订阅</li>
+</ul>
+<h3 id="更新阶段"><a href="#更新阶段" class="headerlink" title="更新阶段:"></a>更新阶段:</h3><ul>
+<li>getDerivedStateFromProps: 此方法在更新个挂载阶段都可能会调用</li>
+<li>shouldComponentUpdate: shouldComponentUpdate(nextProps, nextState),有两个参数 nextProps 和 nextState，表示新的属性和变化之后的 state，返回一个布尔值，true 表示会触发重新渲染，false 表示不会触发重新渲染，默认返回 true,我们通常利用此生命周期来优化 React 程序性能</li>
+<li>render: 更新阶段也会触发此生命周期</li>
+<li>getSnapshotBeforeUpdate: getSnapshotBeforeUpdate(prevProps, prevState),这个方法在 render 之后，componentDidUpdate 之前调用，有两个参数 prevProps 和 prevState，表示之前的属性和之前的 state，这个函数有一个返回值，会作为第三个参数传给 componentDidUpdate，如果你不想要返回值，可以返回 null，此生命周期必须与 componentDidUpdate 搭配使用</li>
+<li>componentDidUpdate: componentDidUpdate(prevProps, prevState, snapshot),该方法在 getSnapshotBeforeUpdate 方法之后被调用，有三个参数 prevProps，prevState，snapshot，表示之前的 props，之前的 state，和 snapshot。第三个参数是 getSnapshotBeforeUpdate 返回的,如果触发某些回调函数时需要用到 DOM 元素的状态，则将对比或计算的过程迁移至 getSnapshotBeforeUpdate，然后在 componentDidUpdate 中统一触发回调或更新状态。</li>
+</ul>
+<h3 id="卸载阶段"><a href="#卸载阶段" class="headerlink" title="卸载阶段:"></a>卸载阶段:</h3><ul>
+<li>componentWillUnmount: 当我们的组件被卸载或者销毁了就会调用，我们可以在这个函数里去清除一些定时器，取消网络请求，清理无效的 DOM 元素等垃圾清理工作</li>
+</ul>
+<h3 id="废弃"><a href="#废弃" class="headerlink" title="废弃"></a>废弃</h3><p>React 16 之后有三个生命周期被废弃(但并未删除)：componentWillMount，componentWillReceiveProps，componentWillUpdate</p>
+<h3 id="周期内禁忌的事"><a href="#周期内禁忌的事" class="headerlink" title="周期内禁忌的事"></a>周期内禁忌的事</h3><ul>
+<li>componentWillMount 里 请求数据，订阅，setState</li>
+</ul>
+<h2 id="React-Fiber"><a href="#React-Fiber" class="headerlink" title="React Fiber"></a>React Fiber</h2><p>ReaxtV16 版本中引入了 Fiber 机制，生命周期部分发生变化。<br>React Fiber 是一种基于浏览器的单线程调度算法.<br>React 16之前 ，diff 算法实际上是递归，想要中断递归是很困难的，React 16 开始使用了循环来代替之前的递归。Fiber将diff拆分成无数个小任务的算法；它随时能够停止，恢复。停止恢复的时机取决于当前的一帧（16ms）内，还有没有足够的时间允许计算<br>Fiber 本质上是一个虚拟的堆栈帧，新的调度器会按照优先级自由调度这些帧，从而将之前的同步渲染改成了异步渲染，在不影响体验的情况下去分段计算更新<br>异步渲染，现在渲染有两个阶段：reconciliation 和 commit 。前者过程是可以打断的，后者不能暂停，会一直更新界面直到完成。<br>Reconciliation 阶段</p>
+<ul>
+<li>componentWillMount</li>
+<li>componentWillReceiveProps</li>
+<li>shouldComponentUpdate</li>
+<li>componentWillUpdate</li>
+</ul>
+<p>Commit 阶段</p>
+<ul>
+<li>componentDidMount</li>
+<li>componentDidUpdate</li>
+<li>componentWillUnmount</li>
+</ul>
+<p>因为 Reconciliation 阶段是可以被打断的，所以 Reconciliation 阶段会执行的生命周期函数就可能会出现调用多次的情况，从而引起 Bug。由此对于 Reconciliation 阶段调用的几个函数，除了 shouldComponentUpdate 以外，其他都应该避免去使用，并且 V16 中也引入了新的 API 来解决这个问题。</p>
+<ul>
+<li>getDerivedStateFromProps 用于替换 componentWillReceiveProps ，该函数会在初始化和 update 时被调用</li>
+<li>getSnapshotBeforeUpdate 用于替换 componentWillUpdate ，该函数会在 update 后 DOM 更新前被调用，用于读取最新的 DOM 数据。</li>
+</ul>
+<h2 id="setState-机制"><a href="#setState-机制" class="headerlink" title="setState 机制"></a>setState 机制</h2><p>PS: useState 它不香吗</p>
+<h3 id="理想情况："><a href="#理想情况：" class="headerlink" title="理想情况："></a>理想情况：</h3><p>setState 是“异步”的，调用 setState 只会提交一次 state 修改到队列中，不会直接修改 this.state，等到满足一定条件时，react 会合并队列中的所有修改，触发一次 update 流程，更新 this.state。因此 setState 机制减少了 update 流程的触发次数，从而提高了性能。所以会有以下情况：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">handle</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="comment">// 初始化 `count` 为 0</span></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">state</span>.<span class="property">count</span>) <span class="comment">// -&gt; 0</span></span><br><span class="line">  <span class="variable language_">this</span>.<span class="title function_">setState</span>(&#123; <span class="attr">count</span>: <span class="variable language_">this</span>.<span class="property">state</span>.<span class="property">count</span> + <span class="number">1</span> &#125;)</span><br><span class="line">  <span class="variable language_">this</span>.<span class="title function_">setState</span>(&#123; <span class="attr">count</span>: <span class="variable language_">this</span>.<span class="property">state</span>.<span class="property">count</span> + <span class="number">1</span> &#125;)</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">state</span>.<span class="property">count</span>) <span class="comment">// -&gt; 0</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当然你也可以通过以下方式来实现调用三次 setState 使得 count 为 3</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">handle</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="title function_">setState</span>(<span class="function">(<span class="params">prevState</span>) =&gt;</span> (&#123; <span class="attr">count</span>: prevState.<span class="property">count</span> + <span class="number">1</span> &#125;))</span><br><span class="line">  <span class="variable language_">this</span>.<span class="title function_">setState</span>(<span class="function">(<span class="params">prevState</span>) =&gt;</span> (&#123; <span class="attr">count</span>: prevState.<span class="property">count</span> + <span class="number">1</span> &#125;))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>由于 setState 会触发 update 过程，因此在 update 过程中必经的生命周期中调用 setState 会存在循环调用的风险。</p>
+<p>另外用于监听 state 更新完成，可以使用 setState 方法的第二个参数，回调函数。在这个回调中读取 this.state 就是已经批量更新后的结果。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">handle</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="title function_">setState</span>(<span class="function">(<span class="params">prevState</span>) =&gt;</span> (&#123; <span class="attr">count</span>: prevState.<span class="property">count</span> + <span class="number">1</span> &#125;), <span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">state</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="特殊情况："><a href="#特殊情况：" class="headerlink" title="特殊情况："></a>特殊情况：</h3><p>在实际开发中，setState 的表现有时会不同于理想情况。主要是以下两种</p>
+<ul>
+<li>在 mount 流程中调用 setState。</li>
+<li>在 setTimeout&#x2F;Promise 回调中调用 setState。</li>
+</ul>
+<p>在第一种情况下，不会进入 update 流程，队列在 mount 时合并修改并 render<br>在第二种情况下，setState 将不会进行队列的批更新，而是直接触发一次 update 流程。这是由于 setState 的两种更新机制导致的，只有在批量更新模式中，才会是“异步”的。</p>
+<h2 id="React-事件机制"><a href="#React-事件机制" class="headerlink" title="React 事件机制"></a>React 事件机制</h2><p><a target="_blank" rel="noopener" href="https://juejin.im/post/5bd32493f265da0ae472cc8e">更详细的源码解析版</a><br>React 其实自己实现了一套事件机制，首先我们考虑一下以下代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">Test</span> = (<span class="params">&#123; list, handleClick &#125;</span>) =&gt; (&#123;</span><br><span class="line">    list.<span class="title function_">map</span>(<span class="function">(<span class="params">item, index</span>) =&gt;</span> (</span><br><span class="line">        <span class="language-xml"><span class="tag">&lt;<span class="name">span</span> <span class="attr">onClick</span>=<span class="string">&#123;handleClick&#125;</span> <span class="attr">key</span>=<span class="string">&#123;index&#125;</span>&gt;</span>&#123;index&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line">    ))</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>上面的点击事件是否绑定在了每一个标签上？当然不是，JSX 上写的事件并没有绑定在对应的真实 DOM 上，而是通过<strong>事件代理</strong>的方式，将所有的事件都统一绑定在了 document 上。这样的方式不仅减少了内存消耗，还能在组件挂载销毁时统一订阅和移除事件。</p>
+<p>另外冒泡到 document 上的事件也不是原生浏览器事件，而是 React 自己实现的合成事件（SyntheticEvent）。因此在React中，用 return false阻止默认行为，而应该在事件处理程序中调用 event.preventDefault 或 event.stopPropagation 来阻止冒泡（所以也不会有兼容性问题）</p>
+<p>合成事件的优点</p>
+<ul>
+<li>抹平了浏览器之间的兼容问题</li>
+<li>性能优化。对于原生浏览器事件来说，浏览器会给监听器创建一个事件对象。如果你有很多的事件监听，那么就需要分配很多的事件对象，造成高额的内存分配问题。但是对于合成事件来说，有一个事件池专门来管理它们的创建和销毁，当事件需要被使用时，就会从池子中复用对象，事件回调结束后，就会销毁事件对象上的属性，从而便于下次复用事件对象</li>
+</ul>
+<h1 id="一些特性"><a href="#一些特性" class="headerlink" title="一些特性"></a>一些特性</h1><h2 id="React-组件"><a href="#React-组件" class="headerlink" title="React 组件"></a>React 组件</h2><p><a target="_blank" rel="noopener" href="https://jacleklm.github.io/2019/12/29/React%E7%BB%84%E4%BB%B6/">见此博文</a></p>
+<h2 id="React-Router-React-Redux"><a href="#React-Router-React-Redux" class="headerlink" title="React Router &amp; React Redux"></a>React Router &amp; React Redux</h2><p><a target="_blank" rel="noopener" href="https://jacleklm.github.io/2020/01/04/React%E8%B7%AF%E7%94%B1%20&%20Redux/">见此博文</a></p>
+<h2 id="通信"><a href="#通信" class="headerlink" title="通信"></a>通信</h2><ul>
+<li>父子组件通信：单向数据流，父组件通过 props 传递数据，子组件不能直接修改 props， 而是必须通过调用父组件函数的方式告知父组件修改数据</li>
+<li>兄弟组件通信：可以通过共同的父组件来管理状态和事件函数。比如说其中一个兄弟组件调用父组件传递过来的事件函数修改父组件中的状态，然后父组件将状态传递给另一个兄弟组件</li>
+<li>跨多层次组件通信<ul>
+<li><a target="_blank" rel="noopener" href="https://zh-hans.reactjs.org/docs/context.html">Context API</a>。此外，还可以通过 context 传递一个函数，使得 consumers 组件更新 context<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建 Context，可以在开始就传入值</span></span><br><span class="line"><span class="keyword">const</span> <span class="title class_">StateContext</span> = <span class="title class_">React</span>.<span class="title function_">createContext</span>()</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Parent</span> <span class="keyword">extends</span> <span class="title class_ inherited__">React.Component</span> &#123;</span><br><span class="line">  render () &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      <span class="comment">// value 就是传入 Context 中的值</span></span><br><span class="line">      <span class="language-xml"><span class="tag">&lt;<span class="name">StateContext.Provider</span> <span class="attr">value</span>=<span class="string">&#x27;yck&#x27;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">Child</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">StateContext.Provider</span>&gt;</span></span></span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Child</span> <span class="keyword">extends</span> <span class="title class_ inherited__">React.Component</span> &#123;</span><br><span class="line">  render () &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      <span class="language-xml"><span class="tag">&lt;<span class="name">ThemeContext.Consumer</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        // 取出值</span></span><br><span class="line"><span class="language-xml">        &#123;context =&gt; (</span></span><br><span class="line"><span class="language-xml">          name is &#123; context &#125;</span></span><br><span class="line"><span class="language-xml">        )&#125;</span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">ThemeContext.Consumer</span>&gt;</span></span></span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><a target="_blank" rel="noopener" href="https://zh-hans.reactjs.org/docs/hooks-reference.html#usecontext">useContext</a>不香吗，其实是同理的</li>
+</ul>
+</li>
+<li>任意组件：Redux等状态管理工具 或者 Event Bus 解决，另外如果你不怕麻烦的话，可以使用这种方式解决上述所有的通信情况</li>
+</ul>
+<h2 id="render-props"><a href="#render-props" class="headerlink" title="render props"></a><a target="_blank" rel="noopener" href="https://zh-hans.reactjs.org/docs/render-props.html">render props</a></h2><h1 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h1><p>react 中性能主要耗费在于 update 阶段的 diff 算法，因此性能优化也主要是减少 diff 算法触发次数</p>
+<h2 id="setState"><a href="#setState" class="headerlink" title="setState"></a>setState</h2><p>setState 机制在正常运行时，由于批更新策略，已经降低了 update 过程的触发次数。<br>因此，setState 优化主要在于非批更新阶段中(timeout&#x2F;Promise 回调)，减少 setState 的触发次数。<br>常见的业务场景即处理接口回调时，无论数据处理多么复杂，保证最后只调用一次 setState</p>
+<h2 id="父组件-Render"><a href="#父组件-Render" class="headerlink" title="父组件 Render"></a>父组件 Render</h2><p>当组件的 state 或 props 变化时，自身 render() 会重新执行<br>父组件的 render 必然会触发子组件 render，子组件会进入 update 阶段（无论 props 是否更新）</p>
+<ul>
+<li>此时最常用的优化方案即为 shouldComponentUpdate 方法。在 shouldComponentUpdate 函数中我们可以通过返回布尔值来决定当前组件是否需要更新，一般来说不推荐完整地对比当前 state 和之前的 state 是否相同，一般只比较 stated 某个或某几个值。最常见的方式为进行 this.props 和 this.state 的浅比较来判断组件是否需要更新，如下，组件只有当 props.color 或者 state.count 的值改变才会更新</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Test</span> <span class="keyword">extends</span> <span class="title class_ inherited__">React.PureComponent</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">props</span>) &#123;</span><br><span class="line">    <span class="variable language_">super</span>(props)</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">state</span> = &#123; <span class="attr">count</span>: <span class="number">1</span> &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="title function_">shouldComponentUpdate</span>(<span class="params">nextProps, nextState</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">props</span>.<span class="property">color</span> !== nextProps.<span class="property">color</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">state</span>.<span class="property">count</span> !== nextState.<span class="property">count</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="title function_">render</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>PureComponent<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>或者直接使用 PureComponent，原理一致</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Test</span> <span class="keyword">extends</span> <span class="title class_ inherited__">React.PureComponent</span> &#123;</span><br><span class="line">  <span class="title function_">render</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>PureComponent<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>函数组件用不了 shouldComponentUpdate，可以使用 React.memo 来实现相同的功能</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">Test</span> = <span class="title class_">React</span>.<span class="title function_">memo</span>(<span class="function">() =&gt;</span> <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>PureComponent<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="DOM-操作方面减少-diff"><a href="#DOM-操作方面减少-diff" class="headerlink" title="DOM 操作方面减少 diff"></a>DOM 操作方面减少 diff</h2><ul>
+<li>不使用跨层级移动节点的操作</li>
+<li>对于条件渲染多个节点时，尽量采用隐藏等方式切换节点，而不是替换节点</li>
+<li>尽量避免将后面的子节点移动到前面的操作，当节点数量较多时，会产生一定的性能问题</li>
+</ul>
+<h1 id="React的优点"><a href="#React的优点" class="headerlink" title="React的优点"></a>React的优点</h1><h2 id="React速度很快"><a href="#React速度很快" class="headerlink" title="React速度很快"></a>React速度很快</h2><p>它并不直接对DOM进行操作，引入了一个叫做虚拟DOM的概念，安插在javascript逻辑和实际的DOM之间，性能好。最大限度减少DOM交互。</p>
+<h2 id="跨浏览器兼容"><a href="#跨浏览器兼容" class="headerlink" title="跨浏览器兼容"></a>跨浏览器兼容</h2><p>虚拟DOM帮助我们解决了跨浏览器问题，它为我们提供了标准化的API，甚至在IE8中都是没问题的</p>
+<h2 id="一切都是component"><a href="#一切都是component" class="headerlink" title="一切都是component"></a>一切都是component</h2><p>代码更加模块化，重用代码更容易，可维护性高。这样当某个或某些组件出现问题是，可以方便地进行隔离。每个组件都可以进行独立的开发和测试，并且它们可以引入其它组件。这等同于提高了代码的可维护性。</p>
+<h2 id="单向数据流"><a href="#单向数据流" class="headerlink" title="单向数据流"></a>单向数据流</h2><p>Flux是一个用于在JavaScript应用中创建单向数据层的架构，它随着React视图库的开发而被Facebook概念化。减少了重复代码，这也是它为什么比传统数据绑定更简单。</p>
+<h2 id="同构、纯粹的javascript"><a href="#同构、纯粹的javascript" class="headerlink" title="同构、纯粹的javascript"></a>同构、纯粹的javascript</h2><p>因为搜索引擎的爬虫程序依赖的是服务端响应而不是JavaScript的执行，预渲染你的应用有助于搜索引擎优化。</p>
+<h2 id="兼容性好"><a href="#兼容性好" class="headerlink" title="兼容性好"></a>兼容性好</h2><p>比如使用RequireJS来加载和打包，而Browserify和Webpack适用于构建大型应用。它们使得那些艰难的任务不再让人望而生畏。</p>
+<h2 id="Vue"><a href="#Vue" class="headerlink" title="Vue"></a>Vue</h2><p>Vue 从一开始的定位就是尽可能的降低前端开发的门槛，让更多的人能够更快地上手开发。Vue 首先考虑的是假设用户只掌握了 web 基础知识 (HTML, CSS, JS) 的情况下，如何能够最快理解和上手，实现一个看得见摸得着的应用</p>
+<h1 id="React设计模式"><a href="#React设计模式" class="headerlink" title="React设计模式"></a>React设计模式</h1><p>见<a target="_blank" rel="noopener" href="https://sangka.github.io/react-in-patterns-cn/chapter-2/">React模式</a>。这篇文章写的非常好，观点简明扼要。看完想写一篇笔记发现这篇文章已经总结的很精简了，直接多看几遍吧吧233</p>
+<blockquote>
+<p>单向数据流这种模式十分适合跟 React 搭配使用。它的主要思想是组件不会改变接收的数据。它们只会监听数据的变化，当数据发生变化时它们会使用接收到的新值，而不是去修改已有的值。当组件的更新机制触发后，它们只是使用新值进行重新渲染而已</p>
+</blockquote>
+<p>参考资料<br><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000015648248">react 基本原理及性能优化</a><br><a target="_blank" rel="noopener" href="https://zh-hans.reactjs.org/docs/optimizing-performance.html">React 官方文档-性能优化</a><br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/36062486">React v16.3 版本新生命周期函数浅析及升级方案</a><br>前端面试之道<br><a target="_blank" rel="noopener" href="https://juejin.im/post/5bd32493f265da0ae472cc8e">React事件机制源码解析</a><br><a target="_blank" rel="noopener" href="http://www.conardli.top/blog/">conardli</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2020/02/04/React%E5%B0%8F%E7%BB%93/" data-id="clmniym76001ubb8748oy1zto" data-title="React基本原理 &amp; 一些特性 &amp; 性能优化" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%A1%86%E6%9E%B6/" rel="tag">框架</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/02/27/%E5%8D%9A%E5%AE%A2%E9%A1%B9%E7%9B%AE%E4%B8%8A%E7%BA%BF%E9%83%A8%E7%BD%B2/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          博客项目上线部署总结
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/01/29/%E5%8D%9A%E5%AE%A2%E9%A1%B9%E7%9B%AE%E5%B0%8F%E7%BB%93/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">博客项目小结</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Kategorien</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Basic-knowledge/">Basic knowledge</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Engineering/">Engineering</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%8A%E7%BA%BF%E9%83%A8%E7%BD%B2/">上线部署</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%90%8E%E7%AB%AF/">后端</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Browser/" rel="tag">Browser</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Computer/" rel="tag">Computer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Data-structure/" rel="tag">Data structure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Interview/" rel="tag">Interview</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Network/" rel="tag">Network</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node/" rel="tag">Node</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/" rel="tag">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Operating-system/" rel="tag">Operating system</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Performance/" rel="tag">Performance</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/" rel="tag">Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web%E5%AE%89%E5%85%A8/" rel="tag">Web安全</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/" rel="tag">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%8A%E7%BA%BF%E9%83%A8%E7%BD%B2/" rel="tag">上线部署</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A1%86%E6%9E%B6/" rel="tag">框架</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" rel="tag">解决方案</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE%E5%B0%8F%E7%BB%93/" rel="tag">项目小结</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Browser/" style="font-size: 14px;">Browser</a> <a href="/tags/CSS/" style="font-size: 14px;">CSS</a> <a href="/tags/Computer/" style="font-size: 10px;">Computer</a> <a href="/tags/Data-structure/" style="font-size: 18px;">Data structure</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/Interview/" style="font-size: 10px;">Interview</a> <a href="/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/tags/Network/" style="font-size: 14px;">Network</a> <a href="/tags/Node/" style="font-size: 12px;">Node</a> <a href="/tags/Nodejs/" style="font-size: 12px;">Nodejs</a> <a href="/tags/Operating-system/" style="font-size: 10px;">Operating system</a> <a href="/tags/Performance/" style="font-size: 12px;">Performance</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/TypeScript/" style="font-size: 14px;">TypeScript</a> <a href="/tags/Web/" style="font-size: 10px;">Web</a> <a href="/tags/Web%E5%AE%89%E5%85%A8/" style="font-size: 10px;">Web安全</a> <a href="/tags/webpack/" style="font-size: 20px;">webpack</a> <a href="/tags/%E4%B8%8A%E7%BA%BF%E9%83%A8%E7%BD%B2/" style="font-size: 10px;">上线部署</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 10px;">工具</a> <a href="/tags/%E6%A1%86%E6%9E%B6/" style="font-size: 16px;">框架</a> <a href="/tags/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" style="font-size: 10px;">解决方案</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 10px;">设计模式</a> <a href="/tags/%E9%A1%B9%E7%9B%AE%E5%B0%8F%E7%BB%93/" style="font-size: 14px;">项目小结</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">April 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/04/30/Python%20Basic/">Python Basic Knowledge</a>
+          </li>
+        
+          <li>
+            <a href="/2021/04/17/%E8%A7%A3%E5%86%B3hexo%20g%E7%94%9F%E6%88%90index.html%E4%B8%BA%E7%A9%BA%E7%9A%84%E9%97%AE%E9%A2%98/">解决hexo g生成index.html为空的问题</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/09/TypeScript%E4%B8%AD%E7%9A%84%E5%86%85%E7%BD%AE%E5%B7%A5%E5%85%B7%E7%B1%BB%E5%9E%8B%E5%8F%8A%E5%85%B6%E5%AE%9E%E7%8E%B0/">TypeScript中的内置工具类型及其实现</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/07/TypeScript%E4%B8%AD%E7%9A%84%E7%B1%BB%E5%9E%8B%E7%BC%96%E7%A8%8B/">TypeScript中的类型编程</a>
+          </li>
+        
+          <li>
+            <a href="/2020/11/03/hope%20statistics%20puppeteer%E5%B7%A5%E5%85%B7%E5%B0%8F%E7%BB%93/">hope statistics puppeteer 工具小结</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 Jacleklm<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

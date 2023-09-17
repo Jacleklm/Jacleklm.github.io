@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>TypeScript中的类型编程 | Jacleklm</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="前言本篇文章是读了林不渡的TypeScript 的另一面：类型编程，码了一些 demo 并查了其他文档等最后留下的学习笔记。建议直接读原文，本文可读性较差 类型编程的特点&#x2F;看法 它会带来代码量大大增多（可能接近甚至超过业务代码），编码耗时增长等问题，而带来的唯一好处就是类型安全，包括的类型提示，进一步减少可能存在的调用错误，以及降低维护成本。看起来似乎有得有失，但实际上，假设你花费 1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TypeScript中的类型编程">
+<meta property="og:url" content="http://example.com/2020/12/07/TypeScript%E4%B8%AD%E7%9A%84%E7%B1%BB%E5%9E%8B%E7%BC%96%E7%A8%8B/index.html">
+<meta property="og:site_name" content="Jacleklm">
+<meta property="og:description" content="前言本篇文章是读了林不渡的TypeScript 的另一面：类型编程，码了一些 demo 并查了其他文档等最后留下的学习笔记。建议直接读原文，本文可读性较差 类型编程的特点&#x2F;看法 它会带来代码量大大增多（可能接近甚至超过业务代码），编码耗时增长等问题，而带来的唯一好处就是类型安全，包括的类型提示，进一步减少可能存在的调用错误，以及降低维护成本。看起来似乎有得有失，但实际上，假设你花费 1">
+<meta property="og:locale">
+<meta property="article:published_time" content="2020-12-07T09:25:21.000Z">
+<meta property="article:modified_time" content="2023-09-17T14:00:22.870Z">
+<meta property="article:author" content="Jacleklm">
+<meta property="article:tag" content="TypeScript">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Jacleklm" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Jacleklm</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Suche"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Suche"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-TypeScript中的类型编程" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/12/07/TypeScript%E4%B8%AD%E7%9A%84%E7%B1%BB%E5%9E%8B%E7%BC%96%E7%A8%8B/" class="article-date">
+  <time class="dt-published" datetime="2020-12-07T09:25:21.000Z" itemprop="datePublished">2020-12-07</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      TypeScript中的类型编程
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本篇文章是读了林不渡的<a target="_blank" rel="noopener" href="https://juejin.cn/post/6885672896128090125#heading-0">TypeScript 的另一面：类型编程</a>，码了一些 demo 并查了其他文档等最后留下的学习笔记。建议直接读原文，本文可读性较差</p>
+<h2 id="类型编程的特点-看法"><a href="#类型编程的特点-看法" class="headerlink" title="类型编程的特点&#x2F;看法"></a>类型编程的特点&#x2F;看法</h2><ul>
+<li>它会带来代码量大大增多（可能接近甚至超过业务代码），编码耗时增长等问题，而带来的唯一好处就是<strong>类型安全</strong>，包括的类型提示，进一步减少可能存在的调用错误，以及降低维护成本。看起来似乎有得有失，但实际上，假设你花费 1 单位脑力使用基础的 TS 以及简单的类型编程，你就能够获得 5 个单位的回馈。但接下来，有可能你花费 10 个单位脑力，也只能再获得 2 个单位的回馈</li>
+<li>另外一个类型编程不受重视的原因则是实际业务中并不会需要多么苛刻的类型定义，通常是底层框架类库才会有此类需求</li>
+</ul>
+<h1 id="泛型-Generic-Type"><a href="#泛型-Generic-Type" class="headerlink" title="泛型 Generic Type"></a>泛型 Generic Type</h1><p>见<a target="_blank" rel="noopener" href="https://jacleklm.github.io/2020/04/14/TypeScript%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%E5%B0%8F%E7%BB%93/">TypeScript 基础语法小结</a></p>
+<blockquote>
+<p>在类型编程里，泛型就是变量</p>
+</blockquote>
+<p>比如我们要写一个类似于 Pick 功能的函数，从一个 obj 中挑选一些键值对出来，可以这么写：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> getValueListOfObj&lt;T <span class="keyword">extends</span> <span class="built_in">object</span>, U <span class="keyword">extends</span> keyof T&gt;(<span class="attr">obj</span>: T, <span class="attr">keys</span>: U[]): T[U][] &#123;</span><br><span class="line">  <span class="keyword">return</span> keys.<span class="title function_">map</span>(<span class="function">(<span class="params">key: U</span>) =&gt;</span> obj[key]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里还用 extends 做了一定的泛型约束</p>
+<h1 id="索引类型与映射类型"><a href="#索引类型与映射类型" class="headerlink" title="索引类型与映射类型"></a>索引类型与映射类型</h1><h2 id="索引类型"><a href="#索引类型" class="headerlink" title="索引类型"></a>索引类型</h2><p>索引类型见<a target="_blank" rel="noopener" href="https://jacleklm.github.io/2020/04/14/TypeScript%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%E5%B0%8F%E7%BB%93/">TypeScript 基础语法小结</a></p>
+<h2 id="映射类型"><a href="#映射类型" class="headerlink" title="映射类型"></a>映射类型</h2><p>映射类型 Mapped Types 通常用于在旧有类型的基础上进行改造，包括接口包含字段、字段的类型、修饰符（readonly 与?）等等。可以利用 Readonly，Partial 等这些 TS 内置<strong>工具类型</strong>(也叫类型接口)实现这个过程。</p>
+<blockquote>
+<p>简单地说就是 TS 允许将一个类型映射成另外一个类型</p>
+</blockquote>
+<p>一个很实用的实现就是 clone，把 T 里面的都拷贝一次</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> cloneT&lt;T&gt; = &#123;</span><br><span class="line">  [K <span class="keyword">in</span> keyof T]: T[K];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>上面这种已经算是工具类型的实现了。相当于类型编程中的 utils</p>
+</blockquote>
+<p>这部分详见 <a target="_blank" rel="noopener" href="https://jacleklm.github.io/2020/12/09/TypeScript%E4%B8%AD%E7%9A%84%E5%86%85%E7%BD%AE%E5%B7%A5%E5%85%B7%E7%B1%BB%E5%9E%8B%E5%8F%8A%E5%85%B6%E5%AE%9E%E7%8E%B0/9">TypeScript 中的内置工具类型及其实现</a></p>
+<h1 id="条件类型-Conditional-Types"><a href="#条件类型-Conditional-Types" class="headerlink" title="条件类型 Conditional Types"></a>条件类型 Conditional Types</h1><p>条件类型的语法实际上就是三元表达式。其中一个常见应用就是用来实现更精准的泛型约束，<strong>使得泛型收窄</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">T extends U ? X : Y</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这种场景下 T 一般是联合类型。如果你觉得这里的 extends 不太好理解，可以暂时简单理解为 U 中的属性在 T 中都有</p>
+</blockquote>
+<p>条件类型理解起来更直观，唯一需要有一定理解成本的就是<strong>何时条件类型系统会收集到足够的信息来确定类型</strong>，也就是说，条件类型有可能不会被立刻完成判断。<br>有时候，条件类型的推导会被延迟（deferred），因为此时类型系统没有足够的信息来完成判断：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 单纯声明而已</span></span><br><span class="line"><span class="keyword">declare</span> <span class="keyword">function</span> strOrNum&lt;T <span class="keyword">extends</span> <span class="built_in">boolean</span>&gt;(<span class="attr">input</span>: T): T <span class="keyword">extends</span> <span class="literal">true</span> ? <span class="built_in">string</span> : <span class="built_in">number</span>;</span><br></pre></td></tr></table></figure>
+
+<p>只有给出了所需信息（在这里是input值），才可以完成推导</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> strReturnType = <span class="title function_">strOrNum</span>(<span class="literal">true</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="嵌套的条件类型"><a href="#嵌套的条件类型" class="headerlink" title="嵌套的条件类型"></a>嵌套的条件类型</h2><p>此外，就像三元表达式可以嵌套，条件类型也可以嵌套，如果你看过一些框架源码，也会发现其中存在着许多嵌套的条件类型，条件类型可以将类型约束收拢到非常精确的范围内</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">TypeName</span>&lt;T&gt; = T <span class="keyword">extends</span> <span class="built_in">string</span></span><br><span class="line">  ? <span class="string">&#x27;string&#x27;</span></span><br><span class="line">  : T <span class="keyword">extends</span> <span class="built_in">number</span></span><br><span class="line">    ? <span class="string">&#x27;number&#x27;</span></span><br><span class="line">    : T <span class="keyword">extends</span> <span class="built_in">boolean</span></span><br><span class="line">      ? <span class="string">&#x27;boolean&#x27;</span></span><br><span class="line">      : T <span class="keyword">extends</span> <span class="literal">undefined</span></span><br><span class="line">        ? <span class="string">&#x27;undefined&#x27;</span></span><br><span class="line">        : T <span class="keyword">extends</span> <span class="title class_">Function</span></span><br><span class="line">          ? <span class="string">&#x27;function&#x27;</span></span><br><span class="line">          : <span class="string">&#x27;object&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="attr">good</span>: <span class="title class_">TypeName</span>&lt;<span class="built_in">number</span>&gt; = <span class="string">&#x27;number&#x27;</span>;</span><br><span class="line"><span class="comment">// Error</span></span><br><span class="line"><span class="keyword">const</span> <span class="attr">bad</span>: <span class="title class_">TypeName</span>&lt;<span class="built_in">string</span>&gt; = <span class="string">&#x27;number&#x27;</span>;</span><br></pre></td></tr></table></figure>
+<h2 id="分布式条件类型-Distributive-Conditional-Types"><a href="#分布式条件类型-Distributive-Conditional-Types" class="headerlink" title="分布式条件类型 Distributive Conditional Types"></a>分布式条件类型 Distributive Conditional Types</h2><h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p>分布式条件类型实际上不是一种特殊的条件类型，而是其特性之一。概括地说，就是<strong>对于属于裸类型参数的检查类型，条件类型会在实例化时期自动分发到联合类型上</strong></p>
+<blockquote>
+<p>原文: Conditional types in which the checked type is a <strong>naked type parameter</strong> are called distributive conditional types.  Distributive conditional types are automatically <strong>distributed over union types</strong> during instantiation</p>
+</blockquote>
+<h3 id="不负责任可能不太准确的简介"><a href="#不负责任可能不太准确的简介" class="headerlink" title="不负责任可能不太准确的简介"></a>不负责任可能不太准确的简介</h3><p>对这样一个场景：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> someTypeName&lt;T&gt; = T <span class="keyword">extends</span> U ? X : Y</span><br></pre></td></tr></table></figure>
+<p>若<code>T</code>为联合类型且<code>T</code>不被包裹，则<code>T</code>中的项会被拆开分别做<code>extends U</code>判断，再把结果合并组成一个联合类型作为推断结果</p>
+<p>抽象起来就是：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">( A | B | C ) <span class="keyword">extends</span> U ? X : Y</span><br><span class="line"><span class="comment">// 相当于</span></span><br><span class="line">(A <span class="keyword">extends</span> U ? X : Y) | (B <span class="keyword">extends</span> U ? X : Y) | (B <span class="keyword">extends</span> U ? X : Y)</span><br></pre></td></tr></table></figure>
+
+<h3 id="正确版的理清概念"><a href="#正确版的理清概念" class="headerlink" title="正确版的理清概念"></a>正确版的理清概念</h3><p>先提取几个关键词，然后我们再通过例子理清这个概念：</p>
+<ul>
+<li>裸类型参数</li>
+<li>实例化</li>
+<li>分发到联合类型</li>
+</ul>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用上面的TypeName类型别名</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// &quot;string&quot; | &quot;function&quot;</span></span><br><span class="line"><span class="keyword">type</span> <span class="variable constant_">T1</span> = <span class="title class_">TypeName</span>&lt;<span class="built_in">string</span> | (<span class="function">() =&gt;</span> <span class="built_in">void</span>)&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// &quot;string&quot; | &quot;object&quot;</span></span><br><span class="line"><span class="keyword">type</span> <span class="variable constant_">T2</span> = <span class="title class_">TypeName</span>&lt;<span class="built_in">string</span> | <span class="built_in">string</span>[]&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// &quot;object&quot;</span></span><br><span class="line"><span class="keyword">type</span> <span class="variable constant_">T3</span> = <span class="title class_">TypeName</span>&lt;<span class="built_in">string</span>[] | <span class="built_in">number</span>[]&gt;</span><br></pre></td></tr></table></figure>
+<p>我们发现在上面的例子里，条件类型的推导结果都是联合类型（T3实际上也是，只不过相同所以被合并了），并且就是类型参数被依次进行条件判断的结果。<br>但是当我们这样做：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">Naked</span>&lt;T&gt; = T <span class="keyword">extends</span> <span class="built_in">boolean</span> ? <span class="string">&quot;Y&quot;</span> : <span class="string">&quot;N&quot;</span>;</span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Wrapped</span>&lt;T&gt; = [T] <span class="keyword">extends</span> [<span class="built_in">boolean</span>] ? <span class="string">&quot;Y&quot;</span> : <span class="string">&quot;N&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 先分发到 Naked&lt;number&gt; | Naked&lt;boolean&gt;</span></span><br><span class="line"><span class="comment"> * 结果是 &quot;N&quot; | &quot;Y&quot;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Distributed</span> = <span class="title class_">Naked</span>&lt;<span class="built_in">number</span> | <span class="built_in">boolean</span>&gt;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 不会分发 直接是 [number | boolean] extends [boolean]</span></span><br><span class="line"><span class="comment"> * 然后结果是 &quot;N&quot;</span></span><br><span class="line"><span class="comment"> * 在这两个例子中，T 都是 number | boolean。区别是 T 有没有被【包裹】过</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">NotDistributed</span> = <span class="title class_">Wrapped</span>&lt;<span class="built_in">number</span> | <span class="built_in">boolean</span>&gt;; </span><br></pre></td></tr></table></figure>
+<p>现在我们可以来讲讲这几个概念了：</p>
+<ul>
+<li><strong>裸类型参数</strong>，没有额外被接口&#x2F;类型别名包裹过的，就像被Wrapped包裹后就不能再被称为裸类型参数。</li>
+<li><strong>实例化</strong>，其实就是条件类型的判断过程，在这里两个例子的实例化过程实际上是不同的，具体会在下一点中介绍。</li>
+<li><strong>分发至联合类型的过程</strong>：<br>对于TypeName，它内部的类型参数T是没有被包裹过的，所以<br><code>TypeName&lt;string | (() =&gt; void)&gt;</code> 会被分发为 <code>TypeName&lt;string&gt; | TypeName&lt;(() =&gt; void)&gt;</code>, 然后再次进行判断，最后分发为<code>&quot;string&quot; | &quot;function&quot;</code><br>抽象下具体过程：<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">( A | B | C ) <span class="keyword">extends</span> T ? X : Y</span><br><span class="line"><span class="comment">// 相当于</span></span><br><span class="line">(A <span class="keyword">extends</span> T ? X : Y) | (B <span class="keyword">extends</span> T ? X : Y) | (B <span class="keyword">extends</span> T ? X : Y)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>一句话概括：没有被额外包装的联合类型参数T，在条件类型进行判定时会<strong>将联合类型</strong>分发，分别进行判断。</p>
+<h1 id="infer关键字"><a href="#infer关键字" class="headerlink" title="infer关键字"></a><a target="_blank" rel="noopener" href="https://jkchao.github.io/typescript-book-chinese/tips/infer.html#%E4%BB%8B%E7%BB%8D">infer关键字</a></h1><p>infer是inference的缩写，通常的使用方式是<code>infer R</code>，<code>R</code>表示 <strong>待推断的类型</strong>。通常infer不会被直接使用，而是被放置在底层工具类型中，需要在条件类型中使用<br>看一个简单的例子，用于获取函数返回值类型的工具类型<code>ReturnType</code>，其用法：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> getStr = (): <span class="function"><span class="params">string</span> =&gt;</span> <span class="string">&#x27;hello&#x27;</span>;</span><br><span class="line"><span class="keyword">type</span> fn = <span class="title class_">ReturnType</span>&lt;<span class="keyword">typeof</span> getStr&gt;; <span class="comment">// 推断结果是 &#x27;string&#x27;</span></span><br></pre></td></tr></table></figure>
+<p><code>ReturnType</code>源码如下</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">ReturnType</span>&lt;T&gt; = T <span class="keyword">extends</span> (</span><br><span class="line">  ...<span class="attr">args</span>: <span class="built_in">any</span>[]</span><br><span class="line">) =&gt; infer R</span><br><span class="line">  ? R</span><br><span class="line">  : <span class="built_in">any</span>;</span><br></pre></td></tr></table></figure>
+<p>这里的<code>infer R</code>就是声明一个变量来承载传入函数签名的返回值类型, 简单说就是用它取到函数返回值的类型方便之后使用。相当于预留一个变量来存函数的返回类型<br>类似前端中的loading占位符，infer也是这个思路，<strong>类型系统在获得足够的信息后，就能将infer后跟随的类型参数推导出来</strong>，最后返回这个推导结果</p>
+<h1 id="类型守卫-类型保护-Type-Guards-is、in-关键字"><a href="#类型守卫-类型保护-Type-Guards-is、in-关键字" class="headerlink" title="类型守卫(类型保护)Type Guards &amp;&amp; is、in 关键字"></a>类型守卫(类型保护)Type Guards &amp;&amp; is、in 关键字</h1><p>见<a target="_blank" rel="noopener" href="https://jacleklm.github.io/2020/04/14/TypeScript%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%E5%B0%8F%E7%BB%93/">TypeScript 基础语法小结</a></p>
+<h1 id="工具类型Tool-Type-及其实现"><a href="#工具类型Tool-Type-及其实现" class="headerlink" title="工具类型Tool Type 及其实现"></a>工具类型Tool Type 及其实现</h1><p>工具类型就像我们自己的util或者我们用的lodash一样，虽然即使你还是不太懂这些工具类型的底层实现，也不影响你把它用好，不够我们自己还是得了解下比较好。推荐在完成学习后记录你觉得比较有价值的工具类型，并在自己的项目里新建一个<code>.d.ts</code>文件存储它</p>
+<h2 id="内置工具类型"><a href="#内置工具类型" class="headerlink" title="内置工具类型"></a>内置工具类型</h2><p><a target="_blank" rel="noopener" href="https://jacleklm.github.io/2020/12/09/TypeScript%E4%B8%AD%E7%9A%84%E5%86%85%E7%BD%AE%E5%B7%A5%E5%85%B7%E7%B1%BB%E5%9E%8B%E5%8F%8A%E5%85%B6%E5%AE%9E%E7%8E%B0/">TypeScript中的内置工具类型及其实现</a></p>
+<h2 id="社区工具类型"><a href="#社区工具类型" class="headerlink" title="社区工具类型"></a>社区工具类型</h2><p>参考资料<br><a target="_blank" rel="noopener" href="https://juejin.cn/post/6885672896128090125#heading-0">TypeScript 的另一面：类型编程</a><br><a target="_blank" rel="noopener" href="https://jkchao.github.io/typescript-book-chinese/">深入理解 TypeScript</a><br>组内分享: TS 最佳实践</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2020/12/07/TypeScript%E4%B8%AD%E7%9A%84%E7%B1%BB%E5%9E%8B%E7%BC%96%E7%A8%8B/" data-id="clmniym790020bb872vvyhxpt" data-title="TypeScript中的类型编程" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/12/09/TypeScript%E4%B8%AD%E7%9A%84%E5%86%85%E7%BD%AE%E5%B7%A5%E5%85%B7%E7%B1%BB%E5%9E%8B%E5%8F%8A%E5%85%B6%E5%AE%9E%E7%8E%B0/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          TypeScript中的内置工具类型及其实现
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/11/03/hope%20statistics%20puppeteer%E5%B7%A5%E5%85%B7%E5%B0%8F%E7%BB%93/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">hope statistics puppeteer 工具小结</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Kategorien</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Basic-knowledge/">Basic knowledge</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Engineering/">Engineering</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%8A%E7%BA%BF%E9%83%A8%E7%BD%B2/">上线部署</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%90%8E%E7%AB%AF/">后端</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Browser/" rel="tag">Browser</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Computer/" rel="tag">Computer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Data-structure/" rel="tag">Data structure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Interview/" rel="tag">Interview</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Network/" rel="tag">Network</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node/" rel="tag">Node</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/" rel="tag">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Operating-system/" rel="tag">Operating system</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Performance/" rel="tag">Performance</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/" rel="tag">Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web%E5%AE%89%E5%85%A8/" rel="tag">Web安全</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/" rel="tag">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%8A%E7%BA%BF%E9%83%A8%E7%BD%B2/" rel="tag">上线部署</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A1%86%E6%9E%B6/" rel="tag">框架</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" rel="tag">解决方案</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE%E5%B0%8F%E7%BB%93/" rel="tag">项目小结</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Browser/" style="font-size: 14px;">Browser</a> <a href="/tags/CSS/" style="font-size: 14px;">CSS</a> <a href="/tags/Computer/" style="font-size: 10px;">Computer</a> <a href="/tags/Data-structure/" style="font-size: 18px;">Data structure</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/Interview/" style="font-size: 10px;">Interview</a> <a href="/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/tags/Network/" style="font-size: 14px;">Network</a> <a href="/tags/Node/" style="font-size: 12px;">Node</a> <a href="/tags/Nodejs/" style="font-size: 12px;">Nodejs</a> <a href="/tags/Operating-system/" style="font-size: 10px;">Operating system</a> <a href="/tags/Performance/" style="font-size: 12px;">Performance</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/TypeScript/" style="font-size: 14px;">TypeScript</a> <a href="/tags/Web/" style="font-size: 10px;">Web</a> <a href="/tags/Web%E5%AE%89%E5%85%A8/" style="font-size: 10px;">Web安全</a> <a href="/tags/webpack/" style="font-size: 20px;">webpack</a> <a href="/tags/%E4%B8%8A%E7%BA%BF%E9%83%A8%E7%BD%B2/" style="font-size: 10px;">上线部署</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 10px;">工具</a> <a href="/tags/%E6%A1%86%E6%9E%B6/" style="font-size: 16px;">框架</a> <a href="/tags/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" style="font-size: 10px;">解决方案</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 10px;">设计模式</a> <a href="/tags/%E9%A1%B9%E7%9B%AE%E5%B0%8F%E7%BB%93/" style="font-size: 14px;">项目小结</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">April 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/04/30/Python%20Basic/">Python Basic Knowledge</a>
+          </li>
+        
+          <li>
+            <a href="/2021/04/17/%E8%A7%A3%E5%86%B3hexo%20g%E7%94%9F%E6%88%90index.html%E4%B8%BA%E7%A9%BA%E7%9A%84%E9%97%AE%E9%A2%98/">解决hexo g生成index.html为空的问题</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/09/TypeScript%E4%B8%AD%E7%9A%84%E5%86%85%E7%BD%AE%E5%B7%A5%E5%85%B7%E7%B1%BB%E5%9E%8B%E5%8F%8A%E5%85%B6%E5%AE%9E%E7%8E%B0/">TypeScript中的内置工具类型及其实现</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/07/TypeScript%E4%B8%AD%E7%9A%84%E7%B1%BB%E5%9E%8B%E7%BC%96%E7%A8%8B/">TypeScript中的类型编程</a>
+          </li>
+        
+          <li>
+            <a href="/2020/11/03/hope%20statistics%20puppeteer%E5%B7%A5%E5%85%B7%E5%B0%8F%E7%BB%93/">hope statistics puppeteer 工具小结</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 Jacleklm<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

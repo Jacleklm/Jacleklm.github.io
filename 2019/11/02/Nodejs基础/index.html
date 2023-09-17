@@ -4,17 +4,22 @@
   <meta charset="utf-8">
   
   
-  <title>Archiv | Jacleklm</title>
+  <title>Nodejs基础 | Jacleklm</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="FullStack Engineer in Narwal. Focus on Frontend.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Jacleklm">
-<meta property="og:url" content="http://example.com/archives/index.html">
+  <meta name="description" content="Node.js的特性简介Node.js 是一个基于 Chrome V8 引擎的 JavaScript 运行环境（runtime）, 是一个让 JavaScript 运行在服务端的开发平台， 使用了一个事件驱动、非阻塞 I&#x2F;O 的模型 非阻塞IO以JS为例，JavaScript为一种单线程语言，所以如果有很多任务需要执行，只能等前面的任务执行完了，再执行后面的任务。一旦遇到大量任务或者遇到">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nodejs基础">
+<meta property="og:url" content="http://example.com/2019/11/02/Nodejs%E5%9F%BA%E7%A1%80/index.html">
 <meta property="og:site_name" content="Jacleklm">
-<meta property="og:description" content="FullStack Engineer in Narwal. Focus on Frontend.">
+<meta property="og:description" content="Node.js的特性简介Node.js 是一个基于 Chrome V8 引擎的 JavaScript 运行环境（runtime）, 是一个让 JavaScript 运行在服务端的开发平台， 使用了一个事件驱动、非阻塞 I&#x2F;O 的模型 非阻塞IO以JS为例，JavaScript为一种单线程语言，所以如果有很多任务需要执行，只能等前面的任务执行完了，再执行后面的任务。一旦遇到大量任务或者遇到">
 <meta property="og:locale">
+<meta property="og:image" content="http://example.com/img/Node/EventLoop.png">
+<meta property="article:published_time" content="2019-11-02T15:02:21.000Z">
+<meta property="article:modified_time" content="2023-09-17T14:00:22.867Z">
 <meta property="article:author" content="Jacleklm">
+<meta property="article:tag" content="Nodejs">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/Node/EventLoop.png">
   
     <link rel="alternate" href="/atom.xml" title="Jacleklm" type="application/atom+xml">
   
@@ -73,236 +78,80 @@
 </header>
 
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2022" class="archive-year">2022</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2022/04/30/Python%20Basic/" class="archive-article-date">
-  <time class="dt-published" datetime="2022-04-30T09:20:21.000Z" itemprop="datePublished">Apr 30</time>
+        <section id="main"><article id="post-Nodejs基础" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/11/02/Nodejs%E5%9F%BA%E7%A1%80/" class="article-date">
+  <time class="dt-published" datetime="2019-11-02T15:02:21.000Z" itemprop="datePublished">2019-11-02</time>
 </a>
-      
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%90%8E%E7%AB%AF/">后端</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2022/04/30/Python%20Basic/">Python Basic Knowledge</a>
+    <h1 class="p-name article-title" itemprop="headline name">
+      Nodejs基础
     </h1>
   
 
-    </header>
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="Node-js的特性"><a href="#Node-js的特性" class="headerlink" title="Node.js的特性"></a>Node.js的特性</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>Node.js 是一个基于 Chrome V8 引擎的 JavaScript 运行环境（runtime）, 是一个让 JavaScript 运行在服务端的开发平台， 使用了一个事件驱动、非阻塞 I&#x2F;O 的模型</p>
+<h2 id="非阻塞IO"><a href="#非阻塞IO" class="headerlink" title="非阻塞IO"></a><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2013/10/event_loop.html">非阻塞IO</a></h2><p>以JS为例，JavaScript为一种单线程语言，所以如果有很多任务需要执行，只能等前面的任务执行完了，再执行后面的任务。一旦遇到大量任务或者遇到一个耗时的任务（一个I&#x2F;O），网页就会被卡住。这种就是<strong>阻塞 I&#x2F;O</strong>。而Node.js在I&#x2F;O时函数立即返回，进程不等待I&#x2F;O完成，因为有Event Loop 的概念来解决这个问题</p>
+<p><strong>Event Loop</strong>是一个程序结构，用于等待和发送消息和事件。简单说，就是在程序中设置两个线程：一个负责程序本身的运行，称为”主线程”；另一个负责主线程与其他进程（主要是各种I&#x2F;O操作）的通信，被称为”Event Loop线程”（可以译为”消息线程”）。当程序遇到耗时的I&#x2F;O操作的时候，就交给Event Loop线程去处理，同时生成一个<strong>事件队列</strong>来放置这些未执行完的任务，并且<strong>监听</strong>这些I&#x2F;O操作是否执行完成，主进程继续执行其他任务；等到I&#x2F;O操作完成后，Event Loop线程再把结果返回主线程。主线程就调用事先设定的回调函数，完成整个任务。这样就提高了任务执行的效率，这种运行模式就是<strong>非阻塞IO</strong> 和<strong>事件驱动</strong><br><img src="/img/Node/EventLoop.png"></p>
+<h2 id="事件驱动"><a href="#事件驱动" class="headerlink" title="事件驱动"></a>事件驱动</h2><p>I&#x2F;O等异步操作结束后的通知，如上所述。其实就是观察者模式</p>
+<h2 id="事件循环-Event-Loop"><a href="#事件循环-Event-Loop" class="headerlink" title="事件循环 Event Loop"></a><a target="_blank" rel="noopener" href="https://jacleklm.github.io/2019/11/03/%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/">事件循环 Event Loop</a></h2><h2 id="异步编程"><a href="#异步编程" class="headerlink" title="异步编程"></a><a target="_blank" rel="noopener" href="https://jacleklm.github.io/2019/11/01/%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B/#more">异步编程</a></h2><h2 id="常用API"><a href="#常用API" class="headerlink" title="常用API"></a>常用API</h2><p>path，fs，Buffer，EventEmitter，process </p>
+<h3 id="Web为什么最适合Node-js"><a href="#Web为什么最适合Node-js" class="headerlink" title="Web为什么最适合Node.js"></a>Web为什么最适合Node.js</h3><p>用JS；在处理高并发（单位时间内访问量大）、I&#x2F;O密集场景性能优势明显<br>CPU密集：做计算、逻辑判断（压缩、解压、加密、解密）<br>I&#x2F;O密集：文件操作（文件存取）、网络操作（http）、数据库。CPU的处理速度是远大于I&#x2F;O的，也就是分析web页面需求很快，但是从计算机拿文件比较慢</p>
+<h2 id="缺点-优点"><a href="#缺点-优点" class="headerlink" title="缺点 &amp; 优点"></a>缺点 &amp; 优点</h2><h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><p>Node 是基于事件驱动和无阻塞的，所以非常适合处理并发请求，因此构建在Node 上的代理服务器相比其他技术实现（如Ruby）的服务器表现要好得多</p>
+<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><p>Node 是一个相对新的开源项目，所以不太稳定，它总是一直在变，而且缺少足够多的第三方库支持。</p>
+<h4 id="容错性较差，一旦出错就整个线程挂掉"><a href="#容错性较差，一旦出错就整个线程挂掉" class="headerlink" title="容错性较差，一旦出错就整个线程挂掉"></a>容错性较差，一旦出错就整个线程挂掉</h4><p>配合pm2等包，自动重启；</p>
+<h2 id="用途"><a href="#用途" class="headerlink" title="用途"></a>用途</h2><h3 id="前后端分离"><a href="#前后端分离" class="headerlink" title="前后端分离"></a>前后端分离</h3><p>模板渲染</p>
+<h3 id="同构"><a href="#同构" class="headerlink" title="同构"></a>同构</h3><p>提供Javascript run time进行服务端渲染</p>
+<h3 id="日志上报"><a href="#日志上报" class="headerlink" title="日志上报"></a>日志上报</h3><h2 id="Nodejs的常用场景"><a href="#Nodejs的常用场景" class="headerlink" title="Nodejs的常用场景"></a>Nodejs的常用场景</h2><h2 id="http-server与其他语言搭建的服务器对比"><a href="#http-server与其他语言搭建的服务器对比" class="headerlink" title="http server与其他语言搭建的服务器对比"></a>http server与其他语言搭建的服务器对比</h2><p>参考资料<br><a target="_blank" rel="noopener" href="https://coding.imooc.com/class/146.html">慕课网-Node.js入门到企业Web开发中的应用</a><br>阮一峰的博客</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/11/02/Nodejs%E5%9F%BA%E7%A1%80/" data-id="clmniym6z0018bb874b5y1qx9" data-title="Nodejs基础" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nodejs/" rel="tag">Nodejs</a></li></ul>
+
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/11/03/JS%E7%9A%84%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF%E5%92%8CNode.js%E7%9A%84%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          JS的事件循环和Node.js的事件循环
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/11/01/%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">异步编程</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-    
-    
-      
-        </div></section>
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2021" class="archive-year">2021</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2021/04/17/%E8%A7%A3%E5%86%B3hexo%20g%E7%94%9F%E6%88%90index.html%E4%B8%BA%E7%A9%BA%E7%9A%84%E9%97%AE%E9%A2%98/" class="archive-article-date">
-  <time class="dt-published" datetime="2021-04-17T12:33:46.000Z" itemprop="datePublished">Apr 17</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/04/17/%E8%A7%A3%E5%86%B3hexo%20g%E7%94%9F%E6%88%90index.html%E4%B8%BA%E7%A9%BA%E7%9A%84%E9%97%AE%E9%A2%98/">解决hexo g生成index.html为空的问题</a>
-    </h1>
-  
 
-    </header>
-  </div>
-</article>
-  
-    
-    
-      
-        </div></section>
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2020/12/09/TypeScript%E4%B8%AD%E7%9A%84%E5%86%85%E7%BD%AE%E5%B7%A5%E5%85%B7%E7%B1%BB%E5%9E%8B%E5%8F%8A%E5%85%B6%E5%AE%9E%E7%8E%B0/" class="archive-article-date">
-  <time class="dt-published" datetime="2020-12-09T09:25:21.000Z" itemprop="datePublished">Dec 9</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/09/TypeScript%E4%B8%AD%E7%9A%84%E5%86%85%E7%BD%AE%E5%B7%A5%E5%85%B7%E7%B1%BB%E5%9E%8B%E5%8F%8A%E5%85%B6%E5%AE%9E%E7%8E%B0/">TypeScript中的内置工具类型及其实现</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2020/12/07/TypeScript%E4%B8%AD%E7%9A%84%E7%B1%BB%E5%9E%8B%E7%BC%96%E7%A8%8B/" class="archive-article-date">
-  <time class="dt-published" datetime="2020-12-07T09:25:21.000Z" itemprop="datePublished">Dec 7</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/07/TypeScript%E4%B8%AD%E7%9A%84%E7%B1%BB%E5%9E%8B%E7%BC%96%E7%A8%8B/">TypeScript中的类型编程</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2020/11/03/hope%20statistics%20puppeteer%E5%B7%A5%E5%85%B7%E5%B0%8F%E7%BB%93/" class="archive-article-date">
-  <time class="dt-published" datetime="2020-11-03T15:04:21.000Z" itemprop="datePublished">Nov 3</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/11/03/hope%20statistics%20puppeteer%E5%B7%A5%E5%85%B7%E5%B0%8F%E7%BB%93/">hope statistics puppeteer 工具小结</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2020/11/03/%E7%94%A8%20node.js%20%E5%BC%80%E5%8F%91%E4%B8%80%E4%B8%AA%E5%8F%AF%E4%BA%A4%E4%BA%92%E7%9A%84%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%BA%94%E7%94%A8/" class="archive-article-date">
-  <time class="dt-published" datetime="2020-11-03T15:02:21.000Z" itemprop="datePublished">Nov 3</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/11/03/%E7%94%A8%20node.js%20%E5%BC%80%E5%8F%91%E4%B8%80%E4%B8%AA%E5%8F%AF%E4%BA%A4%E4%BA%92%E7%9A%84%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%BA%94%E7%94%A8/">用 node.js 开发一个可交互的命令行应用</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2020/07/15/%E3%80%8A%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BANode.js%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" class="archive-article-date">
-  <time class="dt-published" datetime="2020-07-15T15:02:21.000Z" itemprop="datePublished">Jul 15</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/07/15/%E3%80%8A%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BANode.js%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">《深入浅出Node.js》读书笔记</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2020/06/27/babel-plugin-import/" class="archive-article-date">
-  <time class="dt-published" datetime="2020-06-27T15:49:21.000Z" itemprop="datePublished">Jun 27</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/06/27/babel-plugin-import/">按需加载 &amp; 样式自动加载 —— babel-plugin-import</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2020/06/25/AST%E8%AF%A6%E8%A7%A3/" class="archive-article-date">
-  <time class="dt-published" datetime="2020-06-25T15:49:21.000Z" itemprop="datePublished">Jun 25</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/06/25/AST%E8%AF%A6%E8%A7%A3/">AST详解</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2020/05/27/%E6%B8%B2%E6%9F%93%E6%96%B9%E6%A1%88/" class="archive-article-date">
-  <time class="dt-published" datetime="2020-05-27T08:50:21.000Z" itemprop="datePublished">May 27</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/27/%E6%B8%B2%E6%9F%93%E6%96%B9%E6%A1%88/">渲染方案</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-
-  <nav id="page-nav">
-    
-    <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/7/">7</a><a class="extend next" rel="next" href="/archives/page/2/">weiter &raquo;</a>
-  </nav>
 
 </section>
         

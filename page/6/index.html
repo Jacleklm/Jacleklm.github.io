@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Jacleklm</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="FullStack Engineer in Narwal. Focus on Frontend.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Jacleklm">
+<meta property="og:url" content="http://example.com/page/6/index.html">
+<meta property="og:site_name" content="Jacleklm">
+<meta property="og:description" content="FullStack Engineer in Narwal. Focus on Frontend.">
+<meta property="og:locale">
+<meta property="article:author" content="Jacleklm">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Jacleklm" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Jacleklm</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Suche"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Suche"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-HTTPS" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/10/03/HTTPS/" class="article-date">
+  <time class="dt-published" datetime="2019-10-03T14:27:21.000Z" itemprop="datePublished">2019-10-03</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Basic-knowledge/">Basic knowledge</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/10/03/HTTPS/">HTTPS</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="HTTP为什么不安全："><a href="#HTTP为什么不安全：" class="headerlink" title="HTTP为什么不安全："></a>HTTP为什么不安全：</h3><ul>
+<li>通信使用明文（不加密），内容可能被窃听</li>
+<li>不验证通信方的身份，因此有可能遭遇伪装</li>
+<li>无法证明报文的完整性，所以有可能被篡改</li>
+</ul>
+<h3 id="HTTP-加密-认证-完整性保护-HTTPS-HTTP-Secure）"><a href="#HTTP-加密-认证-完整性保护-HTTPS-HTTP-Secure）" class="headerlink" title="HTTP+加密+认证+完整性保护&#x3D;HTTPS(HTTP Secure）"></a>HTTP+加密+认证+完整性保护&#x3D;HTTPS(HTTP Secure）</h3><ul>
+<li>HTTPS则是具有安全性的SSL加密传输协议</li>
+<li>HTTPS协议需要CA申请证书</li>
+<li>HTTP和HTTPS使用的是完全不同的连接方式，用的端口也不一样，前者是80，后者是443</li>
+<li>HTTPS通过HTTP来传输信息，但是信息通过TLS协议进行了加密</li>
+</ul>
+<h3 id="TLS"><a href="#TLS" class="headerlink" title="TLS"></a>TLS</h3><p>https仍用http传输信息，但信息通过TLS进行了加密。<br>TLS作用于表示层</p>
+<h5 id="两种加密技术"><a href="#两种加密技术" class="headerlink" title="两种加密技术"></a>两种加密技术</h5><ul>
+<li>对称加密<br>两边有相同的密钥，都知道如何加密解密</li>
+<li>非对称加密<br>数据公钥加密，私钥解密，私钥只有发出公钥的一方知道</li>
+</ul>
+<p>HTTPS使用两种加密方式混用的加密机制（先用非对称加密方式传递对称加密中要使用的密钥，然后再用对称加密方式传递数据）。流程如下：<br>服务器将公钥发散出去。之后客户端创建一个密钥，用此公钥加密后发送给服务器，服务器用私钥解密，就能得知此密钥。双方都知道密码，之后就可以采用对称加密的方式进行数据传输了。</p>
+<h5 id="TSL的握手过程"><a href="#TSL的握手过程" class="headerlink" title="TSL的握手过程"></a>TSL的握手过程</h5><ol>
+<li>客户端向服务器发送Client Hello报文，包含：</li>
+</ol>
+<ul>
+<li>支持的SSL协议版本</li>
+<li>加密组件（支持的加密方法等）</li>
+</ul>
+<ol start="2">
+<li>服务器回应，向客户端发起回应，称为Server Hello</li>
+</ol>
+<ul>
+<li>确认通信协议版本</li>
+<li>确认使用加密方法</li>
+<li>服务器生成的随机数</li>
+<li>服务器公开密钥证书</li>
+</ul>
+<ol start="3">
+<li>客户端回应（Client Key Exchange报文），首先验证服务器证书，如果证书不是可信机构办法的，或者证书中域名和实际域名不一样，或者证书已经过期，就会向访问者显示一个警告，由其选择是否还要继续通信。如果证书没有问题，客户端从证书中取出服务器的公钥。然后向服务器发送下面三项信息：</li>
+</ol>
+<ul>
+<li>一个随机数Pre master（用服务器提供的公钥加密）</li>
+<li>编码改变通知（之后的通信会采用Pre master密钥加密（对称加密））</li>
+<li>客户端握手结束通知（Finish报文）。该报文包含前面发送的所有内容的hash值，供服务器校验</li>
+</ul>
+<ol start="4">
+<li>服务端收到第三个随机数之后，计算本次会话所用的会话加密，然后向客户端发送下面信息：</li>
+</ol>
+<ul>
+<li>编码改变通知</li>
+<li>服务器握手结束，同时也是前面所有内容的hash值，供服务器校验</li>
+</ul>
+<p>此时两端都有了最终的协商密钥了，接下里的传输就使用这个密钥加密解密（对称加密）</p>
+<h3 id="HTTPS的缺点"><a href="#HTTPS的缺点" class="headerlink" title="HTTPS的缺点"></a>HTTPS的缺点</h3><ul>
+<li>解密加密过程消耗CPU、内存等资源</li>
+<li>加密运算和多次握手降低了访问速度</li>
+<li>SSL证书信用体系不绝对安全，并且增加费用开销</li>
+<li>在开发阶段，加大了页面调试难度 。由于信息都被加密了，所以用代理工具的话，需要先解密然后才能看到真实信息</li>
+<li>用HTTPS访问的页面，页面内的外部资源都得用HTTPS请求，包括脚本中的AJAX请求</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/10/03/HTTPS/" data-id="clmniym6s000qbb87hn31glrv" data-title="HTTPS" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Network/" rel="tag">Network</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-HTTP" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/10/02/HTTP/" class="article-date">
+  <time class="dt-published" datetime="2019-10-02T13:30:21.000Z" itemprop="datePublished">2019-10-02</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Basic-knowledge/">Basic knowledge</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/10/02/HTTP/">HTTP</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="HTTP-方法"><a href="#HTTP-方法" class="headerlink" title="HTTP 方法"></a>HTTP 方法</h3><ul>
+<li>GET 获取资源。当前网络请求中，绝大部分使用的是 GET 方法</li>
+<li>POST 传输实体主体。POST 主要用来传输数据，而 GET 主要用来获取资源</li>
+<li>HEAD 获取报文首部。和 GET 方法类似，但是不返回报文实体主体部分。主要用于确认 URL 的有效性以及资源更新的日期时间等。</li>
+<li>PUT 上传文件</li>
+<li>OPTIONS 查询支持的方法</li>
+<li>*DELETE 删除文件</li>
+<li>*PATCH 对资源进行部分修改</li>
+<li>*CONNECT 要求在与代理服务器通信时建立隧道</li>
+</ul>
+<h3 id="GET-和-POST-的区别"><a href="#GET-和-POST-的区别" class="headerlink" title="GET 和 POST 的区别"></a>GET 和 POST 的区别</h3><p>从用法上说，GET 一般用于无副作用、幂等的场景；POST 多用于有副作用、不幂等的情况（一次POST请求会服务器会添加一份新资源）。</p>
+<blockquote>
+<p>冥等的定义：发送 M 和 N 次请求，服务器上资源状态一致。比如说，注册 10 个账号和 11 个账号是不冥等的，对文章进行了 10 次 11 次修改是幂等的，因为前者多了一个账号（资源），后者是更新同一个资源。<br>副作用的定义：副作用是指对服务器上资源做改变。比如搜索是无副作用的，但更新是有副作用的。</p>
+</blockquote>
+<p>从本质上说，Post 和 Get 都取决于 HTTP，使用哪个方法与应用层传输没有必然的联系。HTTP 没有要求，如果是 POST，数据就要放在 BODY 中。也没有要求 GET，数据（参数）就一定要放在 URL 中而不能放在 BODY 中。</p>
+<p>细节上有一些区别：</p>
+<ol>
+<li>Get 能请求缓存，但是 Post 不可以</li>
+<li>Post 支持更多编码类型</li>
+<li>Get 回退无害，Post 会再次提交</li>
+<li>Get 能被保存为书签，Post 不可以</li>
+<li>POST有消息体（body），长度无限制；GET一般没有body，数据只能放在url中，而url长度是有限的。其实也没有强制规定GET不能有body中，但是一般不会这么做</li>
+</ol>
+<p>简而言之，就是“安全”和“不安全”的区别。eg. 点击同意某个协议，最好用POST</p>
+<h3 id="PUT-和-POST-的区别"><a href="#PUT-和-POST-的区别" class="headerlink" title="PUT 和 POST 的区别"></a>PUT 和 POST 的区别</h3><p>用于向指定URL传送<strong>更新</strong>资源，是<strong>幂等</strong>的。比如修改用户密码，虽然提交的还是账户名跟用户密码这个俩个必填参数，但是每次提交都只是<strong>更新</strong>该用户密码,每次请求都只是覆盖原先的值。此时就该用PUT<br>POST用于提交请求，可以更新或者创建资源，是非幂等的。eg. 注册新用户用POST给服务器传输新用户名和密码</p>
+<h3 id="HTTP-常用首部"><a href="#HTTP-常用首部" class="headerlink" title="HTTP 常用首部"></a>HTTP 常用首部</h3><ul>
+<li>通用<ul>
+<li>cache-control ： 控制缓存行为</li>
+<li>connection ： 连接的性质，比如 keep-alive</li>
+<li>user-Agent ：用户信息</li>
+<li>Date ：报文创建时间</li>
+</ul>
+</li>
+<li>请求<ul>
+<li>Referrer Policy : 表示来源的（浏览器所访问的前一个页面）,可以用于辅助检测 crsf 攻击，一般浏览器的默认值是 no-referrer-when-downgrade，意思是 https 降级 http 的时候不传原地址。</li>
+<li>Accept : 能正确接收的媒体类型</li>
+<li>Accept-XX(Accept-Charset&#x2F;Accept-Encoding&#x2F;Accept-Language):能正确接收的 xx</li>
+<li>Expect :期待服务端的指定行文</li>
+<li>If-Match :两端资源标记比较</li>
+<li>If-Modified-Since : 比较时间 未修改返回 304 Not Modified</li>
+<li>If-None-Match :比较标记 未修改返回 304 Not Modified</li>
+<li>Host: 请求的主机名</li>
+</ul>
+</li>
+<li>响应<ul>
+<li>Location : 客户端重定向的 URI</li>
+<li>Server : 服务器名字</li>
+<li>ETag</li>
+<li>Age :响应存在时间</li>
+<li>Accept-Ranges ：可以接受的范围类型</li>
+</ul>
+</li>
+<li>实体首部<ul>
+<li>Content-Length 实体主体的大小</li>
+<li>Expires 实体主体的过期时间</li>
+<li>Last-Modified 资源的最后修改时间</li>
+</ul>
+</li>
+<li>非首部字段<ul>
+<li>Cookie 和 Set-cookie</li>
+<li>Content-Disponsition</li>
+</ul>
+</li>
+</ul>
+<p>更多关于首部的资料可以查看：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/jycboy/p/http_head.html">《HTTP 首部字段详细介绍》</a></p>
+<h5 id="cache-control-的参数"><a href="#cache-control-的参数" class="headerlink" title="cache-control 的参数"></a>cache-control 的参数</h5><ul>
+<li>可缓存性<ul>
+<li>public：浏览器&#x2F;任何代理服务器等都能缓存</li>
+<li>private：只有发起请求的浏览请能缓存</li>
+<li>no-cache：强制向源服务器再次验证，同意了才能用缓存</li>
+<li>no-store：不缓存</li>
+</ul>
+</li>
+<li>到期<ul>
+<li>max-age&#x3D;[secend]：缓存的保存时间（s）</li>
+<li>s-maxage&#x3D;[secend]：和 max-age 并存时会替代 max-age，但是只有在代理服务器中才会生效</li>
+<li>max-stale：在和 max-age 并存的时候，意思是在发起请求的地方（浏览器）缓存过了 max-age 之后但是还没过 max-stale，则浏览器还可以继续用这个过期了的缓存</li>
+</ul>
+</li>
+<li>重新验证<ul>
+<li>must-revalidate：在设了 max-age 的缓存中，如果过期了必须去原服务端发起请求</li>
+<li>proxy-revalidate：在设了 max-age 的缓存服务器中，如果过期了必须去源服务端发起请求</li>
+</ul>
+</li>
+<li>其他<ul>
+<li>no-transform：用在代理服务器中。缓存不能进行压缩改动等</li>
+</ul>
+</li>
+</ul>
+<h5 id="帮助缓存的资源验证-Last-Modified-和-Etag（见-浏览器-缓存策略）"><a href="#帮助缓存的资源验证-Last-Modified-和-Etag（见-浏览器-缓存策略）" class="headerlink" title="帮助缓存的资源验证 Last-Modified 和 Etag（见 浏览器-缓存策略）"></a>帮助缓存的资源验证 Last-Modified 和 Etag（见 <a target="_blank" rel="noopener" href="https://jacleklm.github.io/2019/10/29/%E6%B5%8F%E8%A7%88%E5%99%A8/#more">浏览器-缓存策略</a>）</h5><h5 id="connection-keep-alive（长连接）"><a href="#connection-keep-alive（长连接）" class="headerlink" title="connection&#x3D;keep-alive（长连接）"></a>connection&#x3D;keep-alive（长连接）</h5><p>在 http 请发送之前会建立 TCP 连接，如果请求发送完之后连接不会关闭，则就是长连接，这样有新请求的时候就可以直接发送，不用经过 TCP 三次握手阶段,避免了连接建立和释放的开销。<br>但是，长时间的 TCP 连接容易导致系统资源无效占用，可以设置 keep-alive timeout（过多长时间没有新请求连接就自动关闭）。</p>
+<h5 id="cookie-和-session"><a href="#cookie-和-session" class="headerlink" title="cookie 和 session"></a>cookie 和 session</h5><p><strong>cookie</strong></p>
+<ol>
+<li>服务端返回数据的时候通过 set-cookie 设置。浏览器保存 cookie 之后，在下次的同域请求中就会带上这个 cookie。cookie 是通过键值对的形式保存的，可以设置很多个。</li>
+<li>cookie 属性</li>
+</ol>
+<ul>
+<li>max-age&#x3D;[second]或 expires: 设置过期时间（若没有设置则默认关闭浏览器 cookie 就被清除，请求不会带上 cookie）</li>
+<li>Secure: 只在 https 的时候发送 cookie</li>
+<li>HttpOnly: 无法通过 JS 的 document.cookie 访问（提高安全性）</li>
+</ul>
+<ol start="3">
+<li>set-cookie 怎么写：例如在服务器的 response.writeHeader 写 <code>&#39;set-cookie&#39;: [&#39;id=123; max-age=10&#39;, &#39;name=Jacleklm;HttpOnly&#39;]</code></li>
+</ol>
+<p><strong>session</strong><br>在网站开发中，最常用的就是用 cookie 来保存 session，但是二者并不等价。cookie 是存在客户端，session 是存在服务器端。服务端根据客户发过来的 cookie（eg.cookie 中有 session_id）定位到这个客户的信息（session），给他提供最合适的响应</p>
+<h5 id="数据协商"><a href="#数据协商" class="headerlink" title="数据协商"></a>数据协商</h5><p>客户端发送给服务端请求时候，请求头中会声明希望拿到的数据格式，以及其他与数据相关的一些限制，服务端会根据它的请求中的声明，来做针对性的返回<br>分类中包含请求和返回两种<br><strong>请求</strong><br>Accept（想要的数据类型），Accept-Encoding（数据是怎样的编码方式，主要是压缩方式）,Accept-Language, User-Agent（浏览器的相关信息，移动端&#x2F;PC）<br><strong>返回</strong><br>Content-Type，Content-Encoding，Content-Language</p>
+<h3 id="HTTP-状态码"><a href="#HTTP-状态码" class="headerlink" title="HTTP 状态码"></a>HTTP 状态码</h3><ul>
+<li>1XX 信息性状态码，接收的请求正在处理<ul>
+<li>100 Continue 等待状态码，客户端应重新发送请求</li>
+<li>101 Switching Protocols 改用协议 http 到 https 或 http1.1 到 2.0 之类</li>
+</ul>
+</li>
+<li>2XX 成功状态码，请求正常处理完毕<ul>
+<li>200 OK 操作成功</li>
+<li>202 Accepted 服务器已接受请求，但尚未处理 (最后可能处理也可能不处理)</li>
+<li>204 No Content 请求成功，但是报文不含实体的主体部分</li>
+<li>206 Partial Content 进行范围请求</li>
+</ul>
+</li>
+<li>3XX 重定向状态码，需要附加操作以完成请求<ul>
+<li>301 Move Permanently 禁止从 POST 变成 GET。 永久性重定向，资源已经被分配到了新的 URI，以后应该使用资源现在的 URI 进行访问。</li>
+<li>302 Found 禁止从 POST 变成 GET。临时重定向，资源已经被分配到了新的 URI，希望用户（本次）能用新的 URI 访问 实际上发部分客户端把它当成 303 处理</li>
+<li>303 See Other 表示资源存在另一个 URI。应用 Get 获取资源</li>
+<li>304 Not Modified 当客户端发送附带条件的请求后，服务端允许访问资源，但因为条件不符合，返回实体主体为空（也可能是服务器端资源未变，建议客户端直接用缓存）</li>
+<li>307 Temporary Redirect 不会从 POST 变成 GET。 临时重定向，资源临时分配了 URL，但是希望客户端能够保持方法不变请求新地址（解决 302 被当成 303 处理的问题）</li>
+</ul>
+</li>
+<li>4XX 客户端错误状态码，服务器无法处理请求<ul>
+<li>400 Bad Request 请求报文存在语法错误</li>
+<li>401 Unauthorized 需要认证，如果之前已经进行一次请求，表示认证失败</li>
+<li>403 Forbidden 请求资源存在但被拒绝，常用于一个资源只允许在特定时间段内访问（如果不想透露可以谎报 404）</li>
+<li>404 Not Found 找不到请求的资源</li>
+<li>405 Method Not Found 不支持的请求方法，比如只支持 Get，但是收到了 Post 请求</li>
+</ul>
+</li>
+<li>5XX 服务器错误状态码，服务器处理请求错误<ul>
+<li><strong>500</strong> Inernal Server Error 执行请求出现错误</li>
+<li>501 Not Implemented 不支持此请求方法（和 405 区别在于，405 是访问的资源不支持，而 501 表示服务器不能操作此方法）</li>
+<li><strong>502</strong> Bad Gateway 代理与上行服务器之间出现问题</li>
+<li><strong>503</strong> Service Unavailable 超负荷，停机维护</li>
+<li><strong>504</strong> Gateway Timeout 网关等待服务器相应超时</li>
+</ul>
+</li>
+</ul>
+<h3 id="HTTP1-1"><a href="#HTTP1-1" class="headerlink" title="HTTP1.1"></a>HTTP1.1</h3><p>HTTP版本迭代详见 <a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2016/08/http.html">HTTP 协议入门</a></p>
+<h4 id="和-1-0-的区别"><a href="#和-1-0-的区别" class="headerlink" title="和 1.0 的区别"></a>和 1.0 的区别</h4><ul>
+<li>持久链接</li>
+<li>管道机制。在同一个TCP连接里面，客户端可以同时发送多个请求。以前的做法是，在同一个TCP连接里面，先发送A请求，然后等待服务器做出回应，收到后再发出B请求</li>
+<li>Content-Length。声明本次响应的数据长度，单位是字节。作用是区分数据包是属于哪一个响应的</li>
+<li>分块传输编码。产生一块数据，就发送一块，采用”流模式”（stream）取代”缓存模式”（buffer）。1.1版规定可以不使用Content-Length字段，而使用”分块传输编码”（chunked transfer encoding）。只要请求或回应的头信息有 <code>Transfer-Encoding: chunked</code> 字段，就表明回应将由数量未定的数据块组成</li>
+<li>新增方法：PUT、PATCH、HEAD、 OPTIONS、DELETE</li>
+</ul>
+<h4 id="1-1的缺点"><a href="#1-1的缺点" class="headerlink" title="1.1的缺点"></a>1.1的缺点</h4><ul>
+<li>队首阻塞。一个TCP无法并行进行多个http传输，只能排队。如果前面请求的响应特别慢的话，就会造成许 多请求排队等待的情况，这种情况被称为“队头堵塞”</li>
+<li>连接过多。为了解决队首阻塞问题，解决方法就是同时打开多个连接请求</li>
+</ul>
+<h3 id="HTTP2"><a href="#HTTP2" class="headerlink" title="HTTP2"></a>HTTP2</h3><p>基于 SPDY 协议</p>
+<h4 id="HTTP1-1-和-HTTP2-的区别"><a href="#HTTP1-1-和-HTTP2-的区别" class="headerlink" title="HTTP1.1 和 HTTP2 的区别"></a>HTTP1.1 和 HTTP2 的区别</h4><ol>
+<li>多路复用，用一个 TCP 进行连接共享，一个请求对应一个 id，这样就可以发送多个请求，接收方通过 id 来响应不同的请求，解决了 http1.1 队首阻塞和连接过多的问题。因为 http2.0 在同一域名不论访问多少文件都只有一个连接，所以对服务器而言，提升的并发量是很大的。</li>
+<li>二进制数据帧和流的概念，数据拆分成数据帧传输，并进行顺序标识，接收方收到数据后按序组合即可获取正确数据。这样就可以并行传输了，解决了 http1.0 只能串行传输的问题。</li>
+<li>Sever Push。 服务端可以在客户端某个请求之后，主动推送其他资源（用 Link 头部字段）。</li>
+<li>压缩头部，解决了 http1.1 中头部反复传输资源浪费（请求的很多字段都是重复的，比如Cookie和User Agent）的问题。一方面，头信息使用gzip或compress压缩后再发送；另一方面，客户端和服务器同时维护一张头信息表，所有字段都会存入这个表，生成一个索引号，以后就不发送同样字段了，只发送索引号，这样就提高速度了</li>
+</ol>
+<h4 id="存在问题"><a href="#存在问题" class="headerlink" title="存在问题"></a>存在问题</h4><p>http2.0 使用了多路复用，一般来说同一域名下只需要使用一个 TCP 连接。<br>但是当连接中出现丢包时，整个 TCP 都要开始等待重传，后面的数据也都被阻塞了。而 http1.0 可以开启多个连接，只会影响一个，不会影响其他的。<br>所以在丢包情况下，http2.0 的情况反而不如 http1.0。</p>
+<h3 id="HTTP3-0"><a href="#HTTP3-0" class="headerlink" title="HTTP3.0"></a>HTTP3.0</h3><p>为了解决 2.0 丢包性能的问题，Google 基于 UDP 提出了 QUIC 协议。<br>HTTP3.0 中的底层支撑协议就是 QUIC。所以 http3.0 也叫 HTTP-over-QUIC。</p>
+<h5 id="QUIC-协议"><a href="#QUIC-协议" class="headerlink" title="QUIC 协议"></a>QUIC 协议</h5><p>UDP 协议高效，但不可靠。QUIC 基于 UDP，在原来的基础上结合了 tcp 和 http 的精华使它可靠。</p>
+<h6 id="特点："><a href="#特点：" class="headerlink" title="特点："></a>特点：</h6><ul>
+<li>多路复用<br>HTTP2 虽然是多路复用，但是 TCP 协议是没有这个功能的。QUIC 原始就包含此功能，并且传输的单个数据流可以保证有序交付且不会影响其他数据流<br>其在移动端也会比 TCP 好，因为 TCP 基于 IP+端口识别连接，不适合多变的网络环境，但是 QUIC 是通过 ID 识别连接，不论网络如何变化，只要 ID 不变，就能迅速连上（实时手游就是这样实现的）</li>
+<li>纠错机制<br>假如说这次我要发送三个包，协议会算出这三个包的异或值并单独发出一个校验包，也就是总共发出了四个包。<br>当出现其中的非校验包丢包的情况时，可以通过另外三个包计算出丢失的数据包的内容。<br>当然这种技术只能使用在丢失一个包的情况下，如果出现丢失多个包就不能使用纠错机制了，只能使用重传的方式了。</li>
+<li>0-RTT<br>通过使用类似 TCP 快速打开的技术，缓存当前会话的上下文，在下次恢复会话的时候，只需要将之前的缓存传递给服务端验证通过就可以进行传输了。</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/10/02/HTTP/" data-id="clmniym6p000mbb8784w16kol" data-title="HTTP" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Network/" rel="tag">Network</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-网络概述" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/10/02/%E7%BD%91%E7%BB%9C%E6%A6%82%E8%BF%B0/" class="article-date">
+  <time class="dt-published" datetime="2019-10-02T04:27:21.000Z" itemprop="datePublished">2019-10-02</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Basic-knowledge/">Basic knowledge</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/10/02/%E7%BD%91%E7%BB%9C%E6%A6%82%E8%BF%B0/">网络概述</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>转载声明：该文章有一部分转载自<a target="_blank" rel="noopener" href="https://github.com/CavsZhouyou/Front-End-Interview-Notebook/blob/master/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C.md#5-dns-%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A8-udp-%E5%8D%8F%E8%AE%AE%E4%BD%9C%E4%B8%BA%E4%BC%A0%E8%BE%93%E5%B1%82%E5%8D%8F%E8%AE%AE">CavsZhouyou</a>。欢迎大家去原博主观看，总结的更好</p>
+</blockquote>
+<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>详细资料可以参考： <a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html">《互联网协议入门（一）》</a> <a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2012/06/internet_protocol_suite_part_ii.html">《互联网协议入门（二）》</a></p>
+<h2 id="OSI-七层模型"><a href="#OSI-七层模型" class="headerlink" title="OSI 七层模型"></a>OSI 七层模型</h2><p>应用层 ：为应用程序（进程）提供服务，并管理应用程序之间的通信（SMTP、HTTP、FTP、DNS）<br>表示层 ：处理数据的标识问题，比如编码、格式转化、加密解密等<br>会话层 ：负责建立管理和断开通信连接，实现数据同步<br>传输层 ：负责向<strong>两个主机中进程之间的通讯</strong>提供服务,<strong>端到端</strong>传输数据，同时处理传输错误、控制流量等（TCP UDP）<br>网络层 ：负责为分组交换网上的不同<strong>主机</strong>提供通信服务。地址管理、路由选择（IP 协议）<br>数据链路层 ：数据分割成帧，mac 寻址、差错校验、信息纠正等。（以太网）<br>物理层 ：利用传输介质为数据链路层提供物理连接<br>发送端从应用层 → 物理层 打包发送<br>接收层从物理层 → 应用层 解析获取</p>
+<h2 id="计算机网络的分类"><a href="#计算机网络的分类" class="headerlink" title="计算机网络的分类"></a>计算机网络的分类</h2><p>按网络的作用范围分类，可分为广域网（WAN，几十到几千 km，跨省跨国），城域网（MAN，5-50km，城市间），局域网（LAN，1km 以内）</p>
+<h2 id="现代互联网的网络拓扑"><a href="#现代互联网的网络拓扑" class="headerlink" title="现代互联网的网络拓扑"></a>现代互联网的网络拓扑</h2><p>如图所示（这种各层的连接组成的结构就称为拓扑）</p>
+<ul>
+<li>边缘部分：eg.家庭或企业</li>
+<li>核心部分：各 ISP（Internet Service Provider，互联网服务提供商）之前的连接（地区 ISP，主干 ISP）</li>
+</ul>
+<p>客户-服务器（C&#x2F;S）模式：eg. 常规的 http 请求<br>对等连接（P2P）模式：当两台计算机上都运行了 P2P 的时候，两台计算机可以直接连接。eg. 迅雷的 P2P 下载</p>
+<h1 id="物理层"><a href="#物理层" class="headerlink" title="物理层"></a>物理层</h1><h2 id="通信方式"><a href="#通信方式" class="headerlink" title="通信方式"></a>通信方式</h2><p>根据信息在传输线上的传送方向，分为以下三种通信方式：</p>
+<ul>
+<li>单工通信：单向传输</li>
+<li>半双工通信：双向交替传输</li>
+<li>全双工通信：双向同时传输</li>
+</ul>
+<h2 id="比特流"><a href="#比特流" class="headerlink" title="比特流"></a>比特流</h2><p><strong>比特流是物理层传递信息的方式</strong>。1 为高电频，0 为低电频，两者的变化就可以形成比特流，如下图<br><img src="/img/%E7%BD%91%E7%BB%9C%E6%A6%82%E8%BF%B0/%E6%AF%94%E7%89%B9%E6%B5%81.png"></p>
+<h2 id="信道"><a href="#信道" class="headerlink" title="信道"></a>信道</h2><p>信道是往一个方向传送信息的媒体。（一条通信电路包含一个接收信道和一个发送信道）</p>
+<h3 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h3><p>单工信道（只有一个方向的，eg. 有线电视），半双工信道（双方都能发送和接收，但不能同时发送&#x2F;同时接收），全双工信道</p>
+<h3 id="信道复用技术"><a href="#信道复用技术" class="headerlink" title="信道复用技术"></a>信道复用技术</h3><p><img src="/img/%E7%BD%91%E7%BB%9C%E6%A6%82%E8%BF%B0/%E4%BF%A1%E9%81%93%E5%A4%8D%E7%94%A8.png"><br>复用技术有：频分复用、时分复用、统计时分复用、波分复用、码分复用</p>
+<h1 id="数据链路层"><a href="#数据链路层" class="headerlink" title="数据链路层"></a>数据链路层</h1><h2 id="数据链路层的基本特征"><a href="#数据链路层的基本特征" class="headerlink" title="数据链路层的基本特征"></a>数据链路层的基本特征</h2><ul>
+<li><strong>封装成帧</strong>。<strong>帧是数据链路层数据的基本单位</strong>。发送端在网络层传下来的数据（IP 数据报）前后添加特定标记形成“帧”（这些标记一般是一段比特流）；接收端根据前后特定标记识别出“帧”<br><img src="/img/%E7%BD%91%E7%BB%9C%E6%A6%82%E8%BF%B0/%E5%B8%A7.png"></li>
+<li><strong>透明传输</strong>。“透明”在计算机领域是非常重要的一个术语， 表示一个实际存在的事物看起来好像不存在一样，对链路层来说就是：即使控制字符在帧数据中，但是要当做不存在去处理。eg. 帧数据中，刚好有一段比特流长的跟帧尾部一毛一样。但是链路层会在这段比特流前加一个转义标志是，做到视而不见所以不会引起解析出错。</li>
+<li><strong>差错检测</strong>。9-9 最大传输单元 MTU（数据链路层）</li>
+</ul>
+<h2 id="MAC-地址"><a href="#MAC-地址" class="headerlink" title="MAC 地址"></a>MAC 地址</h2><p>也称为物理地址、硬件地址，是链路层地址，每个设备都有唯一的 MAC 地址，长度为 6 个字节，即 48 位 bit（16 进制表示）。在命令行工具输入 ipconfig &#x2F;all 可查看</p>
+<h2 id="以太网协议"><a href="#以太网协议" class="headerlink" title="以太网协议"></a>以太网协议</h2><p>以太网（Ethernet）是一种使用广泛的局域网技术，是应用于数据链路层的协议。使用以太网可以完成<strong>相邻设备</strong>的数据帧传输。</p>
+<h3 id="以太网的数据格式"><a href="#以太网的数据格式" class="headerlink" title="以太网的数据格式"></a>以太网的数据格式</h3><p><img src="/img/%E7%BD%91%E7%BB%9C%E6%A6%82%E8%BF%B0/%E4%BB%A5%E5%A4%AA%E7%BD%91.png"></p>
+<h3 id="MAC-地址表"><a href="#MAC-地址表" class="headerlink" title="MAC 地址表"></a>MAC 地址表</h3><p>存一些 MAC 地址和硬件接口的对应关系。单纯靠以太网只能完成相邻设备的传输。 eg. A-B-C （只能说 A 通过以太网传到 B，不能说 A 通过以太网直接传到 C，因为 A 的 MAC 地址表中没有 C 的地址）</p>
+<h1 id="网络层"><a href="#网络层" class="headerlink" title="网络层"></a>网络层</h1><p>负责传输的 IP 协议,作用是把数据包传输给对方(根据 IP 地址和 Mac 地址)<br>互联网中的传输是路由选择机制的，经过多台计算机和网络设备中转才连接到对方，并且我们只能知道起点和终点，过程无法悉知。</p>
+<h2 id="虚拟互连网络"><a href="#虚拟互连网络" class="headerlink" title="虚拟互连网络"></a>虚拟互连网络</h2><p>使用 IP 协议，可以把异构的物理网络连接起来，使得在网络层看起来好像是一个统一的网络<br><img src="/img/%E7%BD%91%E7%BB%9C%E6%A6%82%E8%BF%B0/%E8%99%9A%E6%8B%9F%E7%BD%91%E7%BB%9C.png"></p>
+<h2 id="IP-地址"><a href="#IP-地址" class="headerlink" title="IP 地址"></a>IP 地址</h2><p>IP 地址是节点被分配到的地址（可换）。长度为 32 位，常分为 4 个 8 位。常使用点分十进制来表示（每一位是 0~255）。eg. 255.111.11.71。<br>根据 ARP 协议能从 IP 地址查到 Mac 地址。Mac 地址才是通信目的地</p>
+<h2 id="路由"><a href="#路由" class="headerlink" title="路由"></a>路由</h2><p>交换机是在数据链路层，路由在网络层</p>
+<h3 id="路由器转发流程"><a href="#路由器转发流程" class="headerlink" title="路由器转发流程"></a>路由器转发流程</h3><p>有如下的网络拓扑结构<br><img src="/img/%E7%BD%91%E7%BB%9C%E6%A6%82%E8%BF%B0/%E8%B7%AF%E7%94%B1.png"><br>如计算机 A 想发信息给计算机 C，则流程为：</p>
+<ol>
+<li>A 发出目的地为 C 的 IP 数据报，<strong>查询路由表</strong>发现下一跳为 E，于是 A 将数据发给 E</li>
+<li>E<strong>查询路由表</strong>发现下一跳为 F，于是 E 将数据发给 F</li>
+<li>F<strong>查询路由表</strong>发现目的地 C<strong>直接连接</strong>，于是发给 C</li>
+</ol>
+<h3 id="路由器选择协议"><a href="#路由器选择协议" class="headerlink" title="路由器选择协议"></a>路由器选择协议</h3><p>互联网可以划分为许多较小的自治系统 AS，一个 AS 可以使用一种和别的 AS 不同的路由选择协议<br><strong>路由器是连接因特网中各局域网、广域网的设备，它会根据信道的情况自动选择和设定路由，以最佳路径，先后顺序发送信号</strong>。确定最佳路径方法就是路由选择协议。可以把路由选择协议划分为两大类：</p>
+<ul>
+<li>自治系统内部的路由选择：RIP 和 OSPF</li>
+<li>自治系统间的路由选择：BGP</li>
+</ul>
+<h1 id="传输层"><a href="#传输层" class="headerlink" title="传输层"></a>传输层</h1><h2 id="UDP-与-TCP-的区别"><a href="#UDP-与-TCP-的区别" class="headerlink" title="UDP 与 TCP 的区别"></a>UDP 与 TCP 的区别</h2><ul>
+<li>UDP 协议 是面向无连接的，不需要在正式传递数据之前先连接起双方；UDP 协议只是数据报文的搬运工，不保证有序（面向报文，即对传下来的报文只是加 UDP 首部）且不丢失的传递到对端；并且 UDP 协议也没有任何控制流量的算法；（支持一对一、一对多、多对一和多对多的交互通信；）总的来说 UDP 相较于 TCP 更加的<strong>轻便高效</strong>。一般可以用于直播、即时通讯、即时游戏等。</li>
+<li>TCP 无论是建立连接还是断开连接都需要先需要进行握手。在传输数据的过程中，通过各种算法(通过序号、确认号、定时重传、检验和等机制，来提供可靠的数据传输服务)保证数据的可靠性，有序性（面向字节流，将大块数据分割成以报文段位单位的数据包进行传输）。每一条 TCP 连接只能是点对点的（一对一）。TCP 提供了拥塞控制机制，在网络拥塞的时候会控制发送数据的速率，有助于减少数据包的丢失和减轻网络中的拥塞程度。TCP 提供了流量控制机制，保证了通信双方的发送和接收速率相同。如果接收方可接收的缓存很小时，发送方会降低发送 速率，避免因为缓存填满而造成的数据包的丢失。当然带来的问题就是相比 UDP 来说不那么的高效</li>
+</ul>
+<h2 id="TCP-报文段的的首部格式"><a href="#TCP-报文段的的首部格式" class="headerlink" title="TCP 报文段的的首部格式"></a>TCP 报文段的的首部格式</h2><ul>
+<li>序号：对报文段的编号，例如序号为 301</li>
+<li>确认号：期望收到的下一个报文段的序号，eg. 302</li>
+<li>*数据偏移：数据部分距离报文段起始处的偏移量，实际上指的是首部的长度</li>
+<li>确认 ACK：当 ACK&#x3D;1 时确认号字段有效，否则无效。TCP 规定，在连接建立后所有传送的报文段都必须把 ACK 置 1。</li>
+<li>同步 SYN：在连接建立时用来同步序号。当 SYN&#x3D;1，ACK&#x3D;0 时表示这是一个连接请求报文段。若对方同意建立连接，则响应报文中 SYN&#x3D;1，ACK&#x3D;1。</li>
+<li>终止 FIN：用来释放一个连接，当 FIN&#x3D;1 时，表示此报文段的发送方的数据已发送完毕，并要求释放连接。</li>
+<li>窗口：表示当前允许对方发送的最大数据量，单位是字节</li>
+</ul>
+<h2 id="TCP-的三次握手"><a href="#TCP-的三次握手" class="headerlink" title="TCP 的三次握手"></a>TCP 的三次握手</h2><p><img src="/img/%E7%BD%91%E7%BB%9C%E6%A6%82%E8%BF%B0/TCP3.png"><br>起初，两端都为 CLOSED 状态。在通信开始前，双方都会创建 TCP 连接（因为 HTTP 只有请求和相应）。 服务器创建完 TCP 连接 后便进入 LISTEN 状态，此时开始等待客户端发送数据。</p>
+<ul>
+<li>第一次：客户端向服务器端发送连接请求报文，会包含 SYN&#x3D;1（标志位），Seq&#x3D;X（初始序号，某个数），进入 SYN-SENT 状态；</li>
+<li>第二次：服务端收到请求报文后，发送应答：SYN&#x3D;1，Seq&#x3D;Y（初始序号），ACK（确认号）&#x3D;X+1，进入 SYN-RECEIVED 状态；</li>
+<li>第三次：客户端收到同意连接的应答后，发确认报文：ACK&#x3D;Y+1。进入 ESTABLISHED 状态。服务端收到受也进入 ESTABLISHED 状态。</li>
+</ul>
+<p><strong>要三次握手的原因</strong>：防止出现失效的连接请求报文段被服务端接收的情况，从而产生错误。<br>客户端发送了一个连接请求 A，但是因为网络原因造成了超时，这时 TCP 会启动超时重传的机制再次发送一个连接请求 B。此时请求顺利到达服务端，服务端应答完就建立了请求，然后接收数据后释放了连接。<br>假设这时候连接请求 A 在两端关闭后终于抵达了服务端，那么此时服务端会认为客户端又需要建立 TCP 连接，从而应答了该请求并进入 ESTABLISHED 状态。但是客户端其实是 CLOSED 的状态，那么就会导致服务端一直等待，造成资源的浪费。</p>
+<h2 id="TCP-断开连接的四次挥手"><a href="#TCP-断开连接的四次挥手" class="headerlink" title="TCP 断开连接的四次挥手"></a>TCP 断开连接的四次挥手</h2><p><img src="/img/%E7%BD%91%E7%BB%9C%E6%A6%82%E8%BF%B0/TCP4.png"><br>TCP 是全双工的，在断开连接时两端都需要发送 FIN 和 ACK。<br>第一次握手：若客户端 A 认为数据发送完成，则它需要向服务端 B 发送连接释放请求。<br>第二次握手：B 收到连接释放请求后，会告诉应用层要释放 TCP 链接。然后会发送 ACK 包，并进入 CLOSE_WAIT 状态，此时表明 A 到 B 的连接已经释放，<strong>不再接收 A 发的数据了</strong>。但是因为 TCP 连接是双向的，所以 B 仍旧可以发送数据给 A。<br>第三次握手：<strong>B 如果此时还有没发完的数据会继续发送，完毕后会向 A 发送连接释放请求</strong>，然后 B 便进入 LAST-ACK 状态。<br>第四次握手：A 收到释放请求后，向 B 发送确认应答，此时 A 进入 TIME-WAIT 状态。该状态会持续 2MSL（报文最大生存时间，指报文段在网络中生存的时间，超时会被抛弃） 时间，若该时间段内没有 B 的重发请求的话，就进入 CLOSED 状态。当 B 收到确认应答后，也便进入 CLOSED 状态。</p>
+<p>PS：通过延迟确认的技术（通常有时间限制，否则对方会误认为需要重传），可以将第二次和第三次握手合并，延迟 ACK 包的发送。<br><strong>为什么客户端 A 要进入 TIME-WAIT 状态，等待 2MSL 时间后才进入 CLOSED 状态？</strong><br>为了保证 B 能收到 A 的确认应答。若 A 发完确认应答后直接进入 CLOSED 状态，如果确认应答因为网络问题一直没有到达，那么会造成 B 不能正常关闭。（B 若 1MSL 后没收到，会重新发送 FIN 包。所以来回是 2MSL）</p>
+<h2 id="TCP-的流量控制"><a href="#TCP-的流量控制" class="headerlink" title="TCP 的流量控制"></a>TCP 的流量控制</h2><p>流量控制是为了控制发送方发送速率，保证接收方来得及接收。是通过滑动窗口和拥堵窗口实现的</p>
+<ul>
+<li>滑动窗口主要是用于接收方，保证接收方能够接受数据。接收方通过报文告知发送方当前接收窗口剩余大小，发送窗口根据该值提调整自身窗口来控制发送速率。（将窗口字段设置为 0，则发送方不能发送数据）<br><img src="/img/%E7%BD%91%E7%BB%9C%E6%A6%82%E8%BF%B0/%E7%AA%97%E5%8F%A3.png"></li>
+<li>*拥堵窗口，主要用于网络，防止过多的数据拥堵网络，避免负载过大的情况</li>
+</ul>
+<h2 id="连续-ARQ-协议"><a href="#连续-ARQ-协议" class="headerlink" title="连续 ARQ 协议"></a>连续 ARQ 协议</h2><p>连续 ARQ 协议是为了解决停止等待 ARQ 协议对于信道的利用率过低的问题。它通过连续发送一组分组，然后再等待对分组的 确认回答，对于如何处理分组中可能出现的差错恢复情况，一般可以使用滑动窗口协议和选择重传协议来实现。</p>
+<h3 id="滑动窗口协议"><a href="#滑动窗口协议" class="headerlink" title="滑动窗口协议"></a>滑动窗口协议</h3><p>使用滑动窗口协议，在发送方维持了一个发送窗口，发送窗口以前的分组是已经发送并确认了的分组，发送窗口中包含了已经发 送但未确认的分组和允许发送但还未发送的分组，发送窗口以后的分组是缓存中还不允许发送的分组。当发送方向接收方发送分 组时，会依次发送窗口内的所有分组，并且设置一个定时器，这个定时器可以理解为是最早发送但未收到确认的分组。如果在定 时器的时间内收到某一个分组的确认回答，则滑动窗口，将窗口的首部移动到确认分组的后一个位置，此时如果还有已发送但没 有确认的分组，则重新设置定时器，如果没有了则关闭定时器。如果定时器超时，则重新发送所有已经发送但还未收到确认的分 组。</p>
+<p>接收方使用的是累计确认的机制，对于所有按序到达的分组，接收方返回一个分组的肯定回答。如果收到了一个乱序的分组，那 么接方会直接丢弃，并返回一个最近的按序到达的分组的肯定回答。使用累计确认保证了确认号以前的分组都已经按序到达了， 所以发送窗口可以移动到已确认分组的后面。</p>
+<p>滑动窗口协议的缺点是因为使用了累计确认的机制，如果出现了只是窗口中的第一个分组丢失，而后面的分组都按序到达的情况 的话，那么滑动窗口协议会重新发送所有的分组，这样就造成了大量不必要分组的丢弃和重传。</p>
+<h3 id="选择重传协议"><a href="#选择重传协议" class="headerlink" title="选择重传协议"></a>选择重传协议</h3><p>因为滑动窗口使用累计确认的方式，所以会造成很多不必要分组的重传。使用选择重传协议可以解决这个问题。</p>
+<p>选择重传协议在发送方维护了一个发送窗口。发送窗口的以前是已经发送并确认的分组，窗口内包含了已发送但未被确认的分组， 已确认的乱序分组，和允许发送但还未发送的分组，发送窗口以后的是缓存中还不允许发送的分组。选择重传协议与滑动窗口协 议最大的不同是，发送方发送分组时，为一个分组都创建了一个定时器。当发送方接受到一个分组的确认应答后，取消该分组的 定时器，并判断接受该分组后，是否存在由窗口首部为首的连续的确认分组，如果有则向后移动窗口的位置，如果没有则将该分 组标识为已接收的乱序分组。当某一个分组定时器到时后，则重新传递这个分组。</p>
+<p>在接收方，它会确认每一个正确接收的分组，不管这个分组是按序的还是乱序的，乱序的分组将被缓存下来，直到所有的乱序分 组都到达形成一个有序序列后，再将这一段分组交付给上层。对于不能被正确接收的分组，接收方直接忽略该分组。</p>
+<p>详细资料可以参考： <a target="_blank" rel="noopener" href="https://blog.csdn.net/guoweimelon/article/details/50879588">《TCP 连续 ARQ 协议和滑动窗口协议》</a></p>
+<h2 id="TCP-的可靠运输机制"><a href="#TCP-的可靠运输机制" class="headerlink" title="TCP 的可靠运输机制"></a>TCP 的可靠运输机制</h2><p>TCP 的可靠运输机制是基于连续 ARQ 协议和滑动窗口协议的。</p>
+<p>TCP 协议在发送方维持了一个发送窗口，发送窗口以前的报文段是已经发送并确认了的报文段，发送窗口中包含了已经发送但 未确认的报文段和允许发送但还未发送的报文段，发送窗口以后的报文段是缓存中还不允许发送的报文段。当发送方向接收方发 送报文时，会依次发送窗口内的所有报文段，并且设置一个定时器，这个定时器可以理解为是最早发送但未收到确认的报文段。 如果在定时器的时间内收到某一个报文段的确认回答，则滑动窗口，将窗口的首部向后滑动到确认报文段的后一个位置，此时如 果还有已发送但没有确认的报文段，则重新设置定时器，如果没有了则关闭定时器。如果定时器超时，则重新发送所有已经发送 但还未收到确认的报文段，并将超时的间隔设置为以前的两倍。当发送方收到接收方的三个冗余的确认应答后，这是一种指示， 说明该报文段以后的报文段很有可能发生丢失了，那么发送方会启用快速重传的机制，就是当前定时器结束前，发送所有的已发 送但确认的报文段。</p>
+<p>接收方使用的是累计确认的机制，对于所有按序到达的报文段，接收方返回一个报文段的肯定回答。如果收到了一个乱序的报文 段，那么接方会直接丢弃，并返回一个最近的按序到达的报文段的肯定回答。使用累计确认保证了返回的确认号之前的报文段都 已经按序到达了，所以发送窗口可以移动到已确认报文段的后面。</p>
+<p>发送窗口的大小是变化的，它是由接收窗口剩余大小和网络中拥塞程度来决定的，TCP 就是通过控制发送窗口的长度来控制报文 段的发送速率。</p>
+<p>但是 TCP 协议并不完全和滑动窗口协议相同，因为许多的 TCP 实现会将失序的报文段给缓存起来，并且发生重传时，只会重 传一个报文段，因此 TCP 协议的可靠传输机制更像是窗口滑动协议和选择重传协议的一个混合体。制）</p>
+<h2 id="TCP-的拥塞控制机制"><a href="#TCP-的拥塞控制机制" class="headerlink" title="TCP 的拥塞控制机制"></a>TCP 的拥塞控制机制</h2><p>TCP 的拥塞控制主要是根据网络中的拥塞情况来控制发送方数据的发送速率，如果网络处于拥塞的状态，发送方就减小发送的 速率，这样一方面是为了避免继续增加网络中的拥塞程度，另一方面也是为了避免网络拥塞可能造成的报文段丢失。</p>
+<p>TCP 的拥塞控制主要使用了四个机制，分别是慢启动、拥塞避免、快速重传和快速恢复。</p>
+<p>慢启动的基本思想是，因为在发送方刚开始发送数据的时候，并不知道网络中的拥塞程度，所以先以较低的速率发送，进行试探 ，每次收到一个确认报文，就将发动窗口的长度加一，这样每个 RTT 时间后，发送窗口的长度就会加倍。当发送窗口的大小达 到一个阈值的时候就进入拥塞避免算法。</p>
+<p>拥塞避免算法是为了避免可能发生的拥塞，将发送窗口的大小由每过一个 RTT 增长一倍，变为每过一个 RTT ，长度只加一。 这样将窗口的增长速率由指数增长，变为加法线性增长。</p>
+<p>快速重传指的是，当发送方收到三个冗余的确认应答时，因为 TCP 使用的是累计确认的机制，所以很有可能是发生了报文段的 丢失，因此采用立即重传的机制，在定时器结束前发送所有已发送但还未接收到确认应答的报文段。</p>
+<p>快速恢复是对快速重传的后续处理，因为网络中可能已经出现了拥塞情况，所以会将慢启动的阀值减小为原来的一半，然后将拥 塞窗口的值置为减半后的阀值，然后开始执行拥塞避免算法，使得拥塞窗口缓慢地加性增大。简单来理解就是，乘性减，加性增。</p>
+<p>TCP 认为网络拥塞的主要依据是报文段的重传次数，它会根据网络中的拥塞程度，通过调整慢启动的阀值，然后交替使用上面四 种机制来达到拥塞控制的目的。</p>
+<p>详细资料可以参考： <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/7d59f9292b03">《TCP 的拥塞控制机制》</a> <a target="_blank" rel="noopener" href="http://www.voidcn.com/article/p-vrdkquop-ms.html">《网络基本功：TCP 拥塞控制机制》</a><br><a target="_blank" rel="noopener" href="https://juejin.im/post/5b7be0b2e51d4538db34a51e#heading-1">《搞定计算机网络面试，看这篇就够了（补充版）》</a></p>
+<h1 id="应用层"><a href="#应用层" class="headerlink" title="应用层"></a>应用层</h1><h2 id="常用端口"><a href="#常用端口" class="headerlink" title="常用端口"></a>常用端口</h2><p><img src="/img/%E7%BD%91%E7%BB%9C%E6%A6%82%E8%BF%B0/%E7%AB%AF%E5%8F%A3.png"></p>
+<h2 id="输入-URL-到页面渲染的整个流程"><a href="#输入-URL-到页面渲染的整个流程" class="headerlink" title="输入 URL 到页面渲染的整个流程"></a>输入 URL 到页面渲染的整个流程</h2><ul>
+<li>首先浏览器主进程接管，开了一个下载线程</li>
+<li>DNS 寻址</li>
+<li>然后进行 HTTP 请求：先 DNS 查询获取 IP 地址，接着是 TCP 三次握手，如果是 https 的话，还会 TCP 握手结束后就会进行 TLS 握手，然后就开始正式的传输数据</li>
+<li>接收到响应的文件之后，<strong>首先浏览器会判断状态码是什么</strong>，如果是 200 那就继续解析，如果 400 或 500 的话就会报错，如果 300 的话会进行重定向</li>
+<li>拿到文件后浏览器开始解析文件，通过文件的编码格式正确地去解码文件</li>
+<li>将解析完的内容转交给渲染进程管理（见浏览器这篇博文）。解析 DOM 时，解析绘制过程中，当浏览器遇到 link 标签或者 script、img 等标签，浏览器会去下载这些内容，遇到时候缓存的使用缓存，不适用缓存的重新下载资源</li>
+<li>绘制结束后，关闭 TCP 连接，会有四次挥手</li>
+</ul>
+<h2 id="DNS-协议"><a href="#DNS-协议" class="headerlink" title="DNS 协议"></a>DNS 协议</h2><p>DNS 是一个分布式数据库（每个站点只保留它自己的那部分数据），提供了主机名和 IP 地址之间相互转换的服务</p>
+<h3 id="域名的层级结构"><a href="#域名的层级结构" class="headerlink" title="域名的层级结构"></a>域名的层级结构</h3><p>DNS 系统采用的是分布式的解析方案，整个 DNS 架构是一种层次树状结构（树的根节点是根域名），这个树状结构称为 DNS 域名空间。</p>
+<p>域名具有层次结构，从上到下（从右往左）依次为：根域名（.root, 一般情况下都是省略不写的）；顶级域名，top-level domain，缩写为 TLD（.com，.cn，.net 等）；次级域名，second-level domain，缩写为 SLD（.baidu，.gooele 等）；主机名，host &#x2F; 三级域名（www, mial 等）</p>
+<p>根据域名的层级结构，管理不同层级域名的服务器，可以分为根域名服务器、顶级域名服务器和权威域名服务器</p>
+<h3 id="DNS-的查询过程"><a href="#DNS-的查询过程" class="headerlink" title="DNS 的查询过程"></a>DNS 的查询过程</h3><p>DNS 是基于 UDP 做的查询。DNS 的查询过程一般为，我们首先将 DNS 请求发送到本地 DNS 服务器，由本地 DNS 服务器来代为请求。</p>
+<ul>
+<li>从”根域名服务器”查到”顶级域名服务器”的 NS 记录（Name Server，负责管理该域名的服务器地址）和 A 记录（address，即 IP 地址）。</li>
+<li>从”顶级域名服务器”查到”次级域名服务器”的 NS 记录和 A 记录。</li>
+<li>从”次级域名服务器”查出”主机名”的 IP 地址。</li>
+</ul>
+<p>比如我们如果想要查询 <code>www.google.com</code> 的 IP 地址，我们首先会将请求发送到本地的 DNS 服务器中，本地 DNS 服务器会判断是否存在该域名的缓存；如果不存在，则向根<strong>域名服务器</strong>发送一个请求，它会返回负责 <code>.com</code> 的<strong>顶级域名服务器</strong>的 IP 地址的列表；然后本地 DNS 服务器再向其中一个负责 <code>.com</code> 的顶级域名服务器发送一个请求，它会返回负责 <code>.baidu</code> 的<strong>权威域名服务器</strong>的 IP 地址列表。然后本地 DNS 服务器再向其中一个权威域名服务器发送一个请求，它会返回一个对应的主机名的 IP 地址列表。（一个域名可能有多个 IP 地址，所以返回的是一个列表)</p>
+<p>详细步骤见<a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2016/06/dns.html">阮一峰-DNS 原理入门</a>，<a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2018/05/root-domain.html">阮一峰-根域名的知识</a></p>
+<h3 id="DNS-记录和报文"><a href="#DNS-记录和报文" class="headerlink" title="DNS 记录和报文"></a>DNS 记录和报文</h3><p>DNS 服务器中以资源记录的形式存储信息，每一个 DNS 响应报文一般包含多条资源记录。一条资源记录的具体的格式为</p>
+<p>（Name，Value，Type，TTL）</p>
+<p>其中 TTL 是资源记录的生存时间，它定义了资源记录能够被其他的 DNS 服务器缓存多长时间。</p>
+<p>常用的一共有四种 Type 的值，分别是 A、NS、CNAME 和 MX ，不同 Type 的值，对应资源记录代表的意义不同。</p>
+<ul>
+<li>如果 Type &#x3D; A（Address），则 Name 是主机名，Value 是主机名对应的 IP 地址。因此一条记录为 A 的资源记录，提供了标 准的主机名到 IP 地址的映射。</li>
+<li>如果 Type &#x3D; NS（Name Server），则 Name 是个域名，Value 是负责该域名的 DNS 服务器的主机名。这个记录主要用于 DNS 链式 查询时，返回下一级需要查询的 DNS 服务器的信息。</li>
+<li>如果 Type &#x3D; CNAME（Canonical Name），则 Name 为别名，Value 为该主机的规范主机名。该条记录用于向查询的主机返回一个主机名 对应的规范主机名，从而告诉查询主机去查询这个主机名的 IP 地址。主机别名主要是为了通过给一些复杂的主机名提供 一个便于记忆的简单的别名。</li>
+<li>如果 Type &#x3D; MX（Mail eXchange），则 Name 为一个邮件服务器的别名，Value 为邮件服务器的规范主机名。它的作用和 CNAME 是一 样的，都是为了解决规范主机名不利于记忆的缺点。</li>
+</ul>
+<h3 id="递归查询和迭代查询"><a href="#递归查询和迭代查询" class="headerlink" title="递归查询和迭代查询"></a>递归查询和迭代查询</h3><p>递归查询指的是查询请求发出后，域名服务器代为向下一级域名服务器发出请求，最后向用户返回查询的最终结果。使用递归查询，用户只需要发出一次查询请求。</p>
+<p>迭代查询指的是查询请求后，域名服务器返回单次查询的结果。下一级的查询由用户自己请求。使用迭代查询，用户需要发出多次的查询请求。</p>
+<p>一般我们向本地 DNS 服务器发送请求的方式就是递归查询，因为我们只需要发出一次请求，然后本地 DNS 服务器返回给我们最终的请求结果。而本地 DNS 服务器向其他域名服务器请求的过程是迭代查询的过程，因为每一次域名服务器只返回单次查询的结果，下一级的查询由本地 DNS 服务器自己进行。</p>
+<h3 id="DNS-缓存"><a href="#DNS-缓存" class="headerlink" title="DNS 缓存"></a>DNS 缓存</h3><p>在一个请求中，当某个 DNS 服务器接收到一个 DNS 回答后，它能够将回答中的信息缓存在本地存储器中。返回的资源记录中的 TTL 代表了该条记录的缓存的时间。</p>
+<h3 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h3><h4 id="负载均衡的概念"><a href="#负载均衡的概念" class="headerlink" title="负载均衡的概念"></a>负载均衡的概念</h4><p>在分布式系统中，负载均衡（Load Balancing）是一种将任务分派到多个服务端进程的方法，通常用于<strong>将工作负载分布到多个服务器</strong>来提高网站、应用、数据库或其他服务的性能和可靠性。能用于HTTP，HTTPS，DNS，TCP，UDP等的转发</p>
+<p>实现负载均衡主要有两个目的。第一个目的是将任务的处理负载均摊到不同的进程，以减少单一进程的负载，以达到处理能力水平扩容的目的。第二个目的则是提高容错能力</p>
+<h4 id="负载均衡器如何选择要转发的后端服务器？"><a href="#负载均衡器如何选择要转发的后端服务器？" class="headerlink" title="负载均衡器如何选择要转发的后端服务器？"></a>负载均衡器如何选择要转发的后端服务器？</h4><p>负载均衡器一般根据两个因素来决定要将请求转发到哪个服务器。首先，确保所选择的服务器能够对请求做出响应，然后根据预先配置的规则从健康服务器池（healthy pool）中进行选择。</p>
+<p>因为，负载均衡器应当只选择能正常做出响应的后端服务器，因此就需要有一种判断后端服务器是否「健康」的方法。为了监视后台服务器的运行状况，运行状态检查服务会定期尝试使用转发规则定义的协议和端口去连接后端服务器。如果，服务器无法通过健康检查，就会从池中剔除，保证流量不会被转发到该服务器，直到其再次通过健康检查为止。</p>
+<h4 id="负载均衡算法"><a href="#负载均衡算法" class="headerlink" title="负载均衡算法"></a>负载均衡算法</h4><p>负载均衡算法决定了后端的哪些健康服务器会被选中。几个常用的算法：</p>
+<ul>
+<li>Round Robin（轮询）：为第一个请求选择列表中的第一个服务器，然后按顺序向下移动列表直到结尾，然后循环。</li>
+<li>Least Connections（最小连接）：优先选择连接数最少的服务器，在普遍会话较长的情况下推荐使用。</li>
+<li>Source：根据请求源的 IP 的散列（hash）来选择要转发的服务器。这种方式可以一定程度上保证特定用户能连接到相同的服务器。</li>
+</ul>
+<h4 id="DNS-实现负载均衡"><a href="#DNS-实现负载均衡" class="headerlink" title="DNS 实现负载均衡"></a>DNS 实现负载均衡</h4><p>DNS 可以用于在冗余的服务器上实现负载平衡。因为现在一般的大型网站使用多台服务器提供服务，因此一个域名可能会对应多个服务器地址。当用户发起网站域名的 DNS 请求的时候，DNS 服务器返回这个域名所对应的服务器 IP 地址的集合，但在每个回答中，会循环这些 IP 地址的顺序，用户一般会选择<strong>排在前面的地址</strong>发送请求。以此将用户的请求均衡的分配到各个不同的服务器上，这样来实现负载均衡</p>
+<h3 id="DNS-为什么使用-UDP-协议作为传输层协议"><a href="#DNS-为什么使用-UDP-协议作为传输层协议" class="headerlink" title="DNS 为什么使用 UDP 协议作为传输层协议"></a>DNS 为什么使用 UDP 协议作为传输层协议</h3><p>DNS 使用 UDP 协议作为传输层协议的主要原因是为了避免使用 TCP 协议时造成的连接时延。因为为了得到一个域名的 IP 地<br>址，往往会向多个域名服务器查询，如果使用 TCP 协议，那么每次请求都会存在连接时延，这样使 DNS 服务变得很慢，因为大<br>多数的地址查询请求，都是浏览器请求页面时发出的，这样会造成网页的等待时间过长。</p>
+<p>使用 UDP 协议作为 DNS 协议会有一个问题，由于历史原因，物理链路的最小 MTU &#x3D; 576，所以为了限制报文长度不超过 576，<br><strong>UDP 的报文段的长度被限制在 512 个字节以内</strong>，这样一旦 DNS 的查询或者应答报文，超过了 512 字节，那么基于 UDP 的<br>DNS 协议就会被截断为 512 字节，那么有可能用户得到的 DNS 应答就是不完整的。这里 DNS 报文的长度一旦超过限制，并不<br>会像 TCP 协议那样被拆分成多个报文段传输，因为 UDP 协议不会维护连接状态，所以我们没有办法确定那几个报文段属于同一<br>个数据，UDP 只会将多余的数据给截取掉。<strong>为了解决这个问题，我们可以使用 TCP 协议去请求报文</strong>。</p>
+<p>DNS 还存在的一个问题是安全问题，就是我们没有办法确定我们得到的应答，一定是一个安全的应答，因为应答可以被他人伪造，<br>所以现在有了 DNS over HTTPS 来解决这个问题</p>
+<p>详细资料可参考： <a target="_blank" rel="noopener" href="https://www.zhihu.com/question/310145373">为什么 DNS 使用 UDP 而不是 TCP</a></p>
+<h2 id="CDN"><a href="#CDN" class="headerlink" title="CDN"></a>CDN</h2><h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p>CDN 是一个内容分发网络，通过对源网站资源的缓存，利用本身多台位于不同地域、不同运营商的服务器，向用户提供资就近访问的<br>功能。也就是说，用户的请求并不是直接发送给源网站，而是发送给 CDN 服务器，由 CND 服务器将请求定位到最近的含有该资源<br>的服务器上去请求。这样有利于提高网站的访问速度，同时通过这种方式也减轻了源服务器的访问压力。</p>
+<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>详细资料可参考：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/28939811">CDN知识详解</a></p>
+<p>参考资料<br>《图解 HTTP》<br><a target="_blank" rel="noopener" href="https://coding.imooc.com/class/355.html">慕课网</a><br><a target="_blank" rel="noopener" href="https://github.com/CyC2018/CS-Notes">CS-notes</a><br><a target="_blank" rel="noopener" href="https://blog.nowcoder.net/yiizgo">呓语</a><br><a target="_blank" rel="noopener" href="https://github.com/poetries/">poetries</a><br><a target="_blank" rel="noopener" href="https://github.com/CavsZhouyou/Front-End-Interview-Notebook/blob/master/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C.md">CavsZhouyou&#x2F;Front-End-Interview-Notebook</a><br><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2016/06/dns.html">阮一峰-DNS 原理入门</a><br><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2018/05/root-domain.html">阮一峰-根域名的知识</a><br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/32841479">什么是负载均衡</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/10/02/%E7%BD%91%E7%BB%9C%E6%A6%82%E8%BF%B0/" data-id="clmniym8e005fbb87bqnbgvec" data-title="网络概述" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Network/" rel="tag">Network</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-webpack小结" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/10/01/webpack%E5%B0%8F%E7%BB%93/" class="article-date">
+  <time class="dt-published" datetime="2019-10-01T15:49:21.000Z" itemprop="datePublished">2019-10-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Engineering/">Engineering</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/10/01/webpack%E5%B0%8F%E7%BB%93/">webpack小结</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="基本篇"><a href="#基本篇" class="headerlink" title="基本篇"></a>基本篇</h1><h2 id="对webpack的看法"><a href="#对webpack的看法" class="headerlink" title="对webpack的看法"></a>对webpack的看法</h2><p>webpack是一个<strong>模块打包工具</strong>。可以用webpack<strong>管理</strong>我们的<strong>模块依赖</strong>，并编绎输出模块们所需的静态文件。它能够很好地管理、打包Web开发中所用到的HTML、Javascript、CSS以及各种静态文件（图片、字体等），让开发过程更加高效。对于不同类型的资源，webpack有对应的模块加载器。webpack模块打包器会分析模块间的依赖关系，最后 <strong>生成了优化且合并后的静态资源</strong></p>
+<h2 id="entry-output"><a href="#entry-output" class="headerlink" title="entry &amp;&amp; output"></a>entry &amp;&amp; output</h2><h2 id="loader"><a href="#loader" class="headerlink" title="loader"></a>loader</h2><p>loader其实就是一个<strong>打包的方案</strong>，它知道对于某些特定的文件，webpack应该如何去打包。写在配置文件的 module 项中定义rules。</p>
+<h3 id="常用的loader"><a href="#常用的loader" class="headerlink" title="常用的loader"></a>常用的loader</h3><ul>
+<li>打包图片：file-loader，url-loader（会把图片打包成base64字符串直接放在打包好的js文件中。这样能使得html打开时候少点http请求，但是只适合于图片不要太大的情况，否则js文件太大也不好。所以可以加limit配置项）</li>
+<li>打包样式文件：style-loader（把打包好的css挂载在html的<code>&lt;head&gt;</code>），css-loader（分析各css文件的关系，合并成一个css文件）。如果是sass或stylus文件，还需要借助sass-loader，node-sass和stylus-loader。自动添加产商前缀（提高css兼容性）的postcss-loader</li>
+</ul>
+<p>PS：use中的<strong>loader的执行顺序的是从下到上，从右到左，所以顺序不能弄错</strong></p>
+<h2 id="plugins"><a href="#plugins" class="headerlink" title="plugins"></a>plugins</h2><p>plugin可以在webpack运行到某个时刻的时候，帮我们做一些事情（有点像生命周期函数）。写在配置文件的 plugins 项中</p>
+<h3 id="常用的plugins"><a href="#常用的plugins" class="headerlink" title="常用的plugins"></a>常用的plugins</h3><ul>
+<li>html-webpack-plugin。会在<strong>打包结束后</strong>，自动生成一个html文件，并把打包生成的js自动引入到这个html文件中</li>
+<li>clean-webpack-plugin。不是官网写的插件。会在<strong>打包开始前</strong>，把原来的打包目录删除</li>
+</ul>
+<h2 id="SourceMap"><a href="#SourceMap" class="headerlink" title="SourceMap"></a>SourceMap</h2><p>当 webpack 打包源代码时，可能会很难追踪到错误和警告在源代码中的原始位置（只是显示在打包后的文件中的错误的位置），用SouceMap即可通过<strong>映射关系</strong>能知道该错误在源代码中的位置</p>
+<h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><p>在development模式下默认SourceMap已经被配置进去了，若想关闭可用 devtool: none</p>
+<h3 id="devtool配置项的几种写法"><a href="#devtool配置项的几种写法" class="headerlink" title="devtool配置项的几种写法"></a>devtool配置项的几种写法</h3><ul>
+<li>cheap：使打包性能提升，sourcemap提示错误只提示到行不提示列</li>
+<li>inline：把映射关系文件放在打包好的js文件中而不是生成一个单独的文件</li>
+<li>module：使得cheap-sourcemap不仅管打包好的文件和源js的关系，还会管loader、第三方模块等的关系</li>
+<li>eval：是最快的，会以eval的方式检查</li>
+</ul>
+<h3 id="devtool最配置"><a href="#devtool最配置" class="headerlink" title="devtool最配置"></a>devtool最配置</h3><p>在development下，用 cheap-module-eval-source-map<br>在production下，用 cheap-module-source-map </p>
+<h2 id="webpack-dev-server"><a href="#webpack-dev-server" class="headerlink" title="webpack-dev-server"></a>webpack-dev-server</h2><p>为我们提供了一个简单的 web 服务器，并且能够实时重新加载；不会生成打包好的目录，是把打包好的文件存在内存中，提高效率<br>使用方法：安装，添加命令，写 devServer 项</p>
+<h3 id="proxy转发"><a href="#proxy转发" class="headerlink" title="proxy转发"></a>proxy转发</h3><p>proxy配置项，其实用 Vue-cli 和 create-react-app 构建的项目的proxy功能本质就是这个配置项</p>
+<h3 id="模块热替换"><a href="#模块热替换" class="headerlink" title="模块热替换"></a>模块热替换</h3><p>Hot Module Replacement，HMR。</p>
+<h4 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h4><p>当源文件的发生改变的时候，理论上webpack-dev-server会帮我们打包更新，但是这个过程会刷新页面，使得页面上已有的样式&#x2F;数据被刷新了。用HMR能实现在运行时更新各种模块，而无需进行完全刷新</p>
+<h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a><a target="_blank" rel="noopener" href="https://www.webpackjs.com/concepts/hot-module-replacement/#%E8%BF%99%E4%B8%80%E5%88%87%E6%98%AF%E5%A6%82%E4%BD%95%E8%BF%90%E8%A1%8C%E7%9A%84-">原理</a></h4><h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4><ol>
+<li>更新 webpack-dev-server 的配置：devSever配置项中写 hot: true</li>
+<li>在plugins中实例化HMR插件</li>
+</ol>
+<p>对js文件的HMR功能需要手动多写一段代码</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="variable language_">module</span>.<span class="property">hot</span>) &#123; <span class="comment">// 注意</span></span><br><span class="line">  <span class="variable language_">module</span>.<span class="property">hot</span>.<span class="title function_">accept</span>(<span class="string">&#x27;./number.js&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 一些操作</span></span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>css-loader 中内置了<code>if(module.hot)...</code>这样的代码，所以我们手写</p>
+<h2 id="Babel"><a href="#Babel" class="headerlink" title="Babel"></a>Babel</h2><p>安装 babel-loader（其实只是打通webpack和babel的一个通道），@babel&#x2F;core，@babel&#x2F;preset-env（这个才是翻译器）@babel&#x2F;polyfill（<strong>添加ES6中的新函数新变量</strong>，eg. Promise和Map）<br>具体配置方法见Babel官方文档</p>
+<h3 id="babel-polyfill"><a href="#babel-polyfill" class="headerlink" title="@babel&#x2F;polyfill"></a>@babel&#x2F;polyfill</h3><ul>
+<li>默认情况下polyfill会把所有新变量和函数都添加进打包好的文件，文件会变得较大，可写 useBuiltIns实现按需添加；可写target设定在目标浏览器，会自己判断是否添加这些新变量。（当options太长的时候可以直接把该对象放在根目录下的.babelrc ）<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">options</span>: &#123;</span><br><span class="line">          <span class="attr">presets</span>: [[<span class="string">&quot;@babel/preset-env&quot;</span>, &#123;</span><br><span class="line">            <span class="attr">targets</span>: &#123;</span><br><span class="line">              <span class="attr">edge</span>: <span class="string">&quot;17&quot;</span>,</span><br><span class="line">              <span class="attr">firefox</span>: <span class="string">&quot;60&quot;</span>,</span><br><span class="line">              <span class="attr">chrome</span>: <span class="string">&quot;67&quot;</span>,</span><br><span class="line">              <span class="attr">safari</span>: <span class="string">&quot;11.1&quot;</span>,</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">useBuiltIns</span>: <span class="string">&#x27;usage&#x27;</span> &#125;]]</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure></li>
+<li>此外，polyfill添加新变量是以全局变量的形式，会污染全局环境，当我们在打包UI组件库&#x2F;类库的时候，就不能用这种配置方式。应安装@babel&#x2F;plugin-transform-runtime，@babel&#x2F;runtime 。配置方法见<a target="_blank" rel="noopener" href="https://babeljs.io/docs/en/babel-plugin-transform-runtime">文档</a></li>
+</ul>
+<h1 id="高级概念"><a href="#高级概念" class="headerlink" title="高级概念"></a>高级概念</h1><h2 id="Tree-Shaking"><a href="#Tree-Shaking" class="headerlink" title="Tree Shaking"></a><a target="_blank" rel="noopener" href="https://jacleklm.github.io/2019/09/26/webpack%E4%B9%8BTree%20Shaking/">Tree Shaking</a></h2><h2 id="Code-Splitting"><a href="#Code-Splitting" class="headerlink" title="Code Splitting"></a><a target="_blank" rel="noopener" href="https://jacleklm.github.io/2019/09/26/webpack%E4%B9%8BCode%20Splitting/">Code Splitting</a></h2><h3 id="CSS文件的代码分割"><a href="#CSS文件的代码分割" class="headerlink" title="CSS文件的代码分割"></a>CSS文件的代码分割</h3><ul>
+<li>一般情况下，css会被打包在js文件中，如果想把css文件单独打包，需要用 MiniCssExtractPlugin (该插件不支持HMR，一般只在生产环境下使用，详细用法见笔记)</li>
+<li>css 压缩用 optimize-css-assets-webpack-plugin</li>
+</ul>
+<p>Chunks：打包生成的每个文件都是一个chunk，打包生成很多个js文件，就有很多个chunk<br>output的chunkFilename配置项：如果一个打包后的文件会直接被html引用，那就是走filename，否则就是chunkFilename</p>
+<h2 id="Lazy-loading"><a href="#Lazy-loading" class="headerlink" title="Lazy loading"></a><a target="_blank" rel="noopener" href="https://jacleklm.github.io/2019/09/27/webpack%E4%B9%8BLazy%20Loading/">Lazy loading</a></h2><h2 id="Shimming"><a href="#Shimming" class="headerlink" title="Shimming"></a>Shimming</h2><p><strong>应用场景</strong>：由于webpack具有模块化开发的理念，所以当index.js中有引入jQuery，而有个模块用了$变量却没import jQuery的时候，打包的时候这个模块的$还是会翻译不出，手动往每个用了$的模块去import却很麻烦。故可用shimming。<br><strong>解决方法</strong>：<br>在common中require(‘webpack’)，然后在plugin中写入new webpack.ProvidePlugin({  $: ‘jquery’  })<br>当发现模块中有 $ 时，就会自动给这个模块引入jQuery</p>
+<h2 id="打包分析"><a href="#打包分析" class="headerlink" title="打包分析"></a>打包分析</h2><p>当我们用webpack打包之后，可以用打包分析的工具进行分析，看打包是否合理。看代码分割是否合理</p>
+<h3 id="使用-1"><a href="#使用-1" class="headerlink" title="使用"></a>使用</h3><p>按<a target="_blank" rel="noopener" href="https://github.com/webpack/analyse">文档</a>提示加命令，会在打包过程中生成json文件描述打包过程，把这个文件传到<a target="_blank" rel="noopener" href="http://webpack.github.com/analyse">网站</a>即可；也可以用<a target="_blank" rel="noopener" href="https://www.webpackjs.com/guides/code-splitting/#bundle-%E5%88%86%E6%9E%90-bundle-analysis-">官方文档</a>建议的方法</p>
+<h2 id="preloading-prefetching"><a href="#preloading-prefetching" class="headerlink" title="preloading &amp; prefetching"></a>preloading &amp; prefetching</h2><p>怎么看页面的代码使用率？ 用<a target="_blank" rel="noopener" href="https://blog.csdn.net/Aero_K/article/details/82492634">coverage</a><br>webpack希望我们<strong>多写异步加载的代码（多用懒加载）</strong>，能提高页面的代码使用率，eg，把具体代码写在一个js文件中，然后在index.js中写。（所以代码分割默认是async）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">document</span>.<span class="title function_">addEventListener</span>(<span class="string">&#x27;click&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">import</span>(<span class="string">&#x27;./click.js&#x27;</span>).<span class="title function_">then</span>(<span class="function">(<span class="params">&#123;<span class="keyword">default</span>: func&#125;</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="title function_">func</span>();</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>但是等到用户点击的时候再加载代码，加载时间可能也比较长，这时就可用<strong>preloading、prefetching</strong>：实现在页面加加载完之后，在接下来的空闲时间偷偷地把异步操作的代码下载好，这样真正用的时候只需要加载缓存即可（这个其实是prefetching；preloading是会和主代码一起加载）。<br>使用方法是在import语句中写入<a target="_blank" rel="noopener" href="https://webpack.js.org/guides/code-splitting/">魔法注释</a>即可 &#x2F;* webpackPrefetch: true *&#x2F; </p>
+<h2 id="提升webpack打包速度的方法"><a href="#提升webpack打包速度的方法" class="headerlink" title="提升webpack打包速度的方法"></a><a target="_blank" rel="noopener" href="https://jacleklm.github.io/2019/09/27/%E6%8F%90%E5%8D%87webpack%E6%89%93%E5%8C%85%E9%80%9F%E5%BA%A6%E7%9A%84%E6%96%B9%E6%B3%95/">提升webpack打包速度的方法</a></h2><h1 id="原理篇"><a href="#原理篇" class="headerlink" title="原理篇"></a>原理篇</h1><h2 id="如何编写一个plugin"><a href="#如何编写一个plugin" class="headerlink" title="如何编写一个plugin"></a><a target="_blank" rel="noopener" href="https://jacleklm.github.io/2019/09/29/%E5%A6%82%E4%BD%95%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AAplugin/">如何编写一个plugin</a></h2><h2 id="如何编写一个loader"><a href="#如何编写一个loader" class="headerlink" title="如何编写一个loader"></a><a target="_blank" rel="noopener" href="https://jacleklm.github.io/2019/09/28/%E5%A6%82%E4%BD%95%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AAloader/">如何编写一个loader</a></h2><h2 id="Bundler源码编写"><a href="#Bundler源码编写" class="headerlink" title="Bundler源码编写"></a><a target="_blank" rel="noopener" href="https://jacleklm.github.io/2019/09/30/Bundler%E6%BA%90%E7%A0%81%E7%BC%96%E5%86%99/">Bundler源码编写</a></h2><h2 id="Vue-Cli3"><a href="#Vue-Cli3" class="headerlink" title="Vue Cli3"></a>Vue Cli3</h2><p>如果想改Vue项目中webpack配置，是直接建立vue.config.js然后按<a target="_blank" rel="noopener" href="https://cli.vuejs.org/zh/config/">文档</a>简单粗暴地去配置就可以了，对新手十分友好，vue-cli会在底层自己转变成webpack配置并实施</p>
+<p>参考资料<br><a target="_blank" rel="noopener" href="https://coding.imooc.com/class/316.html">慕课网-从基础到实战 手把手带你掌握新版Webpack4.0</a><br>webpack官方文档</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/10/01/webpack%E5%B0%8F%E7%BB%93/" data-id="clmniym7i002vbb87604w5259" data-title="webpack小结" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webpack/" rel="tag">webpack</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-Bundler源码编写" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/09/30/Bundler%E6%BA%90%E7%A0%81%E7%BC%96%E5%86%99/" class="article-date">
+  <time class="dt-published" datetime="2019-09-30T15:00:21.000Z" itemprop="datePublished">2019-09-30</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Engineering/">Engineering</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/09/30/Bundler%E6%BA%90%E7%A0%81%E7%BC%96%E5%86%99/">Bundler源码编写</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="实现代码"><a href="#实现代码" class="headerlink" title="实现代码"></a>实现代码</h3><p>实现一个类似webpack的打包工具，代码如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> parser = <span class="built_in">require</span>(<span class="string">&#x27;@babel/parser&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> traverse = <span class="built_in">require</span>(<span class="string">&#x27;@babel/traverse&#x27;</span>).<span class="property">default</span></span><br><span class="line"><span class="keyword">const</span> babel = <span class="built_in">require</span>(<span class="string">&#x27;@babel/core&#x27;</span>)</span><br><span class="line"> </span><br><span class="line"><span class="keyword">const</span> <span class="title function_">moduleAnalyser</span> = (<span class="params">filename</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> content = fs.<span class="title function_">readFileSync</span>(filename, <span class="string">&#x27;utf-8&#x27;</span>) <span class="comment">//  content为用fs得到的入口文件的源代码</span></span><br><span class="line">  <span class="keyword">const</span> ast = parser.<span class="title function_">parse</span>(content, &#123; <span class="comment">//  ast为由源代码得到的抽象语法树</span></span><br><span class="line">    <span class="attr">sourceType</span>: <span class="string">&#x27;module&#x27;</span></span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="keyword">const</span> dependencies = &#123;&#125;</span><br><span class="line">  <span class="title function_">traverse</span>(ast, &#123; <span class="comment">//  用traverse在抽象语法树中找到有ImportDeclaration的部分（代码中的import的语句）</span></span><br><span class="line">    <span class="title class_">ImportDeclaration</span>(&#123; node &#125;) &#123;</span><br><span class="line">      <span class="keyword">const</span> dirname = path.<span class="title function_">dirname</span>(filename)</span><br><span class="line">      <span class="keyword">const</span> newFile = <span class="string">&#x27;./&#x27;</span> + path.<span class="property">posix</span>.<span class="title function_">join</span>(dirname, node.<span class="property">source</span>.<span class="property">value</span>)</span><br><span class="line">      dependencies[node.<span class="property">source</span>.<span class="property">value</span>] = (newFile) </span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="keyword">const</span> &#123; code &#125; = babel.<span class="title function_">transformFromAst</span>(ast, <span class="literal">null</span>, &#123;</span><br><span class="line">    <span class="attr">presets</span>: [<span class="string">&#x27;@babel/preset-env&#x27;</span>]</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="keyword">return</span> &#123; <span class="comment">//  这是分析结果</span></span><br><span class="line">    filename,</span><br><span class="line">    dependencies,</span><br><span class="line">    code</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">makeDependencoesGraph</span> = (<span class="params">entry</span>) =&gt; &#123; </span><br><span class="line">  <span class="keyword">const</span> entryModule = <span class="title function_">moduleAnalyser</span>(entry) <span class="comment">//  拿到分析结果</span></span><br><span class="line">  <span class="keyword">const</span> graphArray = [entryModule] <span class="comment">//  用队列，遍历加递归，实现将各层依赖加进这个数组中，得到依赖图谱</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; graphArray.<span class="property">length</span>; i++) &#123;</span><br><span class="line">    <span class="keyword">const</span> item = graphArray[i]</span><br><span class="line">    <span class="keyword">const</span> &#123; dependencies &#125; = item</span><br><span class="line">    <span class="keyword">if</span> (dependencies) &#123;</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">let</span> j <span class="keyword">in</span> dependencies) &#123;</span><br><span class="line">        graphArray.<span class="title function_">push</span>(</span><br><span class="line">          <span class="title function_">moduleAnalyser</span>(dependencies[j])</span><br><span class="line">        )</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">const</span> graph = &#123;&#125;  <span class="comment">//  对图谱做一个简化，方便之后用</span></span><br><span class="line">  graphArray.<span class="title function_">forEach</span>(<span class="function"><span class="params">item</span> =&gt;</span> &#123;</span><br><span class="line">    graph[item.<span class="property">filename</span>] = &#123;</span><br><span class="line">      <span class="attr">dependencies</span>: item.<span class="property">dependencies</span>,</span><br><span class="line">      <span class="attr">code</span>: item.<span class="property">code</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="keyword">return</span> graph</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">generateCode</span> = (<span class="params">entry</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> graph = <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(<span class="title function_">makeDependencoesGraph</span>(entry))</span><br><span class="line">  <span class="comment">//  依赖图谱中各个依赖的代码其实都有require和export，但是浏览器是无法识别的，所以我们要自己写</span></span><br><span class="line">  <span class="comment">//  require(&#x27;$&#123;entry&#125;&#x27;)中要加单引号，因为我们的要拼接一些代码而不是真正去执行一些代码</span></span><br><span class="line">  <span class="keyword">return</span> <span class="string">`</span></span><br><span class="line"><span class="string">    (function(graph) &#123;</span></span><br><span class="line"><span class="string">      function require(module) &#123;</span></span><br><span class="line"><span class="string">        function localRequire(relativePath) &#123;</span></span><br><span class="line"><span class="string">          return require(graph[module].dependencies[relativePath])</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">        var exports = &#123;&#125;;</span></span><br><span class="line"><span class="string">        (funcrion(require, exports, code) &#123;</span></span><br><span class="line"><span class="string">          eval(code);</span></span><br><span class="line"><span class="string">        &#125;)(localRequire, exports, graph[module].code);</span></span><br><span class="line"><span class="string">        return exports;</span></span><br><span class="line"><span class="string">      &#125;;</span></span><br><span class="line"><span class="string">      require(&#x27;<span class="subst">$&#123;entry&#125;</span>&#x27;)</span></span><br><span class="line"><span class="string">    &#125;)(<span class="subst">$&#123;graph&#125;</span>);</span></span><br><span class="line"><span class="string">  `</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="代码解读"><a href="#代码解读" class="headerlink" title="代码解读"></a>代码解读</h3><h4 id="moduleAnalyser"><a href="#moduleAnalyser" class="headerlink" title="moduleAnalyser"></a>moduleAnalyser</h4><p>要对入口文件进行打包，我们应该对入口文件进行分析：</p>
+<ul>
+<li>拿到入口文件的源代码。借助fs模块实现</li>
+<li>找到入口文件的依赖。借助@babel&#x2F;parser，把源代码转换成AST，再用@babel&#x2F;traverse找到源代码中的声明的语句而找到依赖的路径。创建一个对象来保存这些依赖即可</li>
+<li>ES6转ES5。@babel&#x2F;core，@babel&#x2F;preset-env</li>
+</ul>
+<h4 id="makeDependencoesGraph"><a href="#makeDependencoesGraph" class="headerlink" title="makeDependencoesGraph"></a>makeDependencoesGraph</h4><p>模块的依赖里又会引用其他依赖，想完全分析好必须弄清所有依赖的关系，创建依赖图谱</p>
+<h4 id="generateCode"><a href="#generateCode" class="headerlink" title="generateCode"></a>generateCode</h4><p>生成最终打包完成的代码。return的应该是打包生成的代码（字符串），同时这些代码应该是一个闭包，避免污染全局环境</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/09/30/Bundler%E6%BA%90%E7%A0%81%E7%BC%96%E5%86%99/" data-id="clmniym6e0008bb87296ra9gl" data-title="Bundler源码编写" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webpack/" rel="tag">webpack</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-如何编写一个plugin" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/09/29/%E5%A6%82%E4%BD%95%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AAplugin/" class="article-date">
+  <time class="dt-published" datetime="2019-09-29T12:10:21.000Z" itemprop="datePublished">2019-09-29</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Engineering/">Engineering</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/09/29/%E5%A6%82%E4%BD%95%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AAplugin/">如何编写一个plugin</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="什么是plugin"><a href="#什么是plugin" class="headerlink" title="什么是plugin"></a>什么是plugin</h3><p>plugin能帮助我们在webpack打包生成文件的某个事件段帮我们做一些事，类似于Vue中的生命周期函数。例如html-webpack-plugin能帮我们在打包结束生成html文件，并把打包生成的脚本文件插入html中。</p>
+<h3 id="plugin的编写"><a href="#plugin的编写" class="headerlink" title="plugin的编写"></a>plugin的编写</h3><p>假如我们想写一个plugin，这个plguin能帮我们在打包生成文件之后再生成一个.txt文件，里面写我们的版权信息。实现代码如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">CopyrightWebpackPlugin</span> &#123;</span><br><span class="line">  <span class="comment">//  constructor部分仅为演示用的代码</span></span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">options</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(options.<span class="property">name</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="title function_">apply</span>(<span class="params">compiler</span>) &#123;</span><br><span class="line">    compiler.<span class="property">hooks</span>.<span class="property">emit</span>.<span class="title function_">tapAsync</span>(<span class="string">&#x27;CopyrightWebpackPlugin&#x27;</span>, <span class="function">(<span class="params">compilation, cb</span>) =&gt;</span> &#123; <span class="comment">// 在emit这个钩子的时期，执行里面的函数。异步的钩子就是用tapAsync</span></span><br><span class="line">      compilation.<span class="property">assets</span>[<span class="string">&#x27;copyright.txt&#x27;</span>]= &#123; <span class="comment">// assets属性是打包生成的内容(对象)，往这个对象写新的属性即能新增文件</span></span><br><span class="line">        <span class="attr">source</span>: <span class="keyword">function</span>(<span class="params"></span>) &#123; <span class="comment">//  文件的内容</span></span><br><span class="line">          <span class="keyword">return</span> <span class="string">&#x27;copyright by Jacleklm&#x27;</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">size</span>: <span class="keyword">function</span>(<span class="params"></span>) &#123; <span class="comment">//  文件的长度</span></span><br><span class="line">          <span class="keyword">return</span> <span class="number">21</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="title function_">cb</span>()</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = <span class="title class_">CopyrightWebpackPlugin</span></span><br></pre></td></tr></table></figure>
+<h3 id="代码解读"><a href="#代码解读" class="headerlink" title="代码解读"></a>代码解读</h3><h4 id="插件是一个类"><a href="#插件是一个类" class="headerlink" title="插件是一个类"></a>插件是一个类</h4><h4 id="向插件传递参数：通过在webpack配置的new-xxx里写对象属性（如下面的代码），而插件的constructor的参数则能接收这个对象（如上面的代码的constructor部分）。"><a href="#向插件传递参数：通过在webpack配置的new-xxx里写对象属性（如下面的代码），而插件的constructor的参数则能接收这个对象（如上面的代码的constructor部分）。" class="headerlink" title="向插件传递参数：通过在webpack配置的new xxx里写对象属性（如下面的代码），而插件的constructor的参数则能接收这个对象（如上面的代码的constructor部分）。"></a>向插件传递参数：通过在webpack配置的new xxx里写对象属性（如下面的代码），而插件的constructor的参数则能接收这个对象（如上面的代码的constructor部分）。</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">plugins</span>: [</span><br><span class="line">    <span class="keyword">new</span> <span class="title class_">CopyrightWebpackPlugin</span>(&#123;</span><br><span class="line">      <span class="attr">name</span>: <span class="string">&#x27;Jacleklm&#x27;</span></span><br><span class="line">    &#125;)</span><br><span class="line">  ],</span><br></pre></td></tr></table></figure>
+<h4 id="compiler"><a href="#compiler" class="headerlink" title="compiler"></a>compiler</h4><p>compiler对象是webpack的实例，compiler有很多<a target="_blank" rel="noopener" href="https://www.webpackjs.com/api/compiler-hooks/#emit">hooks（钩子）</a>，挑选合适的钩子（eg. <code>emit</code>）写要执行的操作即可。</p>
+<h4 id="compilation"><a href="#compilation" class="headerlink" title="compilation"></a>compilation</h4><p>compilation里存放的是这一次打包的所有内容，eg. 打包生成的内容是放在<code>compilation.assets</code>中。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/09/29/%E5%A6%82%E4%BD%95%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AAplugin/" data-id="clmniym7q003obb87csssh9ep" data-title="如何编写一个plugin" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webpack/" rel="tag">webpack</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-如何编写一个loader" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/09/28/%E5%A6%82%E4%BD%95%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AAloader/" class="article-date">
+  <time class="dt-published" datetime="2019-09-28T06:27:21.000Z" itemprop="datePublished">2019-09-28</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Engineering/">Engineering</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/09/28/%E5%A6%82%E4%BD%95%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AAloader/">如何编写一个loader</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="什么是loader"><a href="#什么是loader" class="headerlink" title="什么是loader"></a>什么是loader</h3><p>loader其实是一种打包方案，loader可以将所有类型的文件转换为 webpack 能够处理的有效模块，然后你就可以利用 webpack 的打包能力，对它们进行处理。</p>
+<h3 id="自己编写的loader的使用"><a href="#自己编写的loader的使用" class="headerlink" title="自己编写的loader的使用"></a>自己编写的loader的使用</h3><p>同普通loader一样，在webpack.config.js的<code>module</code>中写新的<code>rule</code>，还要在webpack.config.js新写一个配置项<code>resolveLoader</code>（代码如下所示），意思是按名称现在<code>node_modules</code>中找loader，找不到再去 .&#x2F;loader 文件夹中找（自己写的loader放在该文件夹中，为replaceLoader.js）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">resolveLoader</span>: &#123;</span><br><span class="line">  <span class="attr">modules</span>: [<span class="string">&#x27;node_modules&#x27;</span>, <span class="string">&#x27;./loaders&#x27;</span>]</span><br><span class="line">&#125;,</span><br><span class="line"><span class="attr">module</span>: &#123;</span><br><span class="line">  <span class="attr">rules</span>: [&#123;</span><br><span class="line">    <span class="attr">test</span>: <span class="regexp">/\.js$/</span>,</span><br><span class="line">    <span class="attr">use</span>: &#123;</span><br><span class="line">      <span class="attr">loader</span>: <span class="string">&#x27;replaceLoader&#x27;</span>,</span><br><span class="line">      <span class="attr">options</span>: &#123;</span><br><span class="line">        <span class="attr">name</span>: <span class="string">&#x27;Jacleklm&#x27;</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="对loader传递数据"><a href="#对loader传递数据" class="headerlink" title="对loader传递数据"></a>对loader传递数据</h3><p>如上面的代码中，option即可用来传递参数，把想传递的参数写成option对象的属性。然后replaceLoader.js中用<code>this.query.属性</code>即可得到这个参数；也可以使用loader-util中的getOption方法来得到这个option对象。</p>
+<h3 id="loader的编写"><a href="#loader的编写" class="headerlink" title="loader的编写"></a>loader的编写</h3><p>在这里，我们假设入口文件index.js中的代码内容仅为<code>console.log(&#39;hello world&#39;);</code>，我们想编写一个loader对这个文件进行处理，实现把<code>world</code>改成<code>Jacleklm</code>。<br>loader其实是一个函数。在编写的时候，我们可以把loader放在一个单独的文件中，然后导出即可使用。注意在这里<code>module.exports = function() &#123; &#125;</code>的function不能写成箭头函数，因为在loader的编写中我们会常用到this，这里用箭头函数可能会造成this的使用出现麻烦。最终代码如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> loaderUtils = <span class="built_in">require</span>(<span class="string">&#x27;loader-utils&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = <span class="keyword">function</span> (<span class="params">source</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> options = loaderUtils.<span class="title function_">getOptions</span>(<span class="variable language_">this</span>)</span><br><span class="line">  <span class="keyword">return</span> source.<span class="title function_">replace</span>(<span class="string">&#x27;world&#x27;</span>, options.<span class="property">name</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/09/28/%E5%A6%82%E4%BD%95%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AAloader/" data-id="clmniym7p003kbb876y6fhccm" data-title="如何编写一个loader" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webpack/" rel="tag">webpack</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-提升webpack打包速度的方法" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/09/27/%E6%8F%90%E5%8D%87webpack%E6%89%93%E5%8C%85%E9%80%9F%E5%BA%A6%E7%9A%84%E6%96%B9%E6%B3%95/" class="article-date">
+  <time class="dt-published" datetime="2019-09-27T02:27:21.000Z" itemprop="datePublished">2019-09-27</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Engineering/">Engineering</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/09/27/%E6%8F%90%E5%8D%87webpack%E6%89%93%E5%8C%85%E9%80%9F%E5%BA%A6%E7%9A%84%E6%96%B9%E6%B3%95/">提升webpack打包速度的方法</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>及时更新版本（node，npm等），新版本一般都会有提高打包效率的新特性</li>
+<li>在尽可能少的模块上应用<code>loader</code>。可以优化文件搜索范围（即在rule中写include或exclude），eg. 可以不用编译<code>node_modules</code>中的代码，因为里面的都是编译过的</li>
+<li>plugin尽可能精简并确保可靠，也尽可能少用</li>
+<li>resolve参数合理配置<br><code>import</code>或<code>require</code>的时候可以不写文件后缀，而在<code>resolva</code>中写<code>resolve.extensions</code>，并尽可能减少后缀列表长度，将出现频率高的后缀排在前面<br><code>resolve.alias</code>：设置别名的方式映射一个路径，让webpack更快找到路径</li>
+<li><code>DllPluign</code><br><code>DllPlugin</code>可以将特定的类库提前打包然后引入。这种方式可以极大的减少打包类库的次数。主要当类库更新版本才有需要重新打包</li>
+<li>控制包的大小<br><code>TreeShaking</code>：可以删除项目中未被引用的代码<br>懒加载：实现按需加载，多写异步代码，提高页面的代码使用率</li>
+<li><code>thread-loader</code>和<code>happypack</code>可以可以利用node中的多进程， 同时利用多个CPO对项目打包；对多页面应用，使用<code>parallel-webpack</code>可以实现对多个页面一起打包</li>
+<li>合理使用sourceMap:用对<code>devtool</code>配置，在开发模式建议用<code>cheap-module-eval-source-map</code>；在生产模式建议用<code>cheap-module-source-map</code></li>
+<li>结合stats分析打包结果</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/09/27/%E6%8F%90%E5%8D%87webpack%E6%89%93%E5%8C%85%E9%80%9F%E5%BA%A6%E7%9A%84%E6%96%B9%E6%B3%95/" data-id="clmniym7z004dbb87b2ac92cf" data-title="提升webpack打包速度的方法" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webpack/" rel="tag">webpack</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-webpack之Lazy Loading" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/09/27/webpack%E4%B9%8BLazy%20Loading/" class="article-date">
+  <time class="dt-published" datetime="2019-09-27T01:27:21.000Z" itemprop="datePublished">2019-09-27</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Engineering/">Engineering</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/09/27/webpack%E4%B9%8BLazy%20Loading/">webpack之Lazy Loading</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h3><p>懒加载就是<strong>将不关键的资源延后加载</strong>，是一种很好的优化网页或应用的方式。<br>这种方式实际上是先把你的代码在一些逻辑断点处分离开，然后在一些代码块中完成某些操作后，立即引用或即将引用另外一些新的代码块。这样加快了应用的初始加载速度，减轻了它的总体体积，因为某些代码块可能永远不会被加载。</p>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>对于图片来说，先设置图片标签的<code>src</code>属性为一张占位图，将真实的图片资源放入一个自定义属性中，当进入自定义区域时，就将自定义属性替换为<code>src</code>属性，这样图片就会去下载资源，实现了图片懒加载。<br>懒加载不仅可以用于图片，也可以使用在别的资源上。例如下面这段代码实现click之后再执行异步函数在页面生成文字。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//  利用异步加载的代码，可以实现懒加载</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">getComponent</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; <span class="attr">default</span>: _ &#125; = <span class="keyword">await</span> <span class="keyword">import</span>(<span class="comment">/* webpackChunkName:&quot;lodash&quot;*/</span><span class="string">&#x27;lodash&#x27;</span>)</span><br><span class="line">  <span class="keyword">const</span> element = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;div&#x27;</span>)</span><br><span class="line">  element.<span class="property">innerHTML</span> = _.<span class="title function_">join</span>([<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;c&#x27;</span>], <span class="string">&#x27;***&#x27;</span>)</span><br><span class="line">  <span class="keyword">return</span> element</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable language_">document</span>.<span class="title function_">addEventListener</span>(<span class="string">&#x27;click&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="title function_">getComponent</span>().<span class="title function_">then</span>(<span class="function"><span class="params">element</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">document</span>.<span class="property">body</span>.<span class="title function_">appendChild</span>(element)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/09/27/webpack%E4%B9%8BLazy%20Loading/" data-id="clmniym7g002obb875mm19ebp" data-title="webpack之Lazy Loading" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webpack/" rel="tag">webpack</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-webpack之Code Splitting" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/09/26/webpack%E4%B9%8BCode%20Splitting/" class="article-date">
+  <time class="dt-published" datetime="2019-09-26T15:49:21.000Z" itemprop="datePublished">2019-09-26</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Engineering/">Engineering</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/09/26/webpack%E4%B9%8BCode%20Splitting/">webpack之Code Splitting</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h3><p>当我们的业务逻辑很大的时候（index.js很大），我们打包生成的文件会很大：用户打开页面要一次性加载这个很大的文件，需要很长的加载时间；当文件有一点点修改，用户又要重新加载这个很大的文件，又需要很长加载时间。所以可以用code splitting（代码分割）把代码分离到不同的 bundle 中，可以实现按需加载或并行加载这些文件，优化加载时间。</p>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>借用SplitChunksPlugin，可以实现对同步加载的代码或者异步加载的代码实现代码分割。把spliChunk写在webpack配置文件的optimization配置项中。代码如下</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">optimization</span>: &#123;</span><br><span class="line">  <span class="attr">splitChunks</span>: &#123;</span><br><span class="line">    <span class="attr">chunks</span>: <span class="string">&quot;async&quot;</span>, </span><br><span class="line">    <span class="attr">minSize</span>: <span class="number">30000</span>,</span><br><span class="line">    <span class="attr">minChunks</span>: <span class="number">1</span>,  </span><br><span class="line">    <span class="attr">maxAsyncRequests</span>: <span class="number">5</span>, </span><br><span class="line">    <span class="attr">maxInitialRequests</span>: <span class="number">3</span>, </span><br><span class="line">    <span class="attr">automaticNameDelimiter</span>: <span class="string">&#x27;~&#x27;</span>, </span><br><span class="line">    <span class="attr">name</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">cacheGroups</span>: &#123; </span><br><span class="line">      <span class="attr">vendors</span>: <span class="literal">false</span>, </span><br><span class="line">      <span class="attr">default</span>: <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="SplitChunksPlugin配置项详解"><a href="#SplitChunksPlugin配置项详解" class="headerlink" title="SplitChunksPlugin配置项详解"></a>SplitChunksPlugin配置项详解</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">splitChunks</span>: &#123;</span><br><span class="line">  <span class="attr">chunks</span>: <span class="string">&quot;async&quot;</span>,  <span class="comment">//  做代码分割的时候只对异步代码生效，也可以是initial（同步）或all</span></span><br><span class="line">  <span class="attr">minSize</span>: <span class="number">30000</span>,  <span class="comment">//  引入的库大于这个字节才会做代码分割</span></span><br><span class="line">  <span class="attr">minChunks</span>: <span class="number">1</span>,  <span class="comment">//  当一个模块至少被用了x次的时候，就对它进行代码分割</span></span><br><span class="line">  <span class="attr">maxAsyncRequests</span>: <span class="number">5</span>,   <span class="comment">//  最多只能对x个库进行代码分割，大于这个数，后面的库就不进行代码分割了</span></span><br><span class="line">  <span class="attr">maxInitialRequests</span>: <span class="number">3</span>,   <span class="comment">//  入口文件引入的库/js文件最多只能是这个数才都进行代码分割</span></span><br><span class="line">  <span class="attr">automaticNameDelimiter</span>: <span class="string">&#x27;~&#x27;</span>,   <span class="comment">//  文件名连接符</span></span><br><span class="line">  <span class="attr">name</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">cacheGroups</span>: &#123;   <span class="comment">//  对同步的代码分割才会走这个配置项</span></span><br><span class="line">    <span class="attr">vendors</span>: <span class="literal">false</span>,   <span class="comment">//  异步的时候用false，同步的时候可用官方文档默认配置；</span></span><br><span class="line">    <span class="comment">//  符合这个方案的打包后文件名前缀是vender~，不符合则是走default方案，可用官方文档默认配置</span></span><br><span class="line">    <span class="attr">default</span>: <span class="literal">false</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/09/26/webpack%E4%B9%8BCode%20Splitting/" data-id="clmniym7f002mbb879pnfdio1" data-title="webpack之Code Splitting" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webpack/" rel="tag">webpack</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/5/">&laquo; zurück</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/7/">weiter &raquo;</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Kategorien</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Basic-knowledge/">Basic knowledge</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Engineering/">Engineering</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%8A%E7%BA%BF%E9%83%A8%E7%BD%B2/">上线部署</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%90%8E%E7%AB%AF/">后端</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Browser/" rel="tag">Browser</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Computer/" rel="tag">Computer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Data-structure/" rel="tag">Data structure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Interview/" rel="tag">Interview</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Network/" rel="tag">Network</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node/" rel="tag">Node</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/" rel="tag">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Operating-system/" rel="tag">Operating system</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Performance/" rel="tag">Performance</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/" rel="tag">Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web%E5%AE%89%E5%85%A8/" rel="tag">Web安全</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/" rel="tag">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%8A%E7%BA%BF%E9%83%A8%E7%BD%B2/" rel="tag">上线部署</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A1%86%E6%9E%B6/" rel="tag">框架</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" rel="tag">解决方案</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE%E5%B0%8F%E7%BB%93/" rel="tag">项目小结</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Browser/" style="font-size: 14px;">Browser</a> <a href="/tags/CSS/" style="font-size: 14px;">CSS</a> <a href="/tags/Computer/" style="font-size: 10px;">Computer</a> <a href="/tags/Data-structure/" style="font-size: 18px;">Data structure</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/Interview/" style="font-size: 10px;">Interview</a> <a href="/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/tags/Network/" style="font-size: 14px;">Network</a> <a href="/tags/Node/" style="font-size: 12px;">Node</a> <a href="/tags/Nodejs/" style="font-size: 12px;">Nodejs</a> <a href="/tags/Operating-system/" style="font-size: 10px;">Operating system</a> <a href="/tags/Performance/" style="font-size: 12px;">Performance</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/TypeScript/" style="font-size: 14px;">TypeScript</a> <a href="/tags/Web/" style="font-size: 10px;">Web</a> <a href="/tags/Web%E5%AE%89%E5%85%A8/" style="font-size: 10px;">Web安全</a> <a href="/tags/webpack/" style="font-size: 20px;">webpack</a> <a href="/tags/%E4%B8%8A%E7%BA%BF%E9%83%A8%E7%BD%B2/" style="font-size: 10px;">上线部署</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 10px;">工具</a> <a href="/tags/%E6%A1%86%E6%9E%B6/" style="font-size: 16px;">框架</a> <a href="/tags/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" style="font-size: 10px;">解决方案</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 10px;">设计模式</a> <a href="/tags/%E9%A1%B9%E7%9B%AE%E5%B0%8F%E7%BB%93/" style="font-size: 14px;">项目小结</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">April 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/04/30/Python%20Basic/">Python Basic Knowledge</a>
+          </li>
+        
+          <li>
+            <a href="/2021/04/17/%E8%A7%A3%E5%86%B3hexo%20g%E7%94%9F%E6%88%90index.html%E4%B8%BA%E7%A9%BA%E7%9A%84%E9%97%AE%E9%A2%98/">解决hexo g生成index.html为空的问题</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/09/TypeScript%E4%B8%AD%E7%9A%84%E5%86%85%E7%BD%AE%E5%B7%A5%E5%85%B7%E7%B1%BB%E5%9E%8B%E5%8F%8A%E5%85%B6%E5%AE%9E%E7%8E%B0/">TypeScript中的内置工具类型及其实现</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/07/TypeScript%E4%B8%AD%E7%9A%84%E7%B1%BB%E5%9E%8B%E7%BC%96%E7%A8%8B/">TypeScript中的类型编程</a>
+          </li>
+        
+          <li>
+            <a href="/2020/11/03/hope%20statistics%20puppeteer%E5%B7%A5%E5%85%B7%E5%B0%8F%E7%BB%93/">hope statistics puppeteer 工具小结</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 Jacleklm<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

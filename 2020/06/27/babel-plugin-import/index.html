@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>按需加载 &amp; 样式自动加载 —— babel-plugin-import | Jacleklm</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="几乎完全转自 一篇文章搞定 babel-plugin-import 插件 ，可以理解为 读后 &amp; 自己敲一遍 的笔记，建议直接读原文章 Background我们用 element-ui 或 antd 的时候，样式都支持全局引入和按需引入。按需引入需要安装一个 babel-plugin-import 的插件，将全局的写法变成按需引入的写法。其实也是用了AST语法树转换的原理，实现 1234i">
+<meta property="og:type" content="article">
+<meta property="og:title" content="按需加载 &amp; 样式自动加载 —— babel-plugin-import">
+<meta property="og:url" content="http://example.com/2020/06/27/babel-plugin-import/index.html">
+<meta property="og:site_name" content="Jacleklm">
+<meta property="og:description" content="几乎完全转自 一篇文章搞定 babel-plugin-import 插件 ，可以理解为 读后 &amp; 自己敲一遍 的笔记，建议直接读原文章 Background我们用 element-ui 或 antd 的时候，样式都支持全局引入和按需引入。按需引入需要安装一个 babel-plugin-import 的插件，将全局的写法变成按需引入的写法。其实也是用了AST语法树转换的原理，实现 1234i">
+<meta property="og:locale">
+<meta property="og:image" content="http://example.com/img/AST/antd.png">
+<meta property="og:image" content="http://example.com/img/AST/create.png">
+<meta property="article:published_time" content="2020-06-27T15:49:21.000Z">
+<meta property="article:modified_time" content="2023-09-17T14:00:22.873Z">
+<meta property="article:author" content="Jacleklm">
+<meta property="article:tag" content="webpack">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/AST/antd.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Jacleklm" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Jacleklm</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Suche"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Suche"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-babel-plugin-import" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/06/27/babel-plugin-import/" class="article-date">
+  <time class="dt-published" datetime="2020-06-27T15:49:21.000Z" itemprop="datePublished">2020-06-27</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Engineering/">Engineering</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      按需加载 &amp; 样式自动加载 —— babel-plugin-import
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>几乎完全转自 <a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/KjkIud4-q0Nm-YBLG6D1zg">一篇文章搞定 babel-plugin-import 插件</a> ，可以理解为 读后 &amp; 自己敲一遍 的笔记，建议直接读原文章</p>
+<h1 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h1><p>我们用 element-ui 或 antd 的时候，样式都支持全局引入和按需引入。按需引入需要安装一个 <a target="_blank" rel="noopener" href="https://github.com/ant-design/babel-plugin-import"><code>babel-plugin-import</code></a> 的插件，将全局的写法变成按需引入的写法。其实也是用了AST语法树转换的原理，实现</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Button</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;antd&#x27;</span>;</span><br><span class="line">      ↓ ↓ ↓ ↓ ↓ ↓</span><br><span class="line"><span class="keyword">var</span> _button = <span class="built_in">require</span>(<span class="string">&#x27;antd/lib/button&#x27;</span>);</span><br><span class="line"><span class="built_in">require</span>(<span class="string">&#x27;antd/lib/button/style&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<h1 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;libraryName&quot;</span>: <span class="string">&quot;antd&quot;</span>,     <span class="comment">// 包名</span></span><br><span class="line">  <span class="string">&quot;libraryDirectory&quot;</span>: <span class="string">&quot;lib&quot;</span>, <span class="comment">// 目录，默认 lib</span></span><br><span class="line">  <span class="string">&quot;style&quot;</span>: <span class="literal">true</span>,             <span class="comment">// 是否引入 style</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其它的看 <a target="_blank" rel="noopener" href="https://github.com/ant-design/babel-plugin-import#usage">文档</a></p>
+<h1 id="Working-mechanism"><a href="#Working-mechanism" class="headerlink" title="Working mechanism"></a>Working mechanism</h1><h2 id="What-does-babel-plugin-import-do"><a href="#What-does-babel-plugin-import-do" class="headerlink" title="What does babel-plugin-import do"></a>What does babel-plugin-import do</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 当options为以下时候：</span></span><br><span class="line">&#123; <span class="string">&quot;libraryName&quot;</span>: <span class="string">&quot;antd&quot;</span>, <span class="attr">style</span>: <span class="literal">true</span> &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Button</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;antd&#x27;</span>;</span><br><span class="line"><span class="title class_">ReactDOM</span>.<span class="title function_">render</span>(<span class="language-xml"><span class="tag">&lt;<span class="name">Button</span>&gt;</span>xxxx<span class="tag">&lt;/<span class="name">Button</span>&gt;</span></span>);</span><br><span class="line">      ↓ ↓ ↓ ↓ ↓ ↓</span><br><span class="line"><span class="keyword">var</span> _button = <span class="built_in">require</span>(<span class="string">&#x27;antd/lib/button&#x27;</span>);</span><br><span class="line"><span class="built_in">require</span>(<span class="string">&#x27;antd/lib/button/style&#x27;</span>);</span><br><span class="line"><span class="title class_">ReactDOM</span>.<span class="title function_">render</span>(<span class="language-xml"><span class="tag">&lt;<span class="name">_button</span>&gt;</span>xxxx<span class="tag">&lt;/<span class="name">_button</span>&gt;</span></span>);</span><br></pre></td></tr></table></figure>
+
+<h2 id="How"><a href="#How" class="headerlink" title="How"></a>How</h2><p>以这段代码为例</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Button</span>, <span class="title class_">AutoComplete</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;antd&#x27;</span>;</span><br><span class="line"><span class="title class_">ReactDOM</span>.<span class="title function_">render</span>(<span class="language-xml"><span class="tag">&lt;<span class="name">Button</span>&gt;</span>提交<span class="tag">&lt;/<span class="name">Button</span>&gt;</span></span>);</span><br></pre></td></tr></table></figure>
+<h3 id="第一步-依赖收集"><a href="#第一步-依赖收集" class="headerlink" title="第一步 依赖收集"></a>第一步 依赖收集</h3><p><code>babel-plubin-import</code> 会在 <code>ImportDeclaration</code> 里将所有的 <code>specifier</code> 收集起来，详见如下 ast<br><img src="/img/AST/antd.png"><br>可以从这个 ImportDeclaration 语句中提取几个关键点：</p>
+<ul>
+<li>source.value: antd</li>
+<li>specifier.imported.name: Button</li>
+<li>specifier.imported.name: AutoComplete</li>
+</ul>
+<p>PS: local.name 是导入进来的别名，比如 <code>import &#123; Button as MyButton &#125; from &#39;antd&#39;</code> 的 <code>MyButton</code> ; imported.name 是真实导入的变量名</p>
+<p>所以要做的事：收集 依赖名 和 依赖来源。插件的代码可以实现如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">ImportDeclaration</span>(path, state) &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; node &#125; = path;</span><br><span class="line">  <span class="keyword">if</span> (!node) <span class="keyword">return</span>;</span><br><span class="line">  <span class="comment">// 代码里 import 的包名</span></span><br><span class="line">  <span class="keyword">const</span> &#123; value &#125; = node.<span class="property">source</span>;</span><br><span class="line">  <span class="comment">// 配在插件 options 的包名</span></span><br><span class="line">  <span class="keyword">const</span> &#123; libraryName &#125; = <span class="variable language_">this</span>;</span><br><span class="line">  <span class="comment">// @babel/types 工具函数</span></span><br><span class="line">  <span class="keyword">const</span> &#123; types &#125; = <span class="variable language_">this</span>;</span><br><span class="line">  <span class="comment">// 内部状态</span></span><br><span class="line">  <span class="keyword">const</span> pluginState = <span class="variable language_">this</span>.<span class="title function_">getPluginState</span>(state);</span><br><span class="line">  <span class="comment">// 判断是不是需要使用该插件的包</span></span><br><span class="line">  <span class="keyword">if</span> (value === libraryName) &#123;</span><br><span class="line">    <span class="comment">// node.specifiers 表示 import 了什么</span></span><br><span class="line">    node.<span class="property">specifiers</span>.<span class="title function_">forEach</span>(<span class="function"><span class="params">spec</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="comment">// 判断是不是 ImportSpecifier 类型的节点，也就是是否是大括号的</span></span><br><span class="line">      <span class="keyword">if</span> (types.<span class="title function_">isImportSpecifier</span>(spec)) &#123;</span><br><span class="line">        <span class="comment">// 收集依赖</span></span><br><span class="line">        <span class="comment">// 也就是 pluginState.specified.Button = Button</span></span><br><span class="line">        <span class="comment">// local.name 是导入进来的别名，比如 import &#123; Button as MyButton &#125; from &#x27;antd&#x27; 的 MyButton</span></span><br><span class="line">        <span class="comment">// imported.name 是真实导入的变量名</span></span><br><span class="line">        pluginState.<span class="property">specified</span>[spec.<span class="property">local</span>.<span class="property">name</span>] = spec.<span class="property">imported</span>.<span class="property">name</span>;</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123; </span><br><span class="line">        <span class="comment">// ImportDefaultSpecifier 和 ImportNamespaceSpecifier</span></span><br><span class="line">        pluginState.<span class="property">libraryObjs</span>[spec.<span class="property">local</span>.<span class="property">name</span>] = <span class="literal">true</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    pluginState.<span class="property">pathsToRemove</span>.<span class="title function_">push</span>(path);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>遍历了所有的 <code>ImportDeclaration</code> 类型的节点之后，就收集好了依赖关系，下一步就是如何加载它们了。</p>
+<h3 id="第二步-判断是否使用"><a href="#第二步-判断是否使用" class="headerlink" title="第二步 判断是否使用"></a>第二步 判断是否使用</h3><p>判断import进来的组件是否有在后续代码中使用，即是下面代码中 <code>createElement</code> 的第一个参数，我们需要判断收集的依赖中是否有被 createElement 使用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ReactDOM.render(&lt;Button&gt;Hello&lt;/Button&gt;);</span><br><span class="line">      ↓ ↓ ↓ ↓ ↓ ↓</span><br><span class="line">React.createElement(Button, null, &quot;Hello&quot;);</span><br></pre></td></tr></table></figure>
+<p>所以我们可以看下 <code>React.createElement(Button, null, &quot;Hello&quot;)</code> 的AST<br><img src="/img/AST/create.png"><br>代码如下:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">CallExpression(path, state) &#123;</span><br><span class="line">  const &#123; node &#125; = path;</span><br><span class="line">  const file = (path &amp;&amp; path.hub &amp;&amp; path.hub.file) || (state &amp;&amp; state.file);</span><br><span class="line">  // 方法调用者的 name</span><br><span class="line">  const &#123; name &#125; = node.callee;</span><br><span class="line">  // babel-type 工具函数</span><br><span class="line">  const &#123; types &#125; = this;</span><br><span class="line">  // 内部状态</span><br><span class="line">  const pluginState = this.getPluginState(state);</span><br><span class="line"></span><br><span class="line">  // 如果方法调用者是 Identifier 类型</span><br><span class="line">  if (types.isIdentifier(node.callee)) &#123;</span><br><span class="line">    if (pluginState.specified[name]) &#123;</span><br><span class="line">      node.callee = this.importMethod(pluginState.specified[name], file, pluginState);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // 遍历 arguments 找我们要的 specifier</span><br><span class="line">  node.arguments = node.arguments.map(arg =&gt; &#123;</span><br><span class="line">    const &#123; name: argName &#125; = arg;</span><br><span class="line">    if (</span><br><span class="line">      pluginState.specified[argName] &amp;&amp;</span><br><span class="line">      path.scope.hasBinding(argName) &amp;&amp;</span><br><span class="line">      path.scope.getBinding(argName).path.type === &#x27;ImportSpecifier&#x27;</span><br><span class="line">    ) &#123;</span><br><span class="line">      // 找到 specifier，调用 importMethod 方法</span><br><span class="line">      return this.importMethod(pluginState.specified[argName], file, pluginState);</span><br><span class="line">    &#125;</span><br><span class="line">    return arg;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>除了 <code>React.createElement(Button)</code> 之外，还有 <code>const btn = Button / [Button]</code> … 等多种情况会使用 Button，源码中都有对应的处理方法，感兴趣的可以自己<a target="_blank" rel="noopener" href="https://github.com/ant-design/babel-plugin-import/blob/master/src/Plugin.js#L163-L272">看一下</a></p>
+<h3 id="第三步-生成引入代码（核心）"><a href="#第三步-生成引入代码（核心）" class="headerlink" title="第三步 生成引入代码（核心）"></a>第三步 生成引入代码（核心）</h3><p>即删除原来的import，引入我们生成的import。创建import的时候会用到一个插件 @babel&#x2F;helper-module-imports。后续部分建议直接看原博客<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/KjkIud4-q0Nm-YBLG6D1zg">一篇文章搞定 babel-plugin-import 插件</a></p>
+<h1 id="插件实现"><a href="#插件实现" class="headerlink" title="插件实现"></a>插件实现</h1><p>见原文章</p>
+<p>Reference<br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/KjkIud4-q0Nm-YBLG6D1zg">一篇文章搞定 babel-plugin-import 插件</a><br><a target="_blank" rel="noopener" href="https://chengyuming.cn/views/webpack/AST.html">AST 团队分享</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2020/06/27/babel-plugin-import/" data-id="clmniym7c002cbb870u4l37rc" data-title="按需加载 &amp; 样式自动加载 —— babel-plugin-import" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webpack/" rel="tag">webpack</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/07/15/%E3%80%8A%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BANode.js%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          《深入浅出Node.js》读书笔记
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/06/25/AST%E8%AF%A6%E8%A7%A3/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">AST详解</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Kategorien</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Basic-knowledge/">Basic knowledge</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Engineering/">Engineering</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%8A%E7%BA%BF%E9%83%A8%E7%BD%B2/">上线部署</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%90%8E%E7%AB%AF/">后端</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Browser/" rel="tag">Browser</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Computer/" rel="tag">Computer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Data-structure/" rel="tag">Data structure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Interview/" rel="tag">Interview</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Network/" rel="tag">Network</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node/" rel="tag">Node</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/" rel="tag">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Operating-system/" rel="tag">Operating system</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Performance/" rel="tag">Performance</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/" rel="tag">Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web%E5%AE%89%E5%85%A8/" rel="tag">Web安全</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/" rel="tag">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%8A%E7%BA%BF%E9%83%A8%E7%BD%B2/" rel="tag">上线部署</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A1%86%E6%9E%B6/" rel="tag">框架</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" rel="tag">解决方案</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE%E5%B0%8F%E7%BB%93/" rel="tag">项目小结</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Browser/" style="font-size: 14px;">Browser</a> <a href="/tags/CSS/" style="font-size: 14px;">CSS</a> <a href="/tags/Computer/" style="font-size: 10px;">Computer</a> <a href="/tags/Data-structure/" style="font-size: 18px;">Data structure</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/Interview/" style="font-size: 10px;">Interview</a> <a href="/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/tags/Network/" style="font-size: 14px;">Network</a> <a href="/tags/Node/" style="font-size: 12px;">Node</a> <a href="/tags/Nodejs/" style="font-size: 12px;">Nodejs</a> <a href="/tags/Operating-system/" style="font-size: 10px;">Operating system</a> <a href="/tags/Performance/" style="font-size: 12px;">Performance</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/TypeScript/" style="font-size: 14px;">TypeScript</a> <a href="/tags/Web/" style="font-size: 10px;">Web</a> <a href="/tags/Web%E5%AE%89%E5%85%A8/" style="font-size: 10px;">Web安全</a> <a href="/tags/webpack/" style="font-size: 20px;">webpack</a> <a href="/tags/%E4%B8%8A%E7%BA%BF%E9%83%A8%E7%BD%B2/" style="font-size: 10px;">上线部署</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 10px;">工具</a> <a href="/tags/%E6%A1%86%E6%9E%B6/" style="font-size: 16px;">框架</a> <a href="/tags/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" style="font-size: 10px;">解决方案</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 10px;">设计模式</a> <a href="/tags/%E9%A1%B9%E7%9B%AE%E5%B0%8F%E7%BB%93/" style="font-size: 14px;">项目小结</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">April 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/04/30/Python%20Basic/">Python Basic Knowledge</a>
+          </li>
+        
+          <li>
+            <a href="/2021/04/17/%E8%A7%A3%E5%86%B3hexo%20g%E7%94%9F%E6%88%90index.html%E4%B8%BA%E7%A9%BA%E7%9A%84%E9%97%AE%E9%A2%98/">解决hexo g生成index.html为空的问题</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/09/TypeScript%E4%B8%AD%E7%9A%84%E5%86%85%E7%BD%AE%E5%B7%A5%E5%85%B7%E7%B1%BB%E5%9E%8B%E5%8F%8A%E5%85%B6%E5%AE%9E%E7%8E%B0/">TypeScript中的内置工具类型及其实现</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/07/TypeScript%E4%B8%AD%E7%9A%84%E7%B1%BB%E5%9E%8B%E7%BC%96%E7%A8%8B/">TypeScript中的类型编程</a>
+          </li>
+        
+          <li>
+            <a href="/2020/11/03/hope%20statistics%20puppeteer%E5%B7%A5%E5%85%B7%E5%B0%8F%E7%BB%93/">hope statistics puppeteer 工具小结</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 Jacleklm<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

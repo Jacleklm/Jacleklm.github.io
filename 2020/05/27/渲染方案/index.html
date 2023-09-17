@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>渲染方案 | Jacleklm</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="长列表 &#x2F; 无限下拉列表 渲染考虑到性能，我们不可能将一个长列表（甚至是一个无限下拉列表）的所有列表元素都进行渲染，应该是只渲染部分数据并随着下拉渲染新数据 方案一：Intersection Observer + padding该方案来自云音乐-一个简洁、有趣的无限下拉方案 Intersection Observer详见MDN，建议全都读完 一直以来，检测元素的可视状态或者两个元素的相对">
+<meta property="og:type" content="article">
+<meta property="og:title" content="渲染方案">
+<meta property="og:url" content="http://example.com/2020/05/27/%E6%B8%B2%E6%9F%93%E6%96%B9%E6%A1%88/index.html">
+<meta property="og:site_name" content="Jacleklm">
+<meta property="og:description" content="长列表 &#x2F; 无限下拉列表 渲染考虑到性能，我们不可能将一个长列表（甚至是一个无限下拉列表）的所有列表元素都进行渲染，应该是只渲染部分数据并随着下拉渲染新数据 方案一：Intersection Observer + padding该方案来自云音乐-一个简洁、有趣的无限下拉方案 Intersection Observer详见MDN，建议全都读完 一直以来，检测元素的可视状态或者两个元素的相对">
+<meta property="og:locale">
+<meta property="og:image" content="http://example.com/img/%E5%88%97%E8%A1%A8%E6%B8%B2%E6%9F%93/entry.png">
+<meta property="article:published_time" content="2020-05-27T08:50:21.000Z">
+<meta property="article:modified_time" content="2023-09-17T14:00:22.885Z">
+<meta property="article:author" content="Jacleklm">
+<meta property="article:tag" content="解决方案">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/%E5%88%97%E8%A1%A8%E6%B8%B2%E6%9F%93/entry.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Jacleklm" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Jacleklm</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Suche"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Suche"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-渲染方案" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/05/27/%E6%B8%B2%E6%9F%93%E6%96%B9%E6%A1%88/" class="article-date">
+  <time class="dt-published" datetime="2020-05-27T08:50:21.000Z" itemprop="datePublished">2020-05-27</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      渲染方案
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="长列表-无限下拉列表-渲染"><a href="#长列表-无限下拉列表-渲染" class="headerlink" title="长列表 &#x2F; 无限下拉列表 渲染"></a>长列表 &#x2F; 无限下拉列表 渲染</h1><p>考虑到性能，我们不可能将一个长列表（甚至是一个无限下拉列表）的所有列表元素都进行渲染，应该是只渲染部分数据并随着下拉渲染新数据</p>
+<h2 id="方案一：Intersection-Observer-padding"><a href="#方案一：Intersection-Observer-padding" class="headerlink" title="方案一：Intersection Observer + padding"></a>方案一：Intersection Observer + padding</h2><p>该方案来自<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/X2ltQyp3W0othLv_m6-Ydg">云音乐-一个简洁、有趣的无限下拉方案</a></p>
+<h3 id="Intersection-Observer"><a href="#Intersection-Observer" class="headerlink" title="Intersection Observer"></a>Intersection Observer</h3><p>详见<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/Intersection_Observer_API">MDN</a>，建议全都读完</p>
+<p>一直以来，<strong>检测元素的可视状态或者两个元素的相对可视状态</strong>都不是件容易事。传统的各种方案不但复杂，而且性能成本很高，比如需要监听滚动事件，然后查询 DOM , 获取元素高度、位置，计算距离视窗高度等等。</p>
+<p>这就是 Intersection Observer 要解决的问题。它为开发人员提供一种便捷的新方法来异步查询元素相对于其他元素或视窗的位置，消除了昂贵的 DOM 查询和样式读取成本</p>
+<p>它不能告诉你的一件事情是 (两个元素的)重叠部分的准确像素个数或者重叠的像素属于哪一个元素。然而这个API覆盖最广的最常用的使用方式是 <strong>如果两个元素发生的交集部分在N%左右，我需要做处理一些事情(执行回调)</strong></p>
+<blockquote>
+<p>在 Safari 上兼容性较差，需要 12.2 及以上才兼容，否则需配合 polyfill  使用</p>
+</blockquote>
+<p>一些应用场景：</p>
+<ul>
+<li>当页面滚动时，懒加载图片或其他内容。</li>
+<li>实现“可无限滚动”网站，也就是当用户滚动网页时直接加载更多内容，无需翻页。</li>
+<li>为计算广告收益，检测其广告元素的曝光情况。</li>
+<li>根据用户是否已滚动到相应区域来灵活开始执行任务或动画</li>
+</ul>
+<h4 id="具体用法"><a href="#具体用法" class="headerlink" title="具体用法"></a>具体用法</h4><ol>
+<li>创建一个 IntersectionObserver对象。</li>
+</ol>
+<ul>
+<li>root必须是目标元素的父级元素；如果未指定或者为null，则默认为浏览器视窗</li>
+<li>rootMargin是root元素的外边距。类似于css中的 margin 属性</li>
+<li>threshold。目标(target)元素与根(root)元素之间的交叉度是交叉比(intersection ratio)。这是目标(target)元素相对于根(root)的交集百分比的表示，它的取值在0.0和1.0之间。阈值为1.0意味着目标元素完全出现在root选项指定的元素中可见时，回调函数将会被执行。可以是单一的number也可以是number数组<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> options = &#123;</span><br><span class="line">  <span class="attr">root</span>: <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&#x27;#scrollArea&#x27;</span>), </span><br><span class="line">  <span class="attr">rootMargin</span>: <span class="string">&#x27;0px&#x27;</span>, </span><br><span class="line">  <span class="attr">threshold</span>: <span class="number">1.0</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> observer = <span class="keyword">new</span> <span class="title class_">IntersectionObserver</span>(callback, options);</span><br></pre></td></tr></table></figure></li>
+</ul>
+<ol start="2">
+<li>每个观察者配置一个目标。每当目标满足该IntersectionObserver指定的threshold值，回调被调用<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> target = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&#x27;#listItem&#x27;</span>);</span><br><span class="line">observer.<span class="title function_">observe</span>(target);</span><br></pre></td></tr></table></figure></li>
+<li>回调函数。回调接收 IntersectionObserverEntry对象和观察者的列表：<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> callback = <span class="keyword">function</span>(<span class="params">entries, observer</span>) &#123; </span><br><span class="line">  entries.<span class="title function_">forEach</span>(<span class="function"><span class="params">entry</span> =&gt;</span> &#123; </span><br><span class="line">    <span class="comment">// 这里的 entry 是 IntersectionObserverEntry 对象，entry.target 是目标元素</span></span><br><span class="line">    <span class="comment">//   entry.boundingClientRect</span></span><br><span class="line">    <span class="comment">//   entry.intersectionRatio</span></span><br><span class="line">    <span class="comment">//   entry.intersectionRect</span></span><br><span class="line">    <span class="comment">//   entry.isIntersecting</span></span><br><span class="line">    <span class="comment">//   entry.rootBounds</span></span><br><span class="line">    <span class="comment">//   entry.target</span></span><br><span class="line">    <span class="comment">//   entry.time</span></span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+entry的属性大概是这样：<br><img src="/img/%E5%88%97%E8%A1%A8%E6%B8%B2%E6%9F%93/entry.png"><br>详见<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/IntersectionObserverEntry">MDN-IntersectionObserverEntry</a></li>
+</ol>
+<h3 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h3><p>总体思路：利用 Intersection Observer 来监测相关元素的滚动位置，异步监听，尽可能得减少 DOM 操作，触发回调，然后去获取新的数据来更新页面元素，并且用调整容器 padding 来替代了本该越来越多的 DOM 元素，最终实现列表滚动、无限下拉。具体如下：</p>
+<ol>
+<li>监听一个固定长度列表的首尾元素是否进入视窗<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">// 观察者创建</span><br><span class="line">this.observer = new IntersectionObserver(callback, options);</span><br><span class="line"></span><br><span class="line">// 观察列表第一个以及最后一个元素</span><br><span class="line">this.observer.observe(this.firstItem);</span><br><span class="line">this.observer.observe(this.lastItem);</span><br><span class="line"></span><br><span class="line">const callback = (entries) =&gt; &#123;</span><br><span class="line">  entries.forEach((entry) =&gt; &#123;</span><br><span class="line">    if (entry.target.id === firstItemId) &#123;</span><br><span class="line">      // 当第一个元素进入视窗</span><br><span class="line">    &#125; else if (entry.target.id === lastItemId) &#123;</span><br><span class="line">      // 当最后一个元素进入视窗</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></li>
+<li>更新当前页面内渲染的第一个元素对应的序号(firstIndex)。我们用一个数组来维护需要渲染到页面中的数据。数组的长度会随着不断请求新的数据而不断变大，而渲染的始终是其中一定数量的元素，比如 20 个。那么：</li>
+</ol>
+<ul>
+<li>最开始渲染的是数组中序号为 0 - 19 的元素，即此时对应的 firstIndex 为 0；</li>
+<li>当序号为 19 的元素（即上一步的 lastItem ）进入视窗时，我们就会往后渲染 10 个元素，即渲染序号为 10 - 29 的元素，那么此时的 firstIndex 为 10；</li>
+<li>下一次就是，当序号为 29 的元素进入视窗时，继续往后渲染 10个元素，即渲染序号为 20 - 39 的元素，那么此时的 firstIndex 为 20，以此类推。。。<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">// 我们对原先的 firstIndex 做了缓存</span><br><span class="line">const &#123; currentIndex &#125; = this.domDataCache;</span><br><span class="line"></span><br><span class="line">// 以全部容器内所有元素的一半作为每一次渲染的增量</span><br><span class="line">const increment = Math.floor(this.listSize / 2);</span><br><span class="line"></span><br><span class="line">let firstIndex;</span><br><span class="line"></span><br><span class="line">if (isScrollDown) &#123;</span><br><span class="line">  // 向下滚动时序号增加</span><br><span class="line">  firstIndex = currentIndex + increment;</span><br><span class="line">&#125; else &#123;</span><br><span class="line">  // 向上滚动时序号减少</span><br><span class="line">  firstIndex = currentIndex - increment;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<ol start="3">
+<li>根据上述序号，获取目标数据元素，列表内容重新渲染成对应内容<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">const renderFunction = (firstIndex) =&gt; &#123;</span><br><span class="line">  // offset = firstIndex, limit = 10 =&gt; getData</span><br><span class="line">  // getData Done =&gt;  new dataItems =&gt; render DOM</span><br><span class="line"> &#125;;</span><br></pre></td></tr></table></figure></li>
+<li>容器 padding 调整，模拟滚动实现<br>其实不用这一步也可以，直接获取了 10 个新的数据元素之后，再塞 10 个新的 DOM 元素到页面中去来渲染这些数据。但是 DOM 会越来越多，页面DOM太多可能会有性能问题。所以这里的方案是：用原来已有的 DOM 元素去渲染，替换掉已经离开视窗、不可见的数据元素；而本该由更多 DOM 元素进一步撑开容器高度的部分，我们用 padding 填充来模拟实现。</li>
+</ol>
+<ul>
+<li>向下滚动<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// padding的增量 = 每一个item的高度 x 新的数据项的数目</span><br><span class="line">const remPaddingsVal = itemHeight * (Math.floor(this.listSize / 2));</span><br><span class="line"></span><br><span class="line">if (isScrollDown) &#123;</span><br><span class="line">  // paddingTop新增，填充顶部位置</span><br><span class="line">  newCurrentPaddingTop = currentPaddingTop + remPaddingsVal;</span><br><span class="line"></span><br><span class="line">  if (currentPaddingBottom === 0) &#123;</span><br><span class="line">    newCurrentPaddingBottom = 0;</span><br><span class="line">  &#125; else &#123;</span><br><span class="line">    // 如果原来有paddingBottom则减去，会有滚动到底部的元素进行替代</span><br><span class="line">    newCurrentPaddingBottom = currentPaddingBottom - remPaddingsVal;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>向上滚动<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// padding的增量 = 每一个item的高度 x 新的数据项的数目</span><br><span class="line">const remPaddingsVal = itemHeight * (Math.floor(this.listSize / 2));</span><br><span class="line"></span><br><span class="line">if (!isScrollDown) &#123;</span><br><span class="line">  // paddingBottom新增，填充底部位置</span><br><span class="line">  newCurrentPaddingBottom = currentPaddingBottom + remPaddingsVal;</span><br><span class="line"></span><br><span class="line">  if (currentPaddingTop === 0) &#123;</span><br><span class="line">    newCurrentPaddingTop = 0;</span><br><span class="line">  &#125; else &#123;</span><br><span class="line">    // 如果原来有paddingTop则减去，会有滚动到顶部的元素进行替代</span><br><span class="line">    newCurrentPaddingTop = currentPaddingTop - remPaddingsVal;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>最后是 padding 设置更新以及相关缓存数据更新<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// 容器padding重新设置</span><br><span class="line">this.updateContainerPadding(&#123;</span><br><span class="line">  newCurrentPaddingBottom,</span><br><span class="line">  newCurrentPaddingTop</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">// DOM元素相关数据缓存更新</span><br><span class="line">this.updateDomDataCache(&#123;</span><br><span class="line">    currentPaddingTop: newCurrentPaddingTop,</span><br><span class="line">  currentPaddingBottom: newCurrentPaddingBottom</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></li>
+</ul>
+<blockquote>
+<p>完整代码实现参考<a target="_blank" rel="noopener" href="https://github.com/Guohjia/listScroll">https://github.com/Guohjia/listScroll</a></p>
+</blockquote>
+<h3 id="缺陷"><a href="#缺陷" class="headerlink" title="缺陷"></a>缺陷</h3><ul>
+<li>padding 的计算依赖列表项固定的高度</li>
+<li>这是一个同步渲染的方案，也就是目前容器 padding 的计算调整，无法计算异步获取的数据，只跟用户的滚动行为有关。解决思路：<ul>
+<li>思路1：利用 Skeleton Screen Loading 来同步渲染数据元素，不受数据异步获取的影响。即在数据请求还未完成时，先使用一些图片进行占位，待内容加载完成之后再进行替换。</li>
+<li>思路2：滚动到目标位置，阻塞容器 padding 的设置（即无限下拉的发生）直至数据请求完毕，用 loading gif 提示用户加载状态，但这个方案相对复杂，你需要全面考虑用户难以预测的滚动行为来设置容器的 padding。</li>
+</ul>
+</li>
+</ul>
+<h2 id="方案二：较为有名的库-iScroll"><a href="#方案二：较为有名的库-iScroll" class="headerlink" title="方案二：较为有名的库 - iScroll"></a>方案二：较为有名的库 - iScroll</h2><p>思路：<br>iScroll 通过对传统滚动事件的监听，获取滚动距离，然后：</p>
+<ol>
+<li>设置父元素的 translate 来实现整体内容的上移（下移）；</li>
+<li>再基于这个滚动距离进行相应计算，得知相应子元素已经被滚动到视窗外，并且判断是否应该将这些离开视窗的子元素移动到末尾，从而再对它们进行 translate 的设置来移动到末尾。这就像是一个循环队列一样，随着滚动的进行，顶部元素先出视窗，但又将移动到末尾，从而实现无限下拉</li>
+</ol>
+<h2 id="方案一和二对比"><a href="#方案一和二对比" class="headerlink" title="方案一和二对比"></a>方案一和二对比</h2><ul>
+<li>实现对比：一个是 Intersection Observer 的监听，来通知子元素离开视窗，只要定量设置父元素 padding 就行；另一个是对传统滚动事件的监听，滚动距离的获取，再进行一系列计算，去设置父元素以及子元素的 translate。显而易见，前者看起来更加简洁明了一些</li>
+<li>性能对比：我知道说到对比，你脑海中肯定一下子会想到性能问题。其实性能对比的关键就是 Intersection Observer。因为单就 padding 设置还是 translate 设置，性能方面的差距是甚小的，只是个人感觉 padding 会简洁些？而 Intersection Observer 其实抽离了所有滚动层面的相关逻辑，你不再需要对滚动距离等相应 DOM 属性进行获取，也不再需要进行一系列滚动距离相关的复杂计算，并且同步的滚动事件触发变成异步的，你也不再需要另外去做防抖之类的逻辑，这在性能方面还是有所提升的</li>
+</ul>
+<h1 id="tree组件的渲染优化"><a href="#tree组件的渲染优化" class="headerlink" title="tree组件的渲染优化"></a>tree组件的渲染优化</h1><h1 id="高性能渲染10万个DOM"><a href="#高性能渲染10万个DOM" class="headerlink" title="高性能渲染10万个DOM"></a>高性能渲染10万个DOM</h1><p>见之前的博客<a target="_blank" rel="noopener" href="https://jacleklm.github.io/2019/11/06/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">性能优化-如何插入几万个 DOM 并不卡住界面</a></p>
+<p>参考资料<br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/X2ltQyp3W0othLv_m6-Ydg">云音乐-一个简洁、有趣的无限下拉方案</a><br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/55528376">前端tree组件，10000个树节点，从14.65s到0.49s</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2020/05/27/%E6%B8%B2%E6%9F%93%E6%96%B9%E6%A1%88/" data-id="clmniym8b0054bb87gpugcz5l" data-title="渲染方案" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" rel="tag">解决方案</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/06/25/AST%E8%AF%A6%E8%A7%A3/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          AST详解
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/05/26/%E5%93%88%E5%B8%8C%E8%A1%A8%20&%20%E5%93%88%E5%B8%8C%E7%AE%97%E6%B3%95/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">哈希表 &amp; 哈希算法</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Kategorien</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Basic-knowledge/">Basic knowledge</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Engineering/">Engineering</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%8A%E7%BA%BF%E9%83%A8%E7%BD%B2/">上线部署</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%90%8E%E7%AB%AF/">后端</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Browser/" rel="tag">Browser</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Computer/" rel="tag">Computer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Data-structure/" rel="tag">Data structure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Interview/" rel="tag">Interview</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Network/" rel="tag">Network</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node/" rel="tag">Node</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/" rel="tag">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Operating-system/" rel="tag">Operating system</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Performance/" rel="tag">Performance</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/" rel="tag">Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web%E5%AE%89%E5%85%A8/" rel="tag">Web安全</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/" rel="tag">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%8A%E7%BA%BF%E9%83%A8%E7%BD%B2/" rel="tag">上线部署</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A1%86%E6%9E%B6/" rel="tag">框架</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" rel="tag">解决方案</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE%E5%B0%8F%E7%BB%93/" rel="tag">项目小结</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Browser/" style="font-size: 14px;">Browser</a> <a href="/tags/CSS/" style="font-size: 14px;">CSS</a> <a href="/tags/Computer/" style="font-size: 10px;">Computer</a> <a href="/tags/Data-structure/" style="font-size: 18px;">Data structure</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/Interview/" style="font-size: 10px;">Interview</a> <a href="/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/tags/Network/" style="font-size: 14px;">Network</a> <a href="/tags/Node/" style="font-size: 12px;">Node</a> <a href="/tags/Nodejs/" style="font-size: 12px;">Nodejs</a> <a href="/tags/Operating-system/" style="font-size: 10px;">Operating system</a> <a href="/tags/Performance/" style="font-size: 12px;">Performance</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/TypeScript/" style="font-size: 14px;">TypeScript</a> <a href="/tags/Web/" style="font-size: 10px;">Web</a> <a href="/tags/Web%E5%AE%89%E5%85%A8/" style="font-size: 10px;">Web安全</a> <a href="/tags/webpack/" style="font-size: 20px;">webpack</a> <a href="/tags/%E4%B8%8A%E7%BA%BF%E9%83%A8%E7%BD%B2/" style="font-size: 10px;">上线部署</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 10px;">工具</a> <a href="/tags/%E6%A1%86%E6%9E%B6/" style="font-size: 16px;">框架</a> <a href="/tags/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" style="font-size: 10px;">解决方案</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 10px;">设计模式</a> <a href="/tags/%E9%A1%B9%E7%9B%AE%E5%B0%8F%E7%BB%93/" style="font-size: 14px;">项目小结</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">April 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/04/30/Python%20Basic/">Python Basic Knowledge</a>
+          </li>
+        
+          <li>
+            <a href="/2021/04/17/%E8%A7%A3%E5%86%B3hexo%20g%E7%94%9F%E6%88%90index.html%E4%B8%BA%E7%A9%BA%E7%9A%84%E9%97%AE%E9%A2%98/">解决hexo g生成index.html为空的问题</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/09/TypeScript%E4%B8%AD%E7%9A%84%E5%86%85%E7%BD%AE%E5%B7%A5%E5%85%B7%E7%B1%BB%E5%9E%8B%E5%8F%8A%E5%85%B6%E5%AE%9E%E7%8E%B0/">TypeScript中的内置工具类型及其实现</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/07/TypeScript%E4%B8%AD%E7%9A%84%E7%B1%BB%E5%9E%8B%E7%BC%96%E7%A8%8B/">TypeScript中的类型编程</a>
+          </li>
+        
+          <li>
+            <a href="/2020/11/03/hope%20statistics%20puppeteer%E5%B7%A5%E5%85%B7%E5%B0%8F%E7%BB%93/">hope statistics puppeteer 工具小结</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 Jacleklm<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

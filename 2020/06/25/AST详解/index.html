@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>AST详解 | Jacleklm</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="TODO：还有这篇 字节分享几乎完全转自 AST 团队分享 ，可以理解为 读后 &amp; 自己敲一遍 的笔记 What &amp; Why What: 抽象语法树（Abstract Syntax Tree，简称 AST）是源代码的抽象语法结构的树状表现形式 Why: webpack、eslint 等很多工具库的核心都是通过抽象语法树来实现对代码的检查、分析等操作 浏览器就是通过将 js 代码转化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AST详解">
+<meta property="og:url" content="http://example.com/2020/06/25/AST%E8%AF%A6%E8%A7%A3/index.html">
+<meta property="og:site_name" content="Jacleklm">
+<meta property="og:description" content="TODO：还有这篇 字节分享几乎完全转自 AST 团队分享 ，可以理解为 读后 &amp; 自己敲一遍 的笔记 What &amp; Why What: 抽象语法树（Abstract Syntax Tree，简称 AST）是源代码的抽象语法结构的树状表现形式 Why: webpack、eslint 等很多工具库的核心都是通过抽象语法树来实现对代码的检查、分析等操作 浏览器就是通过将 js 代码转化">
+<meta property="og:locale">
+<meta property="og:image" content="http://example.com/img/AST/AST.png">
+<meta property="og:image" content="http://example.com/img/AST/output.png">
+<meta property="og:image" content="http://example.com/img/AST/tree.png">
+<meta property="og:image" content="http://example.com/img/AST/code.png">
+<meta property="og:image" content="http://example.com/img/AST/bablon.png">
+<meta property="article:published_time" content="2020-06-25T15:49:21.000Z">
+<meta property="article:modified_time" content="2023-09-17T14:00:22.858Z">
+<meta property="article:author" content="Jacleklm">
+<meta property="article:tag" content="webpack">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/AST/AST.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Jacleklm" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Jacleklm</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Suche"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Suche"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-AST详解" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/06/25/AST%E8%AF%A6%E8%A7%A3/" class="article-date">
+  <time class="dt-published" datetime="2020-06-25T15:49:21.000Z" itemprop="datePublished">2020-06-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Engineering/">Engineering</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      AST详解
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>TODO：还有这篇 <a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/lWj1_rPm75dXROKEMf-eQg">字节分享</a><br>几乎完全转自 <a target="_blank" rel="noopener" href="https://chengyuming.cn/views/webpack/AST.html">AST 团队分享</a> ，可以理解为 读后 &amp; 自己敲一遍 的笔记</p>
+<h1 id="What-Why"><a href="#What-Why" class="headerlink" title="What &amp; Why"></a>What &amp; Why</h1><ul>
+<li>What: 抽象语法树（Abstract Syntax Tree，简称 AST）是<strong>源代码的抽象语法结构的树状表现形式</strong></li>
+<li>Why:<ul>
+<li>webpack、eslint 等很多工具库的核心都是通过抽象语法树来实现对代码的检查、分析等操作</li>
+<li>浏览器就是通过将 js 代码转化为抽象语法树来进行下一步的分析等其他操作，所以将 js 转化为抽象语法树更利于程序的分析</li>
+</ul>
+</li>
+<li>一个简单的例子:<br><img src="/img/AST/AST.png"><ul>
+<li>首先<strong>一段</strong>代码转换成的抽象语法树是一个对象，该对象会有一个顶级的 type 属性 Program；第二个属性是 body 是一个数组</li>
+<li>body 数组中存放的每一项都是一个对象，里面包含了所有的对于该语句的描述信息</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">type: 描述该语句的类型  --&gt; 变量声明的语句</span><br><span class="line">kind: 变量声明的关键字  --&gt; var</span><br><span class="line">declaration: 声明内容的数组，里面每一项也是一个对象</span><br><span class="line">  type: 描述该语句的类型</span><br><span class="line">  id: 描述变量名称的对象</span><br><span class="line">      type: 定义</span><br><span class="line">      name: 变量的名字</span><br><span class="line">  init: 初始化变量值的对象</span><br><span class="line">      type: 类型</span><br><span class="line">      value: 值 &quot;is tree&quot; 不带引号</span><br><span class="line">      row:  &quot;\&quot;is tree&quot;\&quot; 带引号</span><br></pre></td></tr></table></figure>
+
+<h1 id="词法分析和语法分析"><a href="#词法分析和语法分析" class="headerlink" title="词法分析和语法分析"></a>词法分析和语法分析</h1><p><code>JavaScript</code> 是<strong>解释型语言</strong>，一般通过 <code>词法分析 -&gt; 语法分析 -&gt; 语法树</code>，就可以开始解释执行了。从 code 分析成 AST ，我们可以在<a target="_blank" rel="noopener" href="http://esprima.org/">这里</a>看到效果</p>
+<ul>
+<li>词法分析：也叫扫描 (scans)，是将字符流转换为记号流 (tokens)，它会读取我们的代码然后按照一定的规则合成一个个的标识 (scans: code &#x3D;&gt; tokens)<br>。当词法分析源代码的时候，它会一个一个字符的读取代码；当它遇到空格、操作符，或者特殊符号的时候，它会认为一个话已经完成了。比如说：var a &#x3D; 2 ，这段代码通常会被分解成 var、a、&#x3D;、2</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">;[</span><br><span class="line">  &#123; <span class="attr">type</span>: <span class="string">&#x27;Keyword&#x27;</span>, <span class="attr">value</span>: <span class="string">&#x27;var&#x27;</span> &#125;,</span><br><span class="line">  &#123; <span class="attr">type</span>: <span class="string">&#x27;Identifier&#x27;</span>, <span class="attr">value</span>: <span class="string">&#x27;a&#x27;</span> &#125;,</span><br><span class="line">  &#123; <span class="attr">type</span>: <span class="string">&#x27;Punctuator&#x27;</span>, <span class="attr">value</span>: <span class="string">&#x27;=&#x27;</span> &#125;,</span><br><span class="line">  &#123; <span class="attr">type</span>: <span class="string">&#x27;Numeric&#x27;</span>, <span class="attr">value</span>: <span class="string">&#x27;2&#x27;</span> &#125;,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>语法分析：也称解析器，将词法分析出来的数组转换成树的形式，同时验证语法。语法如果有错的话，抛出语法错误 (analyze: tokens &#x3D;&gt; syntax)</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  ...</span><br><span class="line">  <span class="string">&quot;type&quot;</span>: <span class="string">&quot;VariableDeclarator&quot;</span>,</span><br><span class="line">  <span class="string">&quot;id&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;type&quot;</span>: <span class="string">&quot;Identifier&quot;</span>,</span><br><span class="line">    <span class="string">&quot;name&quot;</span>: <span class="string">&quot;a&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>syntax &#x3D;&gt; tree</li>
+</ul>
+<h1 id="What-can-AST-do"><a href="#What-can-AST-do" class="headerlink" title="What can AST do"></a>What can AST do</h1><ul>
+<li>语法检查、代码风格检查、格式化代码、语法高亮、错误提示、自动补全等</li>
+<li>代码混淆压缩</li>
+<li>优化变更代码，改变代码结构等</li>
+</ul>
+<p>eg. 有个函数 <code>function a() &#123;&#125;</code> 我想把它变成 <code>function b() &#123;&#125;</code><br>eg. 在 webpack 中代码编译完成后 <code>require(&#39;a&#39;)</code> –&gt; <code>__webapck__require__(&quot;*/**/a.js&quot;)</code></p>
+<h1 id="The-analysis-process-of-AST"><a href="#The-analysis-process-of-AST" class="headerlink" title="The analysis process of AST"></a>The analysis process of AST</h1><h2 id="How-to-analysis"><a href="#How-to-analysis" class="headerlink" title="How to analysis"></a>How to analysis</h2><p>先说结果：AST 是<strong>深度优先遍历</strong><br>比如说一段代码 <code>function getUser() &#123;&#125;</code>，我们把函数名字更改为 hello<br>推荐另一个常用的 AST 在线转换网站<a target="_blank" rel="noopener" href="https://astexplorer.net/">ast explorer</a>；可以在网站看转换效果，也可以用下面的工具看效果</p>
+<ul>
+<li>工具 (这三个是操作 AST 的三个重要模块，也是实现 babel 的核心依赖)<ul>
+<li>esprima：code &#x3D;&gt; ast</li>
+<li>estraverse: traverse ast</li>
+<li>escodegen: ast &#x3D;&gt; code</li>
+</ul>
+</li>
+<li>实例代码</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> esprima = <span class="built_in">require</span>(<span class="string">&#x27;esprima&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> estraverse = <span class="built_in">require</span>(<span class="string">&#x27;estraverse&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> code = <span class="string">`function getUser() &#123;&#125;`</span></span><br><span class="line"><span class="comment">// 生成 AST</span></span><br><span class="line"><span class="keyword">const</span> ast = esprima.<span class="title function_">parseScript</span>(code)</span><br><span class="line"><span class="comment">// 转换 AST，只会遍历 type 属性</span></span><br><span class="line"><span class="comment">// traverse 方法中有进入和离开两个钩子函数</span></span><br><span class="line">estraverse.<span class="title function_">traverse</span>(ast, &#123;</span><br><span class="line">  <span class="title function_">enter</span>(<span class="params">node</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;enter -&gt; node.type&#x27;</span>, node.<span class="property">type</span>)</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="title function_">leave</span>(<span class="params">node</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;leave -&gt; node.type&#x27;</span>, node.<span class="property">type</span>)</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>打印结果<br><img src="/img/AST/output.png"></li>
+<li>所以是深度优先遍历<br><img src="/img/AST/tree.png"></li>
+</ul>
+<h2 id="Demo-修改函数名字"><a href="#Demo-修改函数名字" class="headerlink" title="Demo: 修改函数名字"></a>Demo: 修改函数名字</h2><p>此时我们发现函数的名字在 <code>type</code> 为 <code>Identifier</code> 的时候就是该函数的名字，我们就可以直接修改它便可实现一个更改函数名字的 AST 工具</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 转换树</span></span><br><span class="line">estraverse.<span class="title function_">traverse</span>(ast, &#123;</span><br><span class="line">  <span class="comment">// 进入离开修改都是可以的</span></span><br><span class="line">  <span class="title function_">enter</span>(<span class="params">node</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;enter -&gt; node.type&#x27;</span>, node.<span class="property">type</span>)</span><br><span class="line">    <span class="keyword">if</span> (node.<span class="property">type</span> === <span class="string">&#x27;Identifier&#x27;</span>) &#123;</span><br><span class="line">      node.<span class="property">name</span> = <span class="string">&#x27;hello&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="title function_">leave</span>(<span class="params">node</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;leave -&gt; node.type&#x27;</span>, node.<span class="property">type</span>)</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 生成新的代码</span></span><br><span class="line"><span class="keyword">const</span> result = escodegen.<span class="title function_">generate</span>(ast)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(result)</span><br><span class="line"><span class="comment">// function hello() &#123;&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="Application-of-AST"><a href="#Application-of-AST" class="headerlink" title="Application of AST"></a>Application of AST</h1><h2 id="babel"><a href="#babel" class="headerlink" title="babel"></a>babel</h2><h3 id="The-working-mechanism-of-babel"><a href="#The-working-mechanism-of-babel" class="headerlink" title="The working mechanism of babel"></a>The working mechanism of babel</h3><blockquote>
+<p>babel 的主要作用就是 Es6 代码转换为 Es5 的代码，以兼容所有浏览器，主要原理就是运用了 AST。有个 class 语法转为 ES5 语法的 demo，见博客 <a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000016706589?utm_medium=referral&utm_source=tuicool">AST 抽象语法树</a></p>
+</blockquote>
+<p>babel两个工具包重要的包： <code>@babel/core</code> (打通webpack和babel的一个通道)、<code>@babel/preset-env</code> (翻译器) (还有一个@babel&#x2F;polyfill（添加ES6中的新函数新变量，eg. Promise和map）)。当我们配置 babel 的时候，不管是在 <code>.babelrc</code> 或者 <code>babel.config.js</code> 文件里面配置的都有 presets 和 plugins 两个配置项</p>
+<h4 id="presets和plugins的区别"><a href="#presets和plugins的区别" class="headerlink" title="presets和plugins的区别"></a>presets和plugins的区别</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// .babelrc</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;presets&quot;</span>: [<span class="string">&quot;@babel/preset-env&quot;</span>],</span><br><span class="line">  <span class="string">&quot;plugins&quot;</span>: []</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当我们配置了 presets 中有 <code>@babel/preset-env</code>，那么 <code>@babel/core</code> 就会去找 <code>preset-env</code> 预设的插件包，它是一套预设好的插件配置。</p>
+<p><code>@babel/core</code>并不会去转换代码，只提供一些核心 API，真正的代码转换工作由插件或者预设来完成，比如要转换箭头函数，会用到这个 plugin：<code>@babel/plugin-transform-arrow-functions</code>，当需要转换的要求增加时，我们不可能去一一配置相应的 plugin，这个时候就可以用到预设了，也就是 presets。<strong>presets 是 plugins 的集合</strong>，一个 presets 内部包含了很多 plugin</p>
+<h4 id="babel中转换代码一个demo"><a href="#babel中转换代码一个demo" class="headerlink" title="babel中转换代码一个demo"></a>babel中转换代码一个demo</h4><p>现在我们有一个箭头函数，要想把它转成普通函数，我们就可以直接这么写：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> babel = <span class="built_in">require</span>(<span class="string">&#x27;@babel/core&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> code = <span class="string">`const fn = (a, b) =&gt; a + b`</span></span><br><span class="line"><span class="comment">// babel 有 transform 方法会帮我们自动遍历，使用相应的预设或者插件转换相应的代码</span></span><br><span class="line"><span class="keyword">const</span> r = babel.<span class="title function_">transform</span>(code, &#123;</span><br><span class="line">  <span class="attr">presets</span>: [<span class="string">&#x27;@babel/preset-env&#x27;</span>],</span><br><span class="line">&#125;)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(r.<span class="property">code</span>)</span><br><span class="line"><span class="comment">// 打印结果如下</span></span><br><span class="line"><span class="comment">// &quot;use strict&quot;;</span></span><br><span class="line"><span class="comment">// var fn = function fn() &#123; return a + b; &#125;;</span></span><br></pre></td></tr></table></figure>
+<p>此时我们可以看到最终代码会被转成普通函数，但是我们，只需要箭头函数转通函数的功能，不需要用这么大一套包，只需要一个箭头函数转普通函数的包，我们其实是可以在 <code>node_modules</code> 下面找到有个叫做 <code>plugin-transform-arrow-functions</code> 的插件，这个插件是专门用来处理 箭头函数的，我们就可以这么写：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> r = babel.<span class="title function_">transform</span>(code, &#123;</span><br><span class="line">  <span class="attr">plugins</span>: [<span class="string">&#x27;@babel/plugin-transform-arrow-functions&#x27;</span>],</span><br><span class="line">&#125;)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(r.<span class="property">code</span>)</span><br><span class="line"><span class="comment">// 打印结果如下</span></span><br><span class="line"><span class="comment">// const fn = function () &#123; return a + b; &#125;;</span></span><br></pre></td></tr></table></figure>
+<p>我们可以从打印结果发现此时并没有转换我们变量的声明方式还是 const 声明，只是转换了箭头函数</p>
+<h3 id="编写一个箭头函数转普通函数的babel插件"><a href="#编写一个箭头函数转普通函数的babel插件" class="headerlink" title="编写一个箭头函数转普通函数的babel插件"></a>编写一个箭头函数转普通函数的babel插件</h3><p>首先应该看 <a target="_blank" rel="noopener" href="https://juejin.im/post/5b14257ef265da6e5546b14b">Babel插件开发入门指南</a><br>现在我们来个实战把 <code>const fn = (a, b) =&gt; a + b</code> 转换为 <code>const fn = function(a, b) &#123; return a + b &#125;</code></p>
+<h4 id="分析-AST-结构"><a href="#分析-AST-结构" class="headerlink" title="分析 AST 结构"></a>分析 AST 结构</h4><p>首先我们在在线分析 AST 的网站上分析 <code>const fn = (a, b) =&gt; a + b</code> 和 <code>const fn = function(a, b) &#123; return a + b &#125;</code> 看两者语法树的区别<br><img src="/img/AST/code.png"></p>
+<p>分析可得：</p>
+<ul>
+<li>变成普通函数之后他就不叫箭头函数了 <code>ArrowFunctionExpression</code>，而是函数表达式了 <code>FunctionExpression</code></li>
+<li>所以首先我们要把 箭头函数表达式(<code>ArrowFunctionExpression</code>) 转换为 函数表达式(<code>FunctionExpression</code>)</li>
+<li>要把 二进制表达式(<code>BinaryExpression</code>) 放到一个 代码块中(<code>BlockStatement</code>)的 <code>ExpressionStatement</code>&#x2F; <code>ReturnStatement</code> 中。</li>
+<li>其实我们要做就是把一棵树变成另外一颗树，说白了其实就是拼成另一颗树的结构，然后生成新的代码，就可以完成代码的转换</li>
+</ul>
+<h4 id="访问者模式"><a href="#访问者模式" class="headerlink" title="访问者模式"></a>访问者模式</h4><p>在 babel 中，我们开发 plugins 的时候要用到<strong>访问者模式</strong>，就是说在访问到某一个路径的时候进行匹配，然后在对这个节点进行修改。<strong>这里的节点指的是AST树中的节点</strong>，比如下面是访问到 ArrowFunctionExpression 节点就执行下面的 ArrowFunctionExpression() 函数</p>
+<p>那么我们就可以这么写：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> babel = <span class="built_in">require</span>(<span class="string">&#x27;@babel/core&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> code = <span class="string">`const fn = (a, b) =&gt; a + b`</span> <span class="comment">// 转换后 const fn = function(a, b) &#123; return a + b &#125;</span></span><br><span class="line"><span class="keyword">const</span> arrowFnPlugin = &#123;</span><br><span class="line">  <span class="comment">// 访问者模式</span></span><br><span class="line">  <span class="attr">visitor</span>: &#123;</span><br><span class="line">    <span class="comment">// 当访问到某个路径的时候进行匹配，比如下面是访问到 ArrowFunctionExpression 就执行下面的 ArrowFunctionExpression() 函数</span></span><br><span class="line">    <span class="title class_">ArrowFunctionExpression</span>(path) &#123;</span><br><span class="line">      <span class="comment">// 拿到节点</span></span><br><span class="line">      <span class="keyword">const</span> node = path.<span class="property">node</span></span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;ArrowFunctionExpression -&gt; node&#x27;</span>, node)</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> r = babel.<span class="title function_">transform</span>(code, &#123;</span><br><span class="line">  <span class="attr">plugins</span>: [arrowFnPlugin],</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(r)</span><br></pre></td></tr></table></figure>
+
+<h4 id="修改-AST-结构"><a href="#修改-AST-结构" class="headerlink" title="修改 AST 结构"></a>修改 AST 结构</h4><p>此时我们拿到的结果是这样的节点结果是 <a target="_blank" rel="noopener" href="https://chengyuming.cn/json/arrowFn.json">这样的</a>，其实就是 <code>ArrowFunctionExpression</code> 的 AST，此时我们要做的是把 <code>ArrowFunctionExpression</code> 的结构替换成 <code>FunctionExpression的结构</code>。但要我们自己手写替换得毫无差错是很麻烦的，所以 babel 为我们提供了一个神仙工具叫做 <a target="_blank" rel="noopener" href="https://babeljs.io/docs/en/babel-types"><code>@babel/types</code></a> <a target="_blank" rel="noopener" href="https://www.babeljs.cn/docs/babel-types">中文版</a></p>
+<p><code>@babel/types</code> 有两个作用：</p>
+<ul>
+<li>判断当前节点是不是某种特定节点（eg. 相当于之前的 node.type &#x3D;&#x3D;&#x3D; ‘ArrowFunctionExpression’ ）</li>
+<li>生成对应的表达式</li>
+</ul>
+<p>那么接下来我们就开始生成一个 FunctionExpression，然后把之前的 <code>ArrowFunctionExpression</code> 替换掉，我们可以看 <code>@babel/types</code> 文档，找到 functionExpression 方法，该方法接受相应的参数我们传递过去即可生成一个 <code>FunctionExpression</code></p>
+<blockquote>
+<p>t.functionExpression(id, params, body, generator, async)</p>
+</blockquote>
+<ul>
+<li>id: Identifier (default: null) id 可传递 null</li>
+<li>params: Array<LVal> (required) 函数参数，可以把之前的参数拿过来</li>
+<li>body: BlockStatement (required) 函数体，接受一个 BlockStatement 我们需要生成一个</li>
+<li>generator: boolean (default: false) 是否为 generator 函数，当然不是了</li>
+<li>async: boolean (default: false) 是否为 async 函数，肯定不是了</li>
+</ul>
+<p>还需要生成一个 <code>BlockStatement</code>，我们接着看文档找到 <code>BlockStatement</code> 接受的参数</p>
+<blockquote>
+<p>t.blockStatement(body, directives)</p>
+</blockquote>
+<p>看文档说明，blockStatement 接受一个 body，那我们把之前的 body 拿过来就可以直接用，不过这里 body 接受一个数组</p>
+<p>我们细看 AST 结构，函数表达式中的 <code>BlockStatement</code> 中的 body 是一个 <code>ReturnStatement</code>，所以我们还需要生成一个 <code>ReturnStatement</code></p>
+<p>现在我们就可以改写 AST 了</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> babel = <span class="built_in">require</span>(<span class="string">&#x27;@babel/core&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> t = <span class="built_in">require</span>(<span class="string">&#x27;@babel/types&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> code = <span class="string">`const fn = (a, b) =&gt; a + b`</span> <span class="comment">// const fn = function(a, b) &#123; return a + b &#125;</span></span><br><span class="line"><span class="keyword">const</span> arrowFnPlugin = &#123;</span><br><span class="line">  <span class="comment">// 访问者模式</span></span><br><span class="line">  <span class="attr">visitor</span>: &#123;</span><br><span class="line">    <span class="comment">// 当访问到某个路径的时候进行匹配</span></span><br><span class="line">    <span class="title class_">ArrowFunctionExpression</span>(path) &#123;</span><br><span class="line">      <span class="comment">// 拿到节点然后替换节点</span></span><br><span class="line">      <span class="keyword">const</span> node = path.<span class="property">node</span></span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;ArrowFunctionExpression -&gt; node&#x27;</span>, node)</span><br><span class="line">      <span class="comment">// 拿到函数的参数</span></span><br><span class="line">      <span class="keyword">const</span> params = node.<span class="property">params</span></span><br><span class="line">      <span class="keyword">const</span> body = node.<span class="property">body</span></span><br><span class="line">      <span class="keyword">const</span> functionExpression = t.<span class="title function_">functionExpression</span>(</span><br><span class="line">        <span class="literal">null</span>,</span><br><span class="line">        params,</span><br><span class="line">        t.<span class="title function_">blockStatement</span>([body])</span><br><span class="line">      )</span><br><span class="line">      <span class="comment">// 替换原来的函数</span></span><br><span class="line">      path.<span class="title function_">replaceWith</span>(functionExpression)</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> r = babel.<span class="title function_">transform</span>(code, &#123;</span><br><span class="line">  <span class="attr">plugins</span>: [arrowFnPlugin],</span><br><span class="line">&#125;)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(r.<span class="property">code</span>) <span class="comment">// const fn = function (a, b) &#123; return a + b; &#125;;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="特殊情况"><a href="#特殊情况" class="headerlink" title="特殊情况"></a>特殊情况</h4><p>我们知道在剪头函数中是可以省略 return 关键字，我们上面是处理了省略关键字的写法，但是如果用户写了 return 关键字后，我们写的这个插件就有问题了，所以我们可以在优化一下</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">fn</span> = (<span class="params">a, b</span>) =&gt; &#123; retrun a + b &#125; -&gt; <span class="keyword">const</span> fn = <span class="keyword">function</span>(<span class="params">a, b</span>) &#123; <span class="keyword">return</span> a + b &#125;</span><br></pre></td></tr></table></figure>
+<p>观察代码我们发现，我们就不需要把 body 转换成 <code>blockStatement</code> 了，直接放过去就可以了，那么我们就可以这么写</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">ArrowFunctionExpression</span>(path) &#123;</span><br><span class="line">  <span class="comment">// 拿到节点然后替换节点</span></span><br><span class="line">  <span class="keyword">const</span> node = path.<span class="property">node</span></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;ArrowFunctionExpression -&gt; node&quot;</span>, node)</span><br><span class="line">  <span class="comment">// 拿到函数的参数</span></span><br><span class="line">  <span class="keyword">const</span> params = node.<span class="property">params</span></span><br><span class="line">  <span class="keyword">let</span> body = node.<span class="property">body</span></span><br><span class="line">  <span class="comment">// 判断是不是 blockStatement，不是的话让他变成 blockStatement</span></span><br><span class="line">  <span class="keyword">if</span> (!t.<span class="title function_">isBlockStatement</span>(body)) &#123;</span><br><span class="line">    body = t.<span class="title function_">blockStatement</span>([body])</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">const</span> functionExpression = t.<span class="title function_">functionExpression</span>(<span class="literal">null</span>, params, body)</span><br><span class="line">  <span class="comment">// 替换原来的函数</span></span><br><span class="line">  path.<span class="title function_">replaceWith</span>(functionExpression)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="编写一个claas转ES5的babel插件"><a href="#编写一个claas转ES5的babel插件" class="headerlink" title="编写一个claas转ES5的babel插件"></a>编写一个claas转ES5的babel插件</h3><p>见 <a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000016706589?utm_medium=referral&utm_source=tuicool">AST 抽象语法树</a><br>类似的实际插件是 <code>@babel/plugin-transform-classes</code></p>
+<h2 id="按需引入"><a href="#按需引入" class="headerlink" title="按需引入"></a>按需引入</h2><p>我们用 element-ui 或 antd 的时候，样式都支持全局引入和按需引入。按需引入需要安装一个 <code>babel-plugin-import</code> 的插件，将全局的写法变成按需引入的写法。其实也是用了AST语法树转换的原理，实现</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Button</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;antd&#x27;</span>;</span><br><span class="line">      ↓ ↓ ↓ ↓ ↓ ↓</span><br><span class="line"><span class="keyword">var</span> _button = <span class="built_in">require</span>(<span class="string">&#x27;antd/lib/button&#x27;</span>);</span><br><span class="line"><span class="built_in">require</span>(<span class="string">&#x27;antd/lib/button/style&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<p>(这个插件详见另一篇博客 <a target="_blank" rel="noopener" href="https://jacleklm.github.io/2020/06/27/babel-plugin-import/">按需加载 &amp; 样式自动加载 —— babel-plugin-import</a>)</p>
+<h2 id="babylon"><a href="#babylon" class="headerlink" title="babylon"></a>babylon</h2><blockquote>
+<p>在 babel 官网上有一句话 <a target="_blank" rel="noopener" href="https://babeljs.io/docs/en/babylon">Babylon</a> is a JavaScript parser used in Babel。（即是Babel 的解析引擎）</p>
+</blockquote>
+<h3 id="babel-与-babylon-的关系"><a href="#babel-与-babylon-的关系" class="headerlink" title="babel 与 babylon 的关系"></a>babel 与 babylon 的关系</h3><p>from <a target="_blank" rel="noopener" href="http://www.alloyteam.com/2017/04/analysis-of-babel-babel-overview/">alloyteam-剖析babel</a> ：<br>Babel 使用的引擎是 babylon，babylon 并非由 babel 团队自己开发的，而是 fork 的 acorn 项目，acorn 的项目本人在很早之前在兴趣部落 1.0 在构建中使用，为了是做一些代码的转换，是很不错的一款引擎，不过 acorn 引擎只提供基本的解析 ast 的能力，遍历还需要配套的 acorn-travesal, 替换节点需要使用 acorn-，而这些开发，在 Babel 的插件体系开发下，变得一体化了 </p>
+<h3 id="使用-babylon-编写一个数组扩展运算符-转-Es5-语法的插件"><a href="#使用-babylon-编写一个数组扩展运算符-转-Es5-语法的插件" class="headerlink" title="使用 babylon 编写一个数组扩展运算符 转 Es5 语法的插件"></a>使用 babylon 编写一个数组扩展运算符 转 Es5 语法的插件</h3><p>把 <code>const arr = [ ...arr1, ...arr2 ]</code> 转成 <code>var arr = [].concat(arr1, arr2)</code></p>
+<p>我们使用 babylon 的话就不需要使用 <code>@babel/core</code> 了，只需要用到他里面的 <code>traverse</code> 和 <code>generator</code>，用到的包有 <code>babylon</code>、<code>@babel/traverse</code>、<code>@babel/generator</code>、<code>@babel/types</code></p>
+<h3 id="分析语法树"><a href="#分析语法树" class="headerlink" title="分析语法树"></a>分析语法树</h3><p>看一下两棵语法树的区别<br><img src="/img/AST/bablon.png"><br>根据上图我们分析得出：</p>
+<ul>
+<li>两棵树都是变量声明的方式，不同的是他们声明的关键字不一样</li>
+<li>他们初始化变量值的时候是不一样的，一个数组表达式（ArrayExpression）另一个是调用表达式（CallExpression）</li>
+<li>那我们要做的就很简单了，就是把 数组表达式转换为调用表达式就可以</li>
+</ul>
+<h3 id="分析类型"><a href="#分析类型" class="headerlink" title="分析类型"></a>分析类型</h3><p>这段代码的核心生成一个 callExpression 调用表达式，所以对应官网上的类型，我们分析需要用到的 api</p>
+<ul>
+<li>先来分析 init 里面的，首先是 callExpression<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">Expression</span>&#125; callee  (required)</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">Array&lt;Expression | SpreadElement | JSXNamespacedName&gt;</span>&#125; source (required)</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">t.<span class="title function_">callExpression</span>(callee, <span class="variable language_">arguments</span>)</span><br></pre></td></tr></table></figure></li>
+<li>对应语法树上 callee 是一个 MemberExpression，所以要生成一个成员表达式<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">Expression</span>&#125; object  (required)</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">if computed then Expression else Identifier</span>&#125; property (required)</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">boolean</span>&#125; computed (default: false)</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">boolean</span>&#125; optional (default: null)</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">t.<span class="title function_">memberExpression</span>(object, property, computed, optional)</span><br></pre></td></tr></table></figure></li>
+<li>在 callee 的 object 是一个 ArrayExpression 数组表达式，是一个空数组<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">Array&lt;null | Expression | SpreadElement&gt;</span>&#125; elements  (default: [])</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">t.<span class="title function_">arrayExpression</span>(elements)</span><br></pre></td></tr></table></figure></li>
+<li>对了里面的东西分析完了，我们还要生成 VariableDeclarator 和 VariableDeclaration 最终生成新的语法树<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">LVal</span>&#125; id  (required)</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">Expression</span>&#125; init (default: null)</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">t.<span class="title function_">variableDeclarator</span>(id, init)</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">&quot;var&quot; | &quot;let&quot; | &quot;const&quot;</span>&#125; kind  (required)</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">Array&lt;VariableDeclarator&gt;</span>&#125; declarations (required)</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">t.<span class="title function_">variableDeclaration</span>(kind, declarations)</span><br></pre></td></tr></table></figure>
+其实倒着分析语法树，分析完怎么写也就清晰了，那么我们开始上代码吧</li>
+</ul>
+<h3 id="上代码"><a href="#上代码" class="headerlink" title="上代码"></a>上代码</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> babylon = <span class="built_in">require</span>(<span class="string">&#x27;babylon&#x27;</span>)</span><br><span class="line"><span class="comment">// 使用 babel 提供的包，traverse 和 generator 都是被暴露在 default 对象上的</span></span><br><span class="line"><span class="keyword">const</span> traverse = <span class="built_in">require</span>(<span class="string">&#x27;@babel/traverse&#x27;</span>).<span class="property">default</span></span><br><span class="line"><span class="keyword">const</span> generator = <span class="built_in">require</span>(<span class="string">&#x27;@babel/generator&#x27;</span>).<span class="property">default</span></span><br><span class="line"><span class="keyword">const</span> t = <span class="built_in">require</span>(<span class="string">&#x27;@babel/types&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> code = <span class="string">`const arr = [ ...arr1, ...arr2 ]`</span> <span class="comment">// var arr = [].concat(arr1, arr2)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> ast = babylon.<span class="title function_">parse</span>(code, &#123;</span><br><span class="line">  <span class="attr">sourceType</span>: <span class="string">&#x27;module&#x27;</span>,</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 转换树</span></span><br><span class="line"><span class="title function_">traverse</span>(ast, &#123;</span><br><span class="line">  <span class="title class_">VariableDeclaration</span>(path) &#123;</span><br><span class="line">    <span class="keyword">const</span> node = path.<span class="property">node</span></span><br><span class="line">    <span class="keyword">const</span> declarations = node.<span class="property">declarations</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;VariableDeclarator -&gt; declarations&#x27;</span>, declarations)</span><br><span class="line">    <span class="keyword">const</span> kind = <span class="string">&#x27;var&#x27;</span></span><br><span class="line">    <span class="comment">// 边界判定</span></span><br><span class="line">    <span class="keyword">if</span> (node.<span class="property">kind</span> !== kind &amp;&amp; declarations.<span class="property">length</span> === <span class="number">1</span> &amp;&amp; t.<span class="title function_">isArrayExpression</span>(declarations[<span class="number">0</span>].<span class="property">init</span>)) &#123;</span><br><span class="line">      <span class="comment">// 取得之前的 elements</span></span><br><span class="line">      <span class="keyword">const</span> args = declarations[<span class="number">0</span>].<span class="property">init</span>.<span class="property">elements</span>.<span class="title function_">map</span>(<span class="function">(<span class="params">item</span>) =&gt;</span> item.<span class="property">argument</span>)</span><br><span class="line">      <span class="keyword">const</span> callee = t.<span class="title function_">memberExpression</span>(t.<span class="title function_">arrayExpression</span>(), t.<span class="title function_">identifier</span>(<span class="string">&#x27;concat&#x27;</span>), <span class="literal">false</span>)</span><br><span class="line">      <span class="keyword">const</span> init = t.<span class="title function_">callExpression</span>(callee, args)</span><br><span class="line">      <span class="keyword">const</span> declaration = t.<span class="title function_">variableDeclarator</span>(declarations[<span class="number">0</span>].<span class="property">id</span>, init)</span><br><span class="line">      <span class="keyword">const</span> variableDeclaration = t.<span class="title function_">variableDeclaration</span>(kind, [declaration])</span><br><span class="line">      path.<span class="title function_">replaceWith</span>(variableDeclaration)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h1 id="具体语法书"><a href="#具体语法书" class="headerlink" title="具体语法书"></a>具体语法书</h1><p>和抽象语法树相对的是具体语法树（Concrete Syntax Tree）简称 CST（通常称作分析树）。一般的，在源代码的翻译和编译过程中，语法分析器创建出分析树。一旦 AST 被创建出来，在后续的处理过程中，比如语义分析阶段，会添加一些信息。可参考抽象语法树和具体语法树有什么区别？</p>
+<h1 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h1><p>关于 node 类型，全集大致如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">(parameter) <span class="attr">node</span>: <span class="title class_">Identifier</span> | <span class="title class_">SimpleLiteral</span> | <span class="title class_">RegExpLiteral</span> | <span class="title class_">Program</span> | <span class="title class_">FunctionDeclaration</span> | <span class="title class_">FunctionExpression</span> | </span><br><span class="line"><span class="title class_">ArrowFunctionExpression</span> | <span class="title class_">SwitchCase</span> | <span class="title class_">CatchClause</span> | <span class="title class_">VariableDeclarator</span> | <span class="title class_">ExpressionStatement</span> | <span class="title class_">BlockStatement</span> | </span><br><span class="line"><span class="title class_">EmptyStatement</span> | <span class="title class_">DebuggerStatement</span> | <span class="title class_">WithStatement</span> | <span class="title class_">ReturnStatement</span> | <span class="title class_">LabeledStatement</span> | <span class="title class_">BreakStatement</span> | </span><br><span class="line"><span class="title class_">ContinueStatement</span> | <span class="title class_">IfStatement</span> | <span class="title class_">SwitchStatement</span> | <span class="title class_">ThrowStatement</span> | <span class="title class_">TryStatement</span> | <span class="title class_">WhileStatement</span> | <span class="title class_">DoWhileStatement</span> | </span><br><span class="line"><span class="title class_">ForStatement</span> | <span class="title class_">ForInStatement</span> | <span class="title class_">ForOfStatement</span> | <span class="title class_">VariableDeclaration</span> | <span class="title class_">ClassDeclaration</span> | <span class="title class_">ThisExpression</span> | </span><br><span class="line"><span class="title class_">ArrayExpression</span> | <span class="title class_">ObjectExpression</span> | <span class="title class_">YieldExpression</span> | <span class="title class_">UnaryExpression</span> | <span class="title class_">UpdateExpression</span> | <span class="title class_">BinaryExpression</span> | </span><br><span class="line"><span class="title class_">AssignmentExpression</span> | <span class="title class_">LogicalExpression</span> | <span class="title class_">MemberExpression</span> | <span class="title class_">ConditionalExpression</span> | <span class="title class_">SimpleCallExpression</span> | </span><br><span class="line"><span class="title class_">NewExpression</span> | <span class="title class_">SequenceExpression</span> | <span class="title class_">TemplateLiteral</span> | <span class="title class_">TaggedTemplateExpression</span> | <span class="title class_">ClassExpression</span> | <span class="title class_">MetaProperty</span> | </span><br><span class="line"><span class="title class_">AwaitExpression</span> | <span class="title class_">Property</span> | <span class="title class_">AssignmentProperty</span> | <span class="title class_">Super</span> | <span class="title class_">TemplateElement</span> | <span class="title class_">SpreadElement</span> | <span class="title class_">ObjectPattern</span> |</span><br><span class="line"> <span class="title class_">ArrayPattern</span> | <span class="title class_">RestElement</span> | <span class="title class_">AssignmentPattern</span> | <span class="title class_">ClassBody</span> | <span class="title class_">MethodDefinition</span> | <span class="title class_">ImportDeclaration</span> | </span><br><span class="line"> <span class="title class_">ExportNamedDeclaration</span> | <span class="title class_">ExportDefaultDeclaration</span> | <span class="title class_">ExportAllDeclaration</span> | <span class="title class_">ImportSpecifier</span> | </span><br><span class="line"> <span class="title class_">ImportDefaultSpecifier</span> | <span class="title class_">ImportNamespaceSpecifier</span> | <span class="title class_">ExportSpecifier</span></span><br></pre></td></tr></table></figure>
+<p>Babel 有文档对 AST 树的详细定义，可参考<a target="_blank" rel="noopener" href="https://github.com/babel/babylon/blob/master/ast/spec.md">这里</a></p>
+<p>参考资料<br><a target="_blank" rel="noopener" href="https://juejin.im/post/5b14257ef265da6e5546b14b">Babel插件开发入门指南</a><br><a target="_blank" rel="noopener" href="https://chengyuming.cn/views/webpack/AST.html">AST 团队分享</a><br><a target="_blank" rel="noopener" href="http://www.alloyteam.com/2017/04/analysis-of-babel-babel-overview/">alloyteam-剖析babel</a><br><a target="_blank" rel="noopener" href="https://cheogo.github.io/learn-javascript/201709/runtime.html">JavaScript 语法解析、AST、V8、JIT</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/huangpb123/article/details/84799198">详解AST抽象语法树</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2020/06/25/AST%E8%AF%A6%E8%A7%A3/" data-id="clmniym630001bb87463t6m1m" data-title="AST详解" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webpack/" rel="tag">webpack</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/06/27/babel-plugin-import/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          按需加载 &amp; 样式自动加载 —— babel-plugin-import
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/05/27/%E6%B8%B2%E6%9F%93%E6%96%B9%E6%A1%88/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">渲染方案</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Kategorien</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Basic-knowledge/">Basic knowledge</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Engineering/">Engineering</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%8A%E7%BA%BF%E9%83%A8%E7%BD%B2/">上线部署</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%90%8E%E7%AB%AF/">后端</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Browser/" rel="tag">Browser</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Computer/" rel="tag">Computer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Data-structure/" rel="tag">Data structure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Interview/" rel="tag">Interview</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Network/" rel="tag">Network</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node/" rel="tag">Node</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/" rel="tag">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Operating-system/" rel="tag">Operating system</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Performance/" rel="tag">Performance</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/" rel="tag">Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web%E5%AE%89%E5%85%A8/" rel="tag">Web安全</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/" rel="tag">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%8A%E7%BA%BF%E9%83%A8%E7%BD%B2/" rel="tag">上线部署</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A1%86%E6%9E%B6/" rel="tag">框架</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" rel="tag">解决方案</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE%E5%B0%8F%E7%BB%93/" rel="tag">项目小结</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Browser/" style="font-size: 14px;">Browser</a> <a href="/tags/CSS/" style="font-size: 14px;">CSS</a> <a href="/tags/Computer/" style="font-size: 10px;">Computer</a> <a href="/tags/Data-structure/" style="font-size: 18px;">Data structure</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/Interview/" style="font-size: 10px;">Interview</a> <a href="/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/tags/Network/" style="font-size: 14px;">Network</a> <a href="/tags/Node/" style="font-size: 12px;">Node</a> <a href="/tags/Nodejs/" style="font-size: 12px;">Nodejs</a> <a href="/tags/Operating-system/" style="font-size: 10px;">Operating system</a> <a href="/tags/Performance/" style="font-size: 12px;">Performance</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/TypeScript/" style="font-size: 14px;">TypeScript</a> <a href="/tags/Web/" style="font-size: 10px;">Web</a> <a href="/tags/Web%E5%AE%89%E5%85%A8/" style="font-size: 10px;">Web安全</a> <a href="/tags/webpack/" style="font-size: 20px;">webpack</a> <a href="/tags/%E4%B8%8A%E7%BA%BF%E9%83%A8%E7%BD%B2/" style="font-size: 10px;">上线部署</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 10px;">工具</a> <a href="/tags/%E6%A1%86%E6%9E%B6/" style="font-size: 16px;">框架</a> <a href="/tags/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" style="font-size: 10px;">解决方案</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 10px;">设计模式</a> <a href="/tags/%E9%A1%B9%E7%9B%AE%E5%B0%8F%E7%BB%93/" style="font-size: 14px;">项目小结</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">April 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/04/30/Python%20Basic/">Python Basic Knowledge</a>
+          </li>
+        
+          <li>
+            <a href="/2021/04/17/%E8%A7%A3%E5%86%B3hexo%20g%E7%94%9F%E6%88%90index.html%E4%B8%BA%E7%A9%BA%E7%9A%84%E9%97%AE%E9%A2%98/">解决hexo g生成index.html为空的问题</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/09/TypeScript%E4%B8%AD%E7%9A%84%E5%86%85%E7%BD%AE%E5%B7%A5%E5%85%B7%E7%B1%BB%E5%9E%8B%E5%8F%8A%E5%85%B6%E5%AE%9E%E7%8E%B0/">TypeScript中的内置工具类型及其实现</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/07/TypeScript%E4%B8%AD%E7%9A%84%E7%B1%BB%E5%9E%8B%E7%BC%96%E7%A8%8B/">TypeScript中的类型编程</a>
+          </li>
+        
+          <li>
+            <a href="/2020/11/03/hope%20statistics%20puppeteer%E5%B7%A5%E5%85%B7%E5%B0%8F%E7%BB%93/">hope statistics puppeteer 工具小结</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 Jacleklm<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

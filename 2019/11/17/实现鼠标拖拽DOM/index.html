@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>实现鼠标拖拽DOM + 页面视图总结 | Jacleklm</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="知识储备常用的鼠标事件 click dbclick：双击 mouseenter：当鼠标指针首次移动到元素上时触发。不冒泡 mouseleave：当鼠标指针移出元素时触发。不冒泡 mousedown：当元素上按下鼠标按钮时候触发 mouseup：当元素上释放鼠标按钮时触发 mousemove：当鼠标指针在元素内部移动时重复地触发 mouseover：当鼠标指针移动到元素上时触发 mouseout：当">
+<meta property="og:type" content="article">
+<meta property="og:title" content="实现鼠标拖拽DOM + 页面视图总结">
+<meta property="og:url" content="http://example.com/2019/11/17/%E5%AE%9E%E7%8E%B0%E9%BC%A0%E6%A0%87%E6%8B%96%E6%8B%BDDOM/index.html">
+<meta property="og:site_name" content="Jacleklm">
+<meta property="og:description" content="知识储备常用的鼠标事件 click dbclick：双击 mouseenter：当鼠标指针首次移动到元素上时触发。不冒泡 mouseleave：当鼠标指针移出元素时触发。不冒泡 mousedown：当元素上按下鼠标按钮时候触发 mouseup：当元素上释放鼠标按钮时触发 mousemove：当鼠标指针在元素内部移动时重复地触发 mouseover：当鼠标指针移动到元素上时触发 mouseout：当">
+<meta property="og:locale">
+<meta property="og:image" content="http://example.com/img/%E9%BC%A0%E6%A0%87/W3C.png">
+<meta property="og:image" content="http://example.com/img/%E9%BC%A0%E6%A0%87/IE.png">
+<meta property="article:published_time" content="2019-11-17T08:50:21.000Z">
+<meta property="article:modified_time" content="2023-09-17T14:00:22.879Z">
+<meta property="article:author" content="Jacleklm">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/%E9%BC%A0%E6%A0%87/W3C.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Jacleklm" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Jacleklm</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Suche"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Suche"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-实现鼠标拖拽DOM" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/11/17/%E5%AE%9E%E7%8E%B0%E9%BC%A0%E6%A0%87%E6%8B%96%E6%8B%BDDOM/" class="article-date">
+  <time class="dt-published" datetime="2019-11-17T08:50:21.000Z" itemprop="datePublished">2019-11-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      实现鼠标拖拽DOM + 页面视图总结
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="知识储备"><a href="#知识储备" class="headerlink" title="知识储备"></a>知识储备</h1><h2 id="常用的鼠标事件"><a href="#常用的鼠标事件" class="headerlink" title="常用的鼠标事件"></a>常用的鼠标事件</h2><ul>
+<li>click</li>
+<li>dbclick：双击</li>
+<li>mouseenter：当鼠标指针<strong>首次</strong>移动到元素上时触发。不冒泡</li>
+<li>mouseleave：当鼠标指针移出元素时触发。不冒泡</li>
+<li><strong>mousedown</strong>：当元素上按下鼠标按钮时候触发</li>
+<li><strong>mouseup</strong>：当元素上释放鼠标按钮时触发</li>
+<li><strong>mousemove</strong>：当鼠标指针在元素内部移动时<strong>重复地</strong>触发</li>
+<li><strong>mouseover</strong>：当鼠标指针移动到元素上时触发</li>
+<li><strong>mouseout</strong>：当鼠标指针移出元素时触发</li>
+</ul>
+<h2 id="事件对象"><a href="#事件对象" class="headerlink" title="事件对象"></a>事件对象</h2><p>当触发某个事件时，会产生一个事件对象，这个对象包含着所有与事件有关的信息。会作为参数传递给函数，IE8以及之前的版本event对象是作为window对象的属性存在的。故有了以下常见的写法：<code>function (e) &#123; e = e || window.event; ... &#125;</code> 。事件对象的属性如下：<br><img src="/img/%E9%BC%A0%E6%A0%87/W3C.png"><br><img src="/img/%E9%BC%A0%E6%A0%87/IE.png"><br>应用：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">stopPro</span>(<span class="params">e</span>) &#123;</span><br><span class="line">  <span class="keyword">var</span> e = e || <span class="variable language_">window</span>.<span class="property">event</span>;</span><br><span class="line">  <span class="comment">// 得到事件目标DOM对象</span></span><br><span class="line">  <span class="keyword">let</span> dom = e.<span class="property">target</span> || e.<span class="property">srcElement</span>;</span><br><span class="line">  <span class="comment">// 阻止冒泡</span></span><br><span class="line">  <span class="variable language_">window</span>.<span class="property">event</span> ? e.<span class="property">cancelBubble</span> = <span class="literal">true</span> : e.<span class="title function_">stopPropagation</span>();</span><br><span class="line">  <span class="comment">// 取消默认事件</span></span><br><span class="line">  <span class="variable language_">window</span>.<span class="property">event</span> ? e.<span class="property">returnValue</span> = <span class="literal">false</span> : e.<span class="title function_">preventDefault</span>();</span><br><span class="line">  <span class="comment">// 阻止默认行为(但会继续冒泡)</span></span><br><span class="line">  <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="坐标"><a href="#坐标" class="headerlink" title="坐标"></a>坐标</h2><h3 id="事件对象-1"><a href="#事件对象-1" class="headerlink" title="事件对象"></a>事件对象</h3><ul>
+<li>event对象.screenX &#x2F; screenY ：相对电脑屏幕的坐标，距离左边框和上边框的距离</li>
+<li>event对象.clientX &#x2F; clientY ：相对浏览器可视区的坐标，同理</li>
+</ul>
+<h3 id="DOM节点"><a href="#DOM节点" class="headerlink" title="DOM节点"></a>DOM节点</h3><h4 id="DOM节点-offsetLeft-offsetTop"><a href="#DOM节点-offsetLeft-offsetTop" class="headerlink" title="DOM节点.offsetLeft &#x2F; offsetTop"></a>DOM节点.offsetLeft &#x2F; offsetTop</h4><p>可以获得元素 距离上方或外层元素 的位置，<strong>本质和 style.top 是一样的</strong>。二者区别：offsetTop 返回的是数字，而 style.top 返回的是字符串，除了数字外还带有单位（px）；offsetTop 只读，而 style.top 可读写。同理offsetWidth 与 style.width、offsetHeight 与 style.height</p>
+<h4 id="DOM节点-clientHeight-clientWidth"><a href="#DOM节点-clientHeight-clientWidth" class="headerlink" title="DOM节点.clientHeight &#x2F; clientWidth"></a>DOM节点.clientHeight &#x2F; clientWidth</h4><p>浏览器中可视区高度。width + padding（不含border）</p>
+<h4 id="DOM节点-scrollHeight-scrollWidth"><a href="#DOM节点-scrollHeight-scrollWidth" class="headerlink" title="DOM节点.scrollHeight &#x2F; scrollWidth"></a>DOM节点.scrollHeight &#x2F; scrollWidth</h4><p>元素内容真实的宽度，内容不超出盒子高度时为盒子的clientWidth</p>
+<h3 id="Window视图"><a href="#Window视图" class="headerlink" title="Window视图"></a>Window视图</h3><p>window.innerWidth &#x2F; innerHeight：浏览器窗口可视区宽度（不包括浏览器控制台、菜单栏、工具栏） （低版本IE浏览器&lt; IE9不支持）</p>
+<h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>拖拽无非是鼠标按下点击元素；鼠标移动，元素移动；鼠标抬起，元素停止不动<br>所以这里我们需要绑定三个事件：mousedown、mousemove、mouseup</p>
+<h2 id="实现-1"><a href="#实现-1" class="headerlink" title="实现"></a>实现</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">window</span>.<span class="property">onload</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">  <span class="comment">//【drag元素必须是是绝对定位】</span></span><br><span class="line">  <span class="keyword">var</span> drag = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;box&#x27;</span>);</span><br><span class="line">  drag.<span class="property">onmousedown</span> = <span class="keyword">function</span> (<span class="params">e</span>) &#123;</span><br><span class="line">    <span class="comment">// IE8以及之前的版本event对象是作为window对象的属性存在的。故有了以下常见的写法：</span></span><br><span class="line">    e = e || <span class="variable language_">window</span>.<span class="property">event</span>;</span><br><span class="line">    <span class="comment">//鼠标点与拖拽元素边框的距离。由于DOM.offsetLeft 和DOM.style.left本质是一样的，所以可以这么写</span></span><br><span class="line">    <span class="keyword">let</span> diffX = e.<span class="property">clientX</span> - drag.<span class="property">offsetLeft</span>;</span><br><span class="line">    <span class="keyword">let</span> diffY = e.<span class="property">clientY</span> - drag.<span class="property">offsetTop</span>;</span><br><span class="line">    drag.<span class="property">onmousemove</span> = <span class="keyword">function</span> (<span class="params">e</span>) &#123;</span><br><span class="line">      e = e || <span class="variable language_">window</span>.<span class="property">event</span>;</span><br><span class="line">      <span class="keyword">let</span> left = e.<span class="property">clientX</span> - diffX;</span><br><span class="line">      <span class="keyword">let</span> top = e.<span class="property">clientY</span> - diffY;</span><br><span class="line">      <span class="comment">//避免拖出可视区外</span></span><br><span class="line">      <span class="keyword">if</span> (left &lt; <span class="number">0</span>) &#123; left = <span class="number">0</span>; &#125;</span><br><span class="line">      <span class="keyword">else</span> <span class="keyword">if</span> (left &gt; <span class="variable language_">window</span>.<span class="property">innerWidth</span> - drag.<span class="property">offsetWidth</span>) &#123;</span><br><span class="line">        <span class="comment">//超出了就放在innerWidth的位置，注意这段代码不要写错</span></span><br><span class="line">        left = <span class="variable language_">window</span>.<span class="property">innerWidth</span> - drag.<span class="property">offsetWidth</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (top &lt; <span class="number">0</span>) top = <span class="number">0</span>;</span><br><span class="line">      <span class="keyword">else</span> <span class="keyword">if</span> (top &gt; <span class="variable language_">window</span>.<span class="property">innerHeight</span> - drag.<span class="property">offsetHeight</span>) &#123;</span><br><span class="line">        top = <span class="variable language_">window</span>, innerHeight - drag.<span class="property">offsetHeight</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      drag.<span class="property">style</span>.<span class="property">left</span> = left + <span class="string">&#x27;px&#x27;</span>;</span><br><span class="line">      drag.<span class="property">style</span>.<span class="property">top</span> = top + <span class="string">&#x27;px&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    drag.<span class="property">onmouseup</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">      drag.<span class="property">onmousemove</span> = <span class="literal">null</span>;</span><br><span class="line">      drag.<span class="property">onmousedown</span> = <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/11/17/%E5%AE%9E%E7%8E%B0%E9%BC%A0%E6%A0%87%E6%8B%96%E6%8B%BDDOM/" data-id="clmniym7s003vbb874nq8bbel" data-title="实现鼠标拖拽DOM + 页面视图总结" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/11/22/Web%20Worker/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          Web Worker
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/11/16/MeiTuan-app%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%93/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">MeiTuan-app项目总结</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Kategorien</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Basic-knowledge/">Basic knowledge</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Engineering/">Engineering</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%8A%E7%BA%BF%E9%83%A8%E7%BD%B2/">上线部署</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%90%8E%E7%AB%AF/">后端</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Browser/" rel="tag">Browser</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Computer/" rel="tag">Computer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Data-structure/" rel="tag">Data structure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Interview/" rel="tag">Interview</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Network/" rel="tag">Network</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node/" rel="tag">Node</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/" rel="tag">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Operating-system/" rel="tag">Operating system</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Performance/" rel="tag">Performance</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/" rel="tag">Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web%E5%AE%89%E5%85%A8/" rel="tag">Web安全</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/" rel="tag">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%8A%E7%BA%BF%E9%83%A8%E7%BD%B2/" rel="tag">上线部署</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A1%86%E6%9E%B6/" rel="tag">框架</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" rel="tag">解决方案</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE%E5%B0%8F%E7%BB%93/" rel="tag">项目小结</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Browser/" style="font-size: 14px;">Browser</a> <a href="/tags/CSS/" style="font-size: 14px;">CSS</a> <a href="/tags/Computer/" style="font-size: 10px;">Computer</a> <a href="/tags/Data-structure/" style="font-size: 18px;">Data structure</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/Interview/" style="font-size: 10px;">Interview</a> <a href="/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/tags/Network/" style="font-size: 14px;">Network</a> <a href="/tags/Node/" style="font-size: 12px;">Node</a> <a href="/tags/Nodejs/" style="font-size: 12px;">Nodejs</a> <a href="/tags/Operating-system/" style="font-size: 10px;">Operating system</a> <a href="/tags/Performance/" style="font-size: 12px;">Performance</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/TypeScript/" style="font-size: 14px;">TypeScript</a> <a href="/tags/Web/" style="font-size: 10px;">Web</a> <a href="/tags/Web%E5%AE%89%E5%85%A8/" style="font-size: 10px;">Web安全</a> <a href="/tags/webpack/" style="font-size: 20px;">webpack</a> <a href="/tags/%E4%B8%8A%E7%BA%BF%E9%83%A8%E7%BD%B2/" style="font-size: 10px;">上线部署</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 10px;">工具</a> <a href="/tags/%E6%A1%86%E6%9E%B6/" style="font-size: 16px;">框架</a> <a href="/tags/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" style="font-size: 10px;">解决方案</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 10px;">设计模式</a> <a href="/tags/%E9%A1%B9%E7%9B%AE%E5%B0%8F%E7%BB%93/" style="font-size: 14px;">项目小结</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">April 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/04/30/Python%20Basic/">Python Basic Knowledge</a>
+          </li>
+        
+          <li>
+            <a href="/2021/04/17/%E8%A7%A3%E5%86%B3hexo%20g%E7%94%9F%E6%88%90index.html%E4%B8%BA%E7%A9%BA%E7%9A%84%E9%97%AE%E9%A2%98/">解决hexo g生成index.html为空的问题</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/09/TypeScript%E4%B8%AD%E7%9A%84%E5%86%85%E7%BD%AE%E5%B7%A5%E5%85%B7%E7%B1%BB%E5%9E%8B%E5%8F%8A%E5%85%B6%E5%AE%9E%E7%8E%B0/">TypeScript中的内置工具类型及其实现</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/07/TypeScript%E4%B8%AD%E7%9A%84%E7%B1%BB%E5%9E%8B%E7%BC%96%E7%A8%8B/">TypeScript中的类型编程</a>
+          </li>
+        
+          <li>
+            <a href="/2020/11/03/hope%20statistics%20puppeteer%E5%B7%A5%E5%85%B7%E5%B0%8F%E7%BB%93/">hope statistics puppeteer 工具小结</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 Jacleklm<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

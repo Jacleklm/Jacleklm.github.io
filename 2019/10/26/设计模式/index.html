@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>设计模式 | Jacleklm</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="PS：一般单例模式和观察者模式问的最多。一般能说出5个设计模式就可以 面向对象的JS语言类型静态类型语言在编译时便确定变量的类型，而动态类型语言要到程序运行的时候，待变量被赋予某个值之后，才会有某种类型。JS是典型的动态类型语言。同时JS也是弱类型语言，Java是强类型语言强类型语言是一旦变量的类型被确定，就不能转化的语言。实际上所谓的貌似转化，都是通过中间变量来达到，原本的变量的类型肯定是没有变">
+<meta property="og:type" content="article">
+<meta property="og:title" content="设计模式">
+<meta property="og:url" content="http://example.com/2019/10/26/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/index.html">
+<meta property="og:site_name" content="Jacleklm">
+<meta property="og:description" content="PS：一般单例模式和观察者模式问的最多。一般能说出5个设计模式就可以 面向对象的JS语言类型静态类型语言在编译时便确定变量的类型，而动态类型语言要到程序运行的时候，待变量被赋予某个值之后，才会有某种类型。JS是典型的动态类型语言。同时JS也是弱类型语言，Java是强类型语言强类型语言是一旦变量的类型被确定，就不能转化的语言。实际上所谓的貌似转化，都是通过中间变量来达到，原本的变量的类型肯定是没有变">
+<meta property="og:locale">
+<meta property="og:image" content="http://example.com/img/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E7%B1%BB%E5%9E%8B.png">
+<meta property="og:image" content="http://example.com/img/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/UML.png">
+<meta property="og:image" content="http://example.com/img/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/3-8.png">
+<meta property="og:image" content="http://example.com/img/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/3-11.png">
+<meta property="og:image" content="http://example.com/img/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F.png">
+<meta property="og:image" content="http://example.com/img/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F.png">
+<meta property="og:image" content="http://example.com/img/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%A3%85%E9%A5%B0%E5%99%A8%E6%A8%A1%E5%BC%8F.png">
+<meta property="og:image" content="http://example.com/img/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F.png">
+<meta property="og:image" content="http://example.com/img/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F.png">
+<meta property="og:image" content="http://example.com/img/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%A4%96%E8%A7%82%E6%A8%A1%E5%BC%8F.png">
+<meta property="og:image" content="http://example.com/img/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%A8%A1%E5%BC%8F.png">
+<meta property="og:image" content="http://example.com/img/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F.png">
+<meta property="article:published_time" content="2019-10-26T14:30:21.000Z">
+<meta property="article:modified_time" content="2023-09-17T14:00:22.887Z">
+<meta property="article:author" content="Jacleklm">
+<meta property="article:tag" content="设计模式">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E7%B1%BB%E5%9E%8B.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Jacleklm" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Jacleklm</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Suche"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Suche"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-设计模式" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/10/26/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="article-date">
+  <time class="dt-published" datetime="2019-10-26T14:30:21.000Z" itemprop="datePublished">2019-10-26</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Basic-knowledge/">Basic knowledge</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      设计模式
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>PS：一般单例模式和观察者模式问的最多。一般能说出5个设计模式就可以</p>
+<h2 id="面向对象的JS"><a href="#面向对象的JS" class="headerlink" title="面向对象的JS"></a>面向对象的JS</h2><h3 id="语言类型"><a href="#语言类型" class="headerlink" title="语言类型"></a>语言类型</h3><p>静态类型语言在编译时便确定变量的类型，而动态类型语言要到程序运行的时候，待变量被赋予某个值之后，才会有某种类型。JS是典型的动态类型语言。同时JS也是弱类型语言，Java是强类型语言<br>强类型语言是一旦变量的类型被确定，就不能转化的语言。实际上所谓的貌似转化，都是通过中间变量来达到，原本的变量的类型肯定是没有变化的<br>弱类型语言则反之，一个变量的类型是由其应用上下文确定的。比如语言直接支持字符串和整数可以直接用 + 号搞定。当然，在支持运算符重载的强类型语言中也能通过外部实现的方式在形式上做到这一点，不过这个是完全不一样的内涵<br>通常的说，java&#x2F;python都算是强类型的，而VB&#x2F;Perl&#x2F;C都是弱类型的<br><img src="/img/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E7%B1%BB%E5%9E%8B.png"></p>
+<h3 id="面向对象三要素"><a href="#面向对象三要素" class="headerlink" title="面向对象三要素"></a>面向对象三要素</h3><h4 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h4><p>ES6实现继承很方便了，不解释</p>
+<h4 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h4><p>数据的权限和保密（eg. 变量 or 对象）<br>封装的三个访问权限关键字：public 完全开放，protected 对子类开放，private 对自己开放。对三个关键字可以对是属性的一种描述。<br>但JS没有着这种关键字（有些语言有，eg. TypeScript，Java），只能通过作用域模拟出public ，private 两种封装性。<br><strong>封装的作用</strong>：</p>
+<ul>
+<li>减少耦合，不该外露的不外露</li>
+<li>利于数据、接口的权限管理</li>
+<li>ES6目前不支持，<strong>一般认为 _ 开头的属性是private</strong></li>
+</ul>
+<h4 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h4><p>同一操作作用于不同的对象上，可以产生不同的解释和不同的执行结果。（eg. 继承自同一父后又自己写方法，这是两个继承自同一父的两个子类的同个方法可能执行结果不同）<br>作用：保持子类的开放性和灵活性；面向接口编程</p>
+<h3 id="为何使用面向对象"><a href="#为何使用面向对象" class="headerlink" title="为何使用面向对象"></a>为何使用面向对象</h3><ul>
+<li>因为计算机的程序执行：顺序、判断、循环 ——实现了结构化；</li>
+<li>而使用面向对象编程能——数据结构化； </li>
+<li>对于计算机，结构化的才是最简单的，所以编程应该 简单&amp;抽象。</li>
+</ul>
+<p>PS：jQuery其实是一个类</p>
+<h3 id="UML类图"><a href="#UML类图" class="headerlink" title="UML类图"></a>UML类图</h3><p>画UML类图帮助理解设计模式，也能帮助面对对象编程。可以去<a href="www.processon.com">processon</a>画<br><img src="/img/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/UML.png"></p>
+<h2 id="设计"><a href="#设计" class="headerlink" title="设计"></a>设计</h2><h3 id="何为设计"><a href="#何为设计" class="headerlink" title="何为设计"></a>何为设计</h3><p>按照哪一种思路或者标准来实现功能。功能相同，可以有不同的设计方案实现。伴随着需求增加，设计的作用才能体现出来</p>
+<h3 id="《UNIX-LINUX设计哲学》"><a href="#《UNIX-LINUX设计哲学》" class="headerlink" title="《UNIX&#x2F;LINUX设计哲学》"></a>《UNIX&#x2F;LINUX设计哲学》</h3><ul>
+<li>准则1：小即是美</li>
+<li>准则2：让每个程序制作好一件事</li>
+<li>准则3：快速建立原型（满足最基本需求）</li>
+<li>准则4：舍弃高效率而取可移植性（可通用性）</li>
+<li>准则5：采用纯文本来存储数据</li>
+<li>准则6：充分利用软件的杠杆效应（软件复用）</li>
+<li>准则7：使用shell脚本来提高杠杆效应和可移植性</li>
+<li>准则8：避免强制性的用户界面</li>
+<li>准则9：让每个程序成为过滤器</li>
+<li>小准则<ul>
+<li>允许用户定制环境</li>
+<li>尽量使操作系统内核小而轻量化</li>
+<li>使用小写字母并尽量简短</li>
+<li>沉默是金</li>
+<li>各部分之和大于整体</li>
+<li>寻求90%的解决方案</li>
+</ul>
+</li>
+</ul>
+<h3 id="SOLID五大设计原则"><a href="#SOLID五大设计原则" class="headerlink" title="SOLID五大设计原则"></a>SOLID五大设计原则</h3><ul>
+<li><strong>S：单一职责原则</strong>。每个程序（或函数&#x2F;函数的一部分）只做好一件事，如果功能过于复杂就拆分，每个部分保持独立</li>
+<li><strong>O：开放封闭原则</strong>。对扩展开放，对修改封闭；增加需求时，扩展新代码，而非修改原来的代码。是软件设计的终极目标。</li>
+<li>L：*李氏置换原则。子类能覆盖父类；父类能出现的地方子类都能出现；JS用的少（弱类型&amp;继承使用较少）</li>
+<li>I：*接口独立原则。保持接口的单一独立，避免出现“胖接口”；JS中没有接口（typescript例外），使用较少</li>
+<li>D：*依赖导致原则。面向接口编程，依赖于抽象而不依赖于具体；使用方只关注接口而不关注具体类的实现。JS使用少</li>
+</ul>
+<h3 id="设计模式简介"><a href="#设计模式简介" class="headerlink" title="设计模式简介"></a>设计模式简介</h3><ul>
+<li>创建型<ul>
+<li>工厂模式</li>
+<li>单例模式</li>
+<li>原型模式</li>
+</ul>
+</li>
+<li>结构性<ul>
+<li>适配器模式</li>
+<li>装饰器模式</li>
+<li>代理模式</li>
+<li>外观模式</li>
+<li>*桥接模式</li>
+<li>*组合模式</li>
+<li>*享元模式</li>
+</ul>
+</li>
+<li>行为型<ul>
+<li>*策略模式</li>
+<li>*模板方法模式</li>
+<li>观察者模式（发布-订阅）</li>
+<li>迭代器模式</li>
+<li>*职责连模式</li>
+<li>*命令模式</li>
+<li>*备忘录模式</li>
+<li>状态模式</li>
+<li>*访问者模式</li>
+<li>*中介者模式</li>
+<li>*解释器模式</li>
+</ul>
+</li>
+</ul>
+<p>学习目的：</p>
+<ul>
+<li>明白每个设计的道理和用意</li>
+<li>通过经典应用体会它的真正的使用场景</li>
+<li><strong>自己编码时多思考，尽量模仿</strong></li>
+</ul>
+<h3 id="例题1"><a href="#例题1" class="headerlink" title="例题1"></a>例题1</h3><p>打车时，可以打专车（每公里2元）或快车（1元）。任何车都有车牌号和名称。行程开始时，显示车辆信息；行程结束时，显示打车金额（假定行程5公里）。要求画出UML类图和用ES6语法写出该示例。<strong>先画UML类图再写代码</strong><br><img src="/img/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/3-8.png"></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Car</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">num, name</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">num</span> = num</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">name</span> = name</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">FastCar</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Car</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">num, name</span>) &#123;</span><br><span class="line">    <span class="variable language_">super</span>(num, name)</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">price</span> = <span class="number">1</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">SpecialCar</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Car</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">num, name</span>) &#123;</span><br><span class="line">    <span class="variable language_">super</span>(num, name)</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">price</span> = <span class="number">2</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Trip</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">car, long</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">car</span> = car</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">long</span> = long</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="title function_">start</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`行程开始，名称：<span class="subst">$&#123;<span class="variable language_">this</span>.car.name&#125;</span>，车牌号：<span class="subst">$&#123;<span class="variable language_">this</span>.car.num&#125;</span>`</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="title function_">end</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`行程结束，价格：<span class="subst">$&#123;<span class="variable language_">this</span>.car.price * <span class="variable language_">this</span>.long&#125;</span>`</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> car = <span class="keyword">new</span> <span class="title class_">SpecialCar</span>(<span class="number">100</span>, <span class="string">&#x27;广州专车&#x27;</span>)</span><br><span class="line"><span class="keyword">let</span> trip = <span class="keyword">new</span> <span class="title class_">Trip</span>(car, <span class="number">5</span>)</span><br><span class="line">trip.<span class="title function_">start</span>()</span><br><span class="line">trip.<span class="title function_">end</span>()</span><br></pre></td></tr></table></figure>
+<h3 id="例题2"><a href="#例题2" class="headerlink" title="例题2"></a>例题2</h3><p>某停车场，分为3层，每层100个车位，；每个车位都能监控到车辆的驶入和离开。车辆进入前，显示每层的空余车辆数；车辆进入时，摄像头可识别车牌号和时间；车辆出来时，出口显示器显示车牌号和停车时长。画UML类图<br><img src="/img/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/3-11.png"></p>
+<h2 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h2><h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>将new操作单独封装（初始化实例）；遇到new时，就要考虑是否用工厂模式<br>eg. 我们去饭店点了个一个菜，后面厨师会做实例化这个菜的各种复杂操作，但是提供给我们的却只有“点菜”这个接口</p>
+<h3 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h3><p>隐藏了创建实例的复杂度，只需要提供一个借口，简单清晰</p>
+<h3 id="UML类图及实现代码"><a href="#UML类图及实现代码" class="headerlink" title="UML类图及实现代码"></a>UML类图及实现代码</h3><p><img src="/img/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F.png"></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Product</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">name</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">name</span> = name</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="title function_">init</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="title function_">alert</span>(<span class="string">&#x27;init&#x27;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="title function_">fn1</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="title function_">alert</span>(<span class="string">&#x27;fn1&#x27;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Creator</span> &#123;</span><br><span class="line">  <span class="title function_">create</span>(<span class="params">name</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Product</span>(name)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> creator = <span class="keyword">new</span> <span class="title class_">Creator</span>()</span><br><span class="line"><span class="keyword">let</span> p = creator.<span class="title function_">create</span>(<span class="string">&#x27;p1&#x27;</span>)</span><br><span class="line">p.<span class="title function_">init</span>()</span><br></pre></td></tr></table></figure>
+<h3 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h3><ul>
+<li>React.createElement</li>
+<li>vue异步组件的创建<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">createComponent</span> (</span><br><span class="line">  <span class="title class_">Ctor</span>: <span class="title class_">Class</span>&lt;<span class="title class_">Component</span>&gt; | <span class="title class_">Function</span> | <span class="title class_">Object</span> | <span class="keyword">void</span>,</span><br><span class="line">  <span class="attr">data</span>: ?<span class="title class_">VNodeData</span>,</span><br><span class="line">  <span class="attr">context</span>: <span class="title class_">Component</span>,</span><br><span class="line">  <span class="attr">children</span>: ?<span class="title class_">Array</span>&lt;<span class="title class_">VNode</span>&gt;,</span><br><span class="line">  tag?: string</span><br><span class="line">): <span class="title class_">VNode</span> | <span class="title class_">Array</span>&lt;<span class="title class_">VNode</span>&gt; | <span class="keyword">void</span> &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 逻辑处理...</span></span><br><span class="line">  </span><br><span class="line">  <span class="keyword">const</span> vnode = <span class="keyword">new</span> <span class="title class_">VNode</span>(</span><br><span class="line">    <span class="string">`vue-component-<span class="subst">$&#123;Ctor.cid&#125;</span><span class="subst">$&#123;name ? <span class="string">`-<span class="subst">$&#123;name&#125;</span>`</span> : <span class="string">&#x27;&#x27;</span>&#125;</span>`</span>,</span><br><span class="line">    data, <span class="literal">undefined</span>, <span class="literal">undefined</span>, <span class="literal">undefined</span>, context,</span><br><span class="line">    &#123; <span class="title class_">Ctor</span>, propsData, listeners, tag, children &#125;,</span><br><span class="line">    asyncFactory</span><br><span class="line">  )</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> vnode</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>在上述代码中，我们可以看到我们只需要调用 createComponent 传入参数就能创建一个组件实例，但是创建这个实例是很复杂的一个过程，工厂帮助我们隐藏了这个复杂的过程，只需要一句代码调用就能实现功能</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h2><h3 id="介绍-1"><a href="#介绍-1" class="headerlink" title="介绍"></a>介绍</h3><p>系统中被唯一使用，一个类只有一个实例<br>eg. 淘宝页面中，登录框、购物车只会有一个；全局缓存，全局状态管理等这些只需要一个对象，就可以使用单例函数</p>
+<h3 id="实现代码"><a href="#实现代码" class="headerlink" title="实现代码"></a>实现代码</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*说明：单例模式要用到pravite关键字，但JS没有。我们只需要用一个变量确保实例只创建一次就行</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">SingleObject</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params"></span>) &#123; &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="title class_">SingleObject</span>.<span class="property">getInstance</span> = (<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> instnce</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!instnce) &#123;</span><br><span class="line">      instnce = <span class="keyword">new</span> <span class="title class_">SingleObject</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> instnce</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)()</span><br><span class="line"><span class="comment">// 下面这种把 instance 写成类的静态属性的方式也可以，更和TS中的写法一致</span></span><br><span class="line"><span class="comment">// 有些库的单例写法会把 instane 挂在 global 中 ，global.instance = xxx。当然这种写法建议用一个复杂一点的变量名，eg: CG_I18N_EMITER</span></span><br><span class="line"><span class="title class_">SingleObject</span>.<span class="property">instnce</span> = <span class="literal">undefined</span></span><br><span class="line"><span class="title class_">SingleObject</span>.<span class="property">getInstance</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (!<span class="variable language_">this</span>.<span class="property">instnce</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">instnce</span> = <span class="keyword">new</span> <span class="title class_">SingleObject</span>()</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">instnce</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//  一定要用自定义的getInstance方法来创建实例，不能用new</span></span><br><span class="line"><span class="keyword">let</span> obj1 = <span class="title class_">SingleObject</span>.<span class="title function_">getInstance</span>()</span><br><span class="line"><span class="keyword">let</span> obj2 = <span class="title class_">SingleObject</span>.<span class="title function_">getInstance</span>()</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(obj1 === obj2) <span class="comment">// true</span></span><br><span class="line"><span class="comment">//  用了new</span></span><br><span class="line"><span class="keyword">let</span> obj3 = <span class="keyword">new</span> <span class="title class_">SingleObject</span>()</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(obj1 === obj3) <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+<h3 id="场景-1"><a href="#场景-1" class="headerlink" title="场景"></a>场景</h3><ul>
+<li>jQuery只有一个$</li>
+<li>模拟登录框</li>
+<li>Vuex源码，通过一个外部变量来控制只安装一次 Vuex<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="title class_">Vue</span> <span class="comment">// bind on install</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">install</span> (_Vue) &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="title class_">Vue</span> &amp;&amp; _Vue === <span class="title class_">Vue</span>) &#123;</span><br><span class="line">    <span class="comment">// 如果发现 Vue 有值，就不重新创建实例了</span></span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="title class_">Vue</span> = _Vue</span><br><span class="line">  <span class="title function_">applyMixin</span>(<span class="title class_">Vue</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="适配器模式"><a href="#适配器模式" class="headerlink" title="适配器模式"></a>适配器模式</h2><h3 id="介绍-2"><a href="#介绍-2" class="headerlink" title="介绍"></a>介绍</h3><p>旧接口格式和使用者不兼容，中间加一个适配转换接口<br>eg. 电源插口转换器；</p>
+<h3 id="UML类图及实现代码-1"><a href="#UML类图及实现代码-1" class="headerlink" title="UML类图及实现代码"></a>UML类图及实现代码</h3><p><img src="/img/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F.png"></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Adaptee</span> &#123;</span><br><span class="line">  <span class="title function_">specificRequest</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;德国标准插头&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Target</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">adaptee</span> = <span class="keyword">new</span> <span class="title class_">Adaptee</span>()</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="title function_">request</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> info = <span class="variable language_">this</span>.<span class="property">adaptee</span>.<span class="title function_">specificRequest</span>()</span><br><span class="line">    <span class="keyword">return</span> <span class="string">`<span class="subst">$&#123;info&#125;</span>的转换器——中国标准插头`</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> target = <span class="keyword">new</span> <span class="title class_">Target</span>()</span><br><span class="line"><span class="keyword">let</span> res = target.<span class="title function_">request</span>()</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(res) <span class="comment">//  德国标准插头的转换器——中国标准插头</span></span><br></pre></td></tr></table></figure>
+<h3 id="场景-2"><a href="#场景-2" class="headerlink" title="场景"></a>场景</h3><ul>
+<li>封装旧接口</li>
+<li>Vue的计算属性<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span>信息列表<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span>信息：&#123;&#123;message&#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span>逆序信息：&#123;&#123;newMessage&#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">var</span> vm = <span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span></span><br><span class="line"><span class="language-javascript">      <span class="attr">el</span>: <span class="string">&#x27;#app&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">      <span class="attr">data</span>: &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="attr">message</span>: <span class="string">&#x27;hello&#x27;</span></span></span><br><span class="line"><span class="language-javascript">      &#125;,</span></span><br><span class="line"><span class="language-javascript">      <span class="attr">computed</span>: &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="attr">newMessage</span>: <span class="keyword">function</span> (<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">          <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">message</span>.<span class="title function_">split</span>(<span class="string">&#x27;&#x27;</span>).<span class="title function_">reverse</span>().<span class="title function_">join</span>(<span class="string">&#x27;&#x27;</span>)</span></span><br><span class="line"><span class="language-javascript">        &#125;</span></span><br><span class="line"><span class="language-javascript">      &#125;</span></span><br><span class="line"><span class="language-javascript">    &#125;)</span></span><br><span class="line"><span class="language-javascript">  </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="装饰器模式"><a href="#装饰器模式" class="headerlink" title="装饰器模式"></a>装饰器模式</h2><h3 id="介绍-3"><a href="#介绍-3" class="headerlink" title="介绍"></a>介绍</h3><p>不需要改变对象原有结构和功能（接口）的前提下，为对象添加新功能<br>eg.  就像我们经常需要给手机戴个保护套防摔一样，不改变手机自身，给手机添加了保护套提供防摔功能</p>
+<h3 id="UML类图及实现代码-2"><a href="#UML类图及实现代码-2" class="headerlink" title="UML类图及实现代码"></a>UML类图及实现代码</h3><p><img src="/img/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%A3%85%E9%A5%B0%E5%99%A8%E6%A8%A1%E5%BC%8F.png"></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Circle</span> &#123;</span><br><span class="line">  <span class="title function_">draw</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;画一个圆形&#x27;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Decorator</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">circle</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">circle</span> = circle</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="title function_">draw</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">circle</span>.<span class="title function_">draw</span>()</span><br><span class="line">    <span class="variable language_">this</span>.<span class="title function_">setRedBorder</span>(circle) <span class="comment">// 这里要传递“原来的功能”为参数，记得是“装饰”</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="title function_">setRedBorder</span>(<span class="params">circle</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;设置红色边框&#x27;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> circle = <span class="keyword">new</span> <span class="title class_">Circle</span>()</span><br><span class="line">circle.<span class="title function_">draw</span>() <span class="comment">// 画一个圆形</span></span><br><span class="line"><span class="keyword">let</span> dec = <span class="keyword">new</span> <span class="title class_">Decorator</span>(circle)</span><br><span class="line">dec.<span class="title function_">draw</span>()  <span class="comment">// 画一个圆形  // 设置红色边框</span></span><br></pre></td></tr></table></figure>
+<h3 id="场景-3"><a href="#场景-3" class="headerlink" title="场景"></a>场景</h3><p>ES7装饰器语法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">@testDec <span class="comment">// 用这个@的语法对下面的类做装饰</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Demo</span> &#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">testDec</span>(<span class="params">target</span>) &#123;</span><br><span class="line">  target.<span class="property">isDec</span> = <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Demo</span>.<span class="property">isDec</span>) <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//  传递参数的情况</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">testDec</span>(<span class="params">isDec</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">function</span>(<span class="params">target</span>) &#123;</span><br><span class="line">    target.<span class="property">isDec</span> = <span class="literal">true</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">@testDec</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Demo</span> &#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Demo</span>.<span class="property">isDec</span>) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<h2 id="代理模式"><a href="#代理模式" class="headerlink" title="代理模式"></a>代理模式</h2><h3 id="介绍-4"><a href="#介绍-4" class="headerlink" title="介绍"></a>介绍</h3><p>使用者无权访问目标对象，可以通过中间加代理的方法，通过代理做授权和控制<br>eg. 代购；明星和经纪人；事件代理</p>
+<h3 id="UML类图及实现代码-3"><a href="#UML类图及实现代码-3" class="headerlink" title="UML类图及实现代码"></a>UML类图及实现代码</h3><p><img src="/img/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F.png"></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">RealImg</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">filename</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">filename</span> = filename</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="title function_">display</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`展示<span class="subst">$&#123;<span class="variable language_">this</span>.filename&#125;</span>图片`</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ProxyImg</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">filename</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">realimg</span> = <span class="keyword">new</span> <span class="title class_">RealImg</span>(filename)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="title function_">display</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">realimg</span>.<span class="title function_">display</span>()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> proxyImg = <span class="keyword">new</span> <span class="title class_">ProxyImg</span>(<span class="string">&#x27;1.png&#x27;</span>)</span><br><span class="line">proxyImg.<span class="title function_">display</span>() <span class="comment">// 展示1.png图片</span></span><br></pre></td></tr></table></figure>
+<h3 id="代理模式-vs-装饰器模式"><a href="#代理模式-vs-装饰器模式" class="headerlink" title="代理模式 vs 装饰器模式"></a>代理模式 vs 装饰器模式</h3><p>装饰器模式：扩展功能，原有功能不变且可以直接使用<br>代理模式：显示原有功能，但是经过限制或者阉割之后的（ES6的proxy也是如此）</p>
+<h3 id="场景-4"><a href="#场景-4" class="headerlink" title="场景"></a>场景</h3><ul>
+<li>ES6 proxy</li>
+<li>网页事件代理<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span> <span class="attr">id</span>=<span class="string">&quot;ul&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>1<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>2<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>3<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>4<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>5<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">let</span> ul = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&#x27;#ul&#x27;</span>)</span></span><br><span class="line"><span class="language-javascript">    ul.<span class="title function_">addEventListener</span>(<span class="string">&#x27;click&#x27;</span>, <span class="function">(<span class="params">event</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">console</span>.<span class="title function_">log</span>(event.<span class="property">target</span>);</span></span><br><span class="line"><span class="language-javascript">    &#125;)</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>因为存在太多的 li，不可能每个都去绑定事件。这时候可以通过给父节点绑定一个事件，让父节点作为代理去拿到真实点击的节点</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="观察者模式"><a href="#观察者模式" class="headerlink" title="观察者模式"></a>观察者模式</h2><h3 id="介绍-5"><a href="#介绍-5" class="headerlink" title="介绍"></a>介绍</h3><p>通过一对一或者一对多的依赖关系，当对象发生改变时，订阅方都会收到通知，即 发布 &amp; 订阅（发布给订阅者）<br>eg. 肯德基很多个人点餐完成，每准备好一个顾客的餐那个顾客就会收到通知；双11某商品降价通知</p>
+<h3 id="UML类图及实现代码-4"><a href="#UML类图及实现代码-4" class="headerlink" title="UML类图及实现代码"></a>UML类图及实现代码</h3><p><img src="/img/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F.png"></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 主题，保存状态，状态变化之后触发所有观察者对象</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Subject</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">name</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">state</span> = <span class="number">0</span></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">observers</span> = []</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">name</span> = name</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 添加观察者</span></span><br><span class="line">  <span class="title function_">addOvservers</span>(<span class="params">observer</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">observers</span>.<span class="title function_">push</span>(observer)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="title function_">getState</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">state</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="title function_">setState</span>(<span class="params">state</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">state</span> = state</span><br><span class="line">    <span class="variable language_">this</span>.<span class="title function_">notifyAllObservers</span>()</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="title function_">notifyAllObservers</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">observers</span>.<span class="title function_">forEach</span>(<span class="function">(<span class="params">observer</span>) =&gt;</span> &#123;</span><br><span class="line">      observer.<span class="title function_">update</span>()</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 观察者</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Observer</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">name, subject</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">name</span> = name</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">subject</span> = subject</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">subject</span>.<span class="title function_">addOvservers</span>(<span class="variable language_">this</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="title function_">update</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`<span class="subst">$&#123;<span class="variable language_">this</span>.subject.name&#125;</span> updata, now state is <span class="subst">$&#123;<span class="variable language_">this</span>.subject.getState()&#125;</span>`</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> s = <span class="keyword">new</span> <span class="title class_">Subject</span>(<span class="string">&#x27;subject1&#x27;</span>)</span><br><span class="line"><span class="keyword">let</span> o1 = <span class="keyword">new</span> <span class="title class_">Observer</span>(<span class="string">&#x27;o1&#x27;</span>, s)</span><br><span class="line"><span class="keyword">let</span> o2 = <span class="keyword">new</span> <span class="title class_">Observer</span>(<span class="string">&#x27;o2&#x27;</span>, s)</span><br><span class="line">s.<span class="title function_">setState</span>(<span class="number">2</span>) <span class="comment">// subject1 updata, now state is 2  // subject1 updata, now state is 2</span></span><br></pre></td></tr></table></figure>
+<h3 id="场景-5"><a href="#场景-5" class="headerlink" title="场景"></a>场景</h3><ul>
+<li>网页的addEventListener</li>
+<li>Vue的双向数据绑定、父子传值$emit、生命周期触发、Vue的watch</li>
+<li>Promise的 .then（监听promise的状态变化）</li>
+<li>Node.js自定义事件EventEmitter（这个其实和Vue的$emit是一样的），http（其实底也是EventEmitter）</li>
+</ul>
+<h2 id="外观模式"><a href="#外观模式" class="headerlink" title="外观模式"></a>外观模式</h2><h3 id="介绍-6"><a href="#介绍-6" class="headerlink" title="介绍"></a>介绍</h3><p>为子系统中的一组接口提供了一个高层接口，使用者使用这个高层接口</p>
+<h3 id="UML类图-1"><a href="#UML类图-1" class="headerlink" title="UML类图"></a>UML类图</h3><p><img src="/img/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%A4%96%E8%A7%82%E6%A8%A1%E5%BC%8F.png"></p>
+<h3 id="场景-6"><a href="#场景-6" class="headerlink" title="场景"></a>场景</h3><p>实现一个兼容多种浏览器的添加事件方法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">addEvent</span>(<span class="params">elm, evType, fn, useCapture</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (elm.<span class="property">addEventListener</span>) &#123;</span><br><span class="line">    elm.<span class="title function_">addEventListener</span>(evType, fn, useCapture)</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (elm.<span class="property">attachEvent</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> r = elm.<span class="title function_">attachEvent</span>(<span class="string">&quot;on&quot;</span> + evType, fn)</span><br><span class="line">    <span class="keyword">return</span> r</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    elm[<span class="string">&quot;on&quot;</span> + evType] = fn</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>对于不同的浏览器，添加事件的方式可能会存在兼容问题。如果每次都需要去这样写一遍的话肯定是不能接受的，所以我们将这些判断逻辑统一封装在一个接口中，外部需要添加事件只需要调用 addEvent 即可</p>
+</blockquote>
+<h2 id="迭代器模式"><a href="#迭代器模式" class="headerlink" title="迭代器模式"></a>迭代器模式</h2><h3 id="介绍-7"><a href="#介绍-7" class="headerlink" title="介绍"></a>介绍</h3><p>顺序遍历有序集合（Array，NodeList，Set等，对象不算，不是有序），使用者无需知道集合的内部结构（被封装了，不知道它是数组还是NodeList还是啥的，也不知道它的长度）。（所以 Array.prototype.forEach(), for循环 这些都不算迭代模式）</p>
+<h3 id="UML类图及实现代码-5"><a href="#UML类图及实现代码-5" class="headerlink" title="UML类图及实现代码"></a>UML类图及实现代码</h3><p><img src="/img/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%A8%A1%E5%BC%8F.png"></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Iterator</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">conatiner</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">list</span> = conatiner.<span class="property">list</span></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">index</span> = <span class="number">0</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="title function_">next</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="title function_">hasNext</span>()) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">list</span>[<span class="variable language_">this</span>.<span class="property">index</span>++]</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="title function_">hasNext</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">index</span> &gt;= <span class="variable language_">this</span>.<span class="property">list</span>.<span class="property">length</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Container</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">list</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">list</span> = list</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="title function_">getIterator</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Iterator</span>(<span class="variable language_">this</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 测试代码</span></span><br><span class="line"><span class="keyword">let</span> container = <span class="keyword">new</span> <span class="title class_">Container</span>([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>])</span><br><span class="line"><span class="keyword">let</span> iterator = container.<span class="title function_">getIterator</span>()</span><br><span class="line"><span class="keyword">while</span> (iterator.<span class="title function_">hasNext</span>()) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(iterator.<span class="title function_">next</span>())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="场景-7"><a href="#场景-7" class="headerlink" title="场景"></a>场景</h3><ul>
+<li>jQuery each</li>
+<li>ES6 Iterator</li>
+</ul>
+<h2 id="状态模式"><a href="#状态模式" class="headerlink" title="状态模式"></a>状态模式</h2><h3 id="介绍-8"><a href="#介绍-8" class="headerlink" title="介绍"></a>介绍</h3><p>一个对象有状态变化，每次状态变化都会触发一个逻辑，当状态有很多种的时候不能总是用 if…else 来控制<br>eg. 交通信号灯不同颜色的变化</p>
+<h3 id="UML类图及实现代码-6"><a href="#UML类图及实现代码-6" class="headerlink" title="UML类图及实现代码"></a>UML类图及实现代码</h3><p><img src="/img/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F.png"></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 状态（红灯、绿灯、黄灯）</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">State</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">color</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">color</span> = color</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="title function_">handle</span>(<span class="params">context</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`turn to <span class="subst">$&#123;<span class="variable language_">this</span>.color&#125;</span> light`</span>)</span><br><span class="line">    context.<span class="title function_">setState</span>(<span class="variable language_">this</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 主体</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Context</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">state</span> = <span class="literal">null</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="title function_">getState</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">state</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="title function_">setState</span>(<span class="params">state</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">state</span> = state</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> context = <span class="keyword">new</span> <span class="title class_">Context</span>()</span><br><span class="line"><span class="keyword">let</span> green = <span class="keyword">new</span> <span class="title class_">State</span>(<span class="string">&#x27;green&#x27;</span>)</span><br><span class="line"><span class="keyword">let</span> yellow = <span class="keyword">new</span> <span class="title class_">State</span>(<span class="string">&#x27;yellow&#x27;</span>)</span><br><span class="line"><span class="keyword">let</span> red = <span class="keyword">new</span> <span class="title class_">State</span>(<span class="string">&#x27;red&#x27;</span>)</span><br><span class="line"><span class="comment">// 绿灯亮了</span></span><br><span class="line">green.<span class="title function_">handle</span>(context)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(context.<span class="title function_">getState</span>()) <span class="comment">// 打印状态</span></span><br><span class="line"><span class="comment">// 黄灯亮了</span></span><br><span class="line">yellow.<span class="title function_">handle</span>(context)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(context.<span class="title function_">getState</span>()) <span class="comment">// 打印状态</span></span><br></pre></td></tr></table></figure>
+<h3 id="场景-8"><a href="#场景-8" class="headerlink" title="场景"></a>场景</h3><ul>
+<li>有限状态机</li>
+<li>写一个简单的Promise</li>
+</ul>
+<h2 id="一些很不错的博客贴-小测"><a href="#一些很不错的博客贴-小测" class="headerlink" title="一些很不错的博客贴 &amp;&amp; 小测"></a>一些很不错的博客贴 &amp;&amp; 小测</h2><h3 id="如何消除层出不穷的-switch…case-————-开放封闭原则"><a href="#如何消除层出不穷的-switch…case-————-开放封闭原则" class="headerlink" title="如何消除层出不穷的 switch…case ———— 开放封闭原则"></a>如何消除层出不穷的 switch…case ———— 开放封闭原则</h3><p><a target="_blank" rel="noopener" href="https://xie.infoq.cn/article/7830562df8028398eec1b6ee3">核心稳定、易扩展——开放关闭原则</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/FHbHhjtfJOc2NPfge6xw2Q">备用链接</a></p>
+<h3 id="React设计模式与最佳实践"><a href="#React设计模式与最佳实践" class="headerlink" title="React设计模式与最佳实践"></a>React设计模式与最佳实践</h3><p>比较有历史的一本<a target="_blank" rel="noopener" href="https://juejin.im/book/6844733754326401038">小册</a></p>
+<p>参考资料<br><a target="_blank" rel="noopener" href="https://coding.imooc.com/class/255.html">慕课网-Javascript 设计模式系统讲解与应用</a><br><a target="_blank" rel="noopener" href="http://blog.poetries.top/FE-Interview-Questions/excellent/#_34-6-%E5%8F%91%E5%B8%83-%E8%AE%A2%E9%98%85%E6%A8%A1%E5%BC%8F">poetries</a><br>《JavaScript设计模式与开发实践》</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/10/26/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" data-id="clmniym8m006dbb879tqs1geo" data-title="设计模式" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/10/27/Web%E5%AE%89%E5%85%A8/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          Web安全
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/10/23/Web%20Component/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">Web Component</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Kategorien</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Basic-knowledge/">Basic knowledge</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Engineering/">Engineering</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%8A%E7%BA%BF%E9%83%A8%E7%BD%B2/">上线部署</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%90%8E%E7%AB%AF/">后端</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Browser/" rel="tag">Browser</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Computer/" rel="tag">Computer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Data-structure/" rel="tag">Data structure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Interview/" rel="tag">Interview</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Network/" rel="tag">Network</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node/" rel="tag">Node</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/" rel="tag">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Operating-system/" rel="tag">Operating system</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Performance/" rel="tag">Performance</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/" rel="tag">Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web%E5%AE%89%E5%85%A8/" rel="tag">Web安全</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/" rel="tag">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%8A%E7%BA%BF%E9%83%A8%E7%BD%B2/" rel="tag">上线部署</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A1%86%E6%9E%B6/" rel="tag">框架</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" rel="tag">解决方案</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE%E5%B0%8F%E7%BB%93/" rel="tag">项目小结</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Browser/" style="font-size: 14px;">Browser</a> <a href="/tags/CSS/" style="font-size: 14px;">CSS</a> <a href="/tags/Computer/" style="font-size: 10px;">Computer</a> <a href="/tags/Data-structure/" style="font-size: 18px;">Data structure</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/Interview/" style="font-size: 10px;">Interview</a> <a href="/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/tags/Network/" style="font-size: 14px;">Network</a> <a href="/tags/Node/" style="font-size: 12px;">Node</a> <a href="/tags/Nodejs/" style="font-size: 12px;">Nodejs</a> <a href="/tags/Operating-system/" style="font-size: 10px;">Operating system</a> <a href="/tags/Performance/" style="font-size: 12px;">Performance</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/TypeScript/" style="font-size: 14px;">TypeScript</a> <a href="/tags/Web/" style="font-size: 10px;">Web</a> <a href="/tags/Web%E5%AE%89%E5%85%A8/" style="font-size: 10px;">Web安全</a> <a href="/tags/webpack/" style="font-size: 20px;">webpack</a> <a href="/tags/%E4%B8%8A%E7%BA%BF%E9%83%A8%E7%BD%B2/" style="font-size: 10px;">上线部署</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 10px;">工具</a> <a href="/tags/%E6%A1%86%E6%9E%B6/" style="font-size: 16px;">框架</a> <a href="/tags/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" style="font-size: 10px;">解决方案</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 10px;">设计模式</a> <a href="/tags/%E9%A1%B9%E7%9B%AE%E5%B0%8F%E7%BB%93/" style="font-size: 14px;">项目小结</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">April 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/04/30/Python%20Basic/">Python Basic Knowledge</a>
+          </li>
+        
+          <li>
+            <a href="/2021/04/17/%E8%A7%A3%E5%86%B3hexo%20g%E7%94%9F%E6%88%90index.html%E4%B8%BA%E7%A9%BA%E7%9A%84%E9%97%AE%E9%A2%98/">解决hexo g生成index.html为空的问题</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/09/TypeScript%E4%B8%AD%E7%9A%84%E5%86%85%E7%BD%AE%E5%B7%A5%E5%85%B7%E7%B1%BB%E5%9E%8B%E5%8F%8A%E5%85%B6%E5%AE%9E%E7%8E%B0/">TypeScript中的内置工具类型及其实现</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/07/TypeScript%E4%B8%AD%E7%9A%84%E7%B1%BB%E5%9E%8B%E7%BC%96%E7%A8%8B/">TypeScript中的类型编程</a>
+          </li>
+        
+          <li>
+            <a href="/2020/11/03/hope%20statistics%20puppeteer%E5%B7%A5%E5%85%B7%E5%B0%8F%E7%BB%93/">hope statistics puppeteer 工具小结</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 Jacleklm<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

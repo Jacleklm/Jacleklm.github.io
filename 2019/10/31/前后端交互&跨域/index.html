@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>前后端交互&amp;跨域 | Jacleklm</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="前后端数据交互利用 CookieCookie 是一些数据, 存储于电脑上的文本文件中,只要客户端 cookie 开放且有数据，每一次请求都会自动添加到 http 报文中，后台可以实时接收观察获取这些 Cookie 。 Cookie 的作用就是用于解决 “如何记录客户端的用户信息”:  当用户访问 web 页面时，他的名字可以记录在 cookie 中。 在用户下一次访问该页面时，可以在 cookie">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前后端交互&amp;跨域">
+<meta property="og:url" content="http://example.com/2019/10/31/%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92&%E8%B7%A8%E5%9F%9F/index.html">
+<meta property="og:site_name" content="Jacleklm">
+<meta property="og:description" content="前后端数据交互利用 CookieCookie 是一些数据, 存储于电脑上的文本文件中,只要客户端 cookie 开放且有数据，每一次请求都会自动添加到 http 报文中，后台可以实时接收观察获取这些 Cookie 。 Cookie 的作用就是用于解决 “如何记录客户端的用户信息”:  当用户访问 web 页面时，他的名字可以记录在 cookie 中。 在用户下一次访问该页面时，可以在 cookie">
+<meta property="og:locale">
+<meta property="article:published_time" content="2019-10-31T15:02:21.000Z">
+<meta property="article:modified_time" content="2023-09-17T14:00:22.876Z">
+<meta property="article:author" content="Jacleklm">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Jacleklm" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Jacleklm</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Suche"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Suche"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-前后端交互&amp;跨域" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/10/31/%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92&%E8%B7%A8%E5%9F%9F/" class="article-date">
+  <time class="dt-published" datetime="2019-10-31T15:02:21.000Z" itemprop="datePublished">2019-10-31</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%90%8E%E7%AB%AF/">后端</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      前后端交互&amp;跨域
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="前后端数据交互"><a href="#前后端数据交互" class="headerlink" title="前后端数据交互"></a>前后端数据交互</h1><h2 id="利用-Cookie"><a href="#利用-Cookie" class="headerlink" title="利用 Cookie"></a>利用 Cookie</h2><p>Cookie 是一些数据, 存储于电脑上的文本文件中,只要客户端 cookie 开放且有数据，每一次请求都会自动添加到 http 报文中，后台可以实时接收观察获取这些 Cookie 。</p>
+<p>Cookie 的作用就是用于解决 “如何记录客户端的用户信息”:</p>
+<ul>
+<li>当用户访问 web 页面时，他的名字可以记录在 cookie 中。</li>
+<li>在用户下一次访问该页面时，可以在 cookie 中读取用户访问记录。</li>
+</ul>
+<h2 id="利用-Session-对象"><a href="#利用-Session-对象" class="headerlink" title="利用 Session 对象"></a>利用 Session 对象</h2><p>session 对象表示特定会话 session 的用户数据。</p>
+<p>客户第一次访问支持 session 的 JSP 网页，服务器会创建一个 session 对象记录客户的信息。当客户访问同一网站的不同网页时，仍处于同一个 session 中。</p>
+<p>request.getSession().setAttribute();<br>request.getSession().getAttribute();<br>只要浏览器不关闭，就能使用。所以用户访问网站整个生命都会用到的数据一般都用 session 来存储，比如用户名、登录状态之类的</p>
+<h2 id="Ajax"><a href="#Ajax" class="headerlink" title="Ajax"></a>Ajax</h2><p>PS：相对有点老了，用 fetch 方便很多<br>Ajax &#x3D; 异步 JavaScript 和 XML。是一种在无需重新加载整个网页的情况下，能够更新部分网页的技术</p>
+<h3 id="XHR-对象"><a href="#XHR-对象" class="headerlink" title="XHR 对象"></a>XHR 对象</h3><p>XMLHttpRequest（XHR) 对象是 Ajax 的基础，用于在后台与服务器交换数据。用 var 变量名 &#x3D; new XMLHttpRequest(); 创建</p>
+<h4 id="XHR-的方法"><a href="#XHR-的方法" class="headerlink" title="XHR 的方法"></a>XHR 的方法</h4><p>如需将请求发送到服务器，我们使用 XMLHttpRequest 对象的</p>
+<ul>
+<li>open(method, url, async)方法。第一个参数是’GET’&#x2F;‘POST’；第三个参数是一个布尔值，同步&#x2F;异步<br>eg. <code>request.open(&#39;GET&#39;, &#39;/api/categories&#39;，true);</code></li>
+<li>send(string)方法。用于将请求及参数发送到服务器，有参数时仅用于 POST。对于一些没带参数的请求方法，可以写成 send(null)</li>
+</ul>
+<h4 id="获取响应"><a href="#获取响应" class="headerlink" title="获取响应"></a>获取响应</h4><p>需获得来自服务器的响应，请使用 XMLHttpRequest 对象的 responseText 或 responseXML 属性。<br>eg. <code>document.getElementById(&quot;myDiv&quot;).innerHTML=xmlhttp.responseText;</code></p>
+<h4 id="状态信息及监听"><a href="#状态信息及监听" class="headerlink" title="状态信息及监听"></a>状态信息及监听</h4><p><strong>readyState</strong>属性存有 XMLHttpRequest 的状态信息，有以下几个属性值：</p>
+<ul>
+<li>0: （未初始化）XHR 对象已创建，open()未调用</li>
+<li>1: （载入）send()已调用，正在发送请求</li>
+<li>2: （载入完成）send()方法执行完成，已经收到全部响应的内容</li>
+<li>3: （交互）正在解析内容</li>
+<li><strong>4</strong>: （完成）响应内容解析完成，可以在客户端使用了</li>
+</ul>
+<p>status 属性，该属性有两个属性值：200，404<br>当 readyState 改变时，就会触发 onreadystatechange 事件；此外 XHR 对象还提供了其他监听事件：process 事件，load 事件（加载完成），error 事件，abort 事件（加载终止）。可以用 addEventListener 来监听。<br>一般 open()并监听（监听后执行异步代码）后还会 send()，这才是一个完整的流程</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//  普通版</span></span><br><span class="line"><span class="keyword">const</span> xhr = <span class="keyword">new</span> <span class="title class_">XMLHttpRequest</span>()</span><br><span class="line">xhr.<span class="title function_">open</span>(<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;https:www.baidu.com&#x27;</span>, <span class="literal">true</span>)</span><br><span class="line">xhr.<span class="property">onreadystatechange</span> = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (xhr.<span class="property">readyState</span> === <span class="number">4</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (xhr.<span class="property">status</span> === <span class="number">200</span>) &#123;</span><br><span class="line">      <span class="title function_">alert</span>(xhr.<span class="property">responseText</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">xhr.<span class="title function_">send</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 上面的 onreadystatechange 部分也可以写成如下：</span></span><br><span class="line">xhr.<span class="property">onload</span> = <span class="keyword">function</span> (<span class="params">e</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (xhr.<span class="property">readyState</span> === <span class="number">4</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (xhr.<span class="property">status</span> === <span class="number">200</span>) &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(xhr.<span class="property">responseText</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">error</span>(xhr.<span class="property">statusText</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line">xhr.<span class="property">onerror</span> = <span class="keyword">function</span> (<span class="params">e</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">error</span>(xhr.<span class="property">statusText</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//  Promise版</span></span><br><span class="line"><span class="keyword">const</span> myAjax = <span class="keyword">function</span>(<span class="params">url</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> promise = <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="keyword">function</span>(<span class="params">resolve, reject</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="title function_">handler</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">      <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">readystate</span> !== <span class="number">4</span>) <span class="keyword">return</span></span><br><span class="line">      <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">status</span> === <span class="number">200</span>) &#123;</span><br><span class="line">        <span class="title function_">resolve</span>(<span class="variable language_">this</span>.<span class="property">response</span>)</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="title function_">reject</span>(<span class="keyword">new</span> <span class="title class_">Error</span>(<span class="variable language_">this</span>.<span class="property">statustext</span>))</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">const</span> client = <span class="keyword">new</span> <span class="title class_">XMLHttpRequest</span>()</span><br><span class="line">    client.<span class="title function_">open</span>(<span class="string">&#x27;GET&#x27;</span>, url)</span><br><span class="line">    client.<span class="property">onreadystatechange</span> = handle</span><br><span class="line">    client.<span class="title function_">send</span>()</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="keyword">return</span> promise</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">myAjax</span>(<span class="string">&#x27;/url&#x27;</span>)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(res)</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">cathch</span>(<span class="function"><span class="params">e</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(e)</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="XHR-请求的缓存问题的处理方案"><a href="#XHR-请求的缓存问题的处理方案" class="headerlink" title="XHR 请求的缓存问题的处理方案"></a>XHR 请求的缓存问题的处理方案</h3><p>由于浏览器的缓存机制，当我们使用 XMLHttpRequest 发出请求的时候，浏览器会将请求的地址与缓存中的地址进行比较，如果存在相同记录则根据不向服务器发出请求而直接返回与上一次请求相同内容。但我们有时候其实希望每次都请求而不读缓存，解决方法如下：</p>
+<h4 id="方法一：URL-加时间戳"><a href="#方法一：URL-加时间戳" class="headerlink" title="方法一：URL 加时间戳"></a>方法一：URL 加时间戳</h4><p>在每次请求的 url 后面加上 ‘?’ or ‘&amp;’ 再加当前时间的字符串或其他类似的不会重复的随机字符串，这样浏览器每次发出的是不同的 url，即会当做不同的请求来处理，而不会从缓存中读取</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var oReq = new XMLHttpRequest();</span><br><span class="line">oReq.open(&quot;GET&quot;, url + ((/\?/).test(url) ? &quot;&amp;&quot; : &quot;?&quot;) + (new Date()).getTime());</span><br><span class="line">oReq.send(null);</span><br></pre></td></tr></table></figure>
+
+<h4 id="方法二：HTTP-的缓存策略"><a href="#方法二：HTTP-的缓存策略" class="headerlink" title="方法二：HTTP 的缓存策略"></a>方法二：HTTP 的缓存策略</h4><p>可以把 Cache-ontrol: no-cache + If-Modified-Since: 0。写成 XHR 代码就是</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">XMLHttpRequest.setRequestHeader(&quot;If-Modified-Since&quot;, &quot;0&quot;);</span><br><span class="line">XMLHttpRequest.setRequestHeader(&quot;Cache-ontrol&quot;, &quot;no-cache&quot;);</span><br><span class="line">XMLHttpRequest.send(null);</span><br></pre></td></tr></table></figure>
+
+<h3 id="实现一个前端缓存模块"><a href="#实现一个前端缓存模块" class="headerlink" title="实现一个前端缓存模块"></a>实现一个前端缓存模块</h3><p>实现一个前端缓存模块，主要用于缓存 xhr 返回的结果，避免多余的网络请求浪费，要求：</p>
+<ul>
+<li>生命周期为一次页面打开</li>
+<li>如果有相同的请求同时并行发起，要求其中一个能挂起并且等待另外一个请求返回并读取该缓存</li>
+</ul>
+<h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><p>参考了<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30114149/article/details/79419600">封装原生 ajax（缓存+xhr 单例）</a>，有所删改。还没完成</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">export class XAjaxRequester &#123;</span><br><span class="line">  constructor() &#123;</span><br><span class="line">    this.cacheUrl = &#123;&#125; // 缓存</span><br><span class="line">  &#125;</span><br><span class="line">  updataStatus(url, res) &#123;</span><br><span class="line">    this.cacheUrl[url] = res</span><br><span class="line">  &#125;</span><br><span class="line">  get(url, successCallBack) &#123;</span><br><span class="line">    let _self = this</span><br><span class="line">    let xhr = new XMLHttpRequest()</span><br><span class="line">    // 发起请求但是没响应的时候标记为 1</span><br><span class="line">    _self.cacheUrl[url] = 1</span><br><span class="line">    if (!_self.cacheUrl[url]) &#123;</span><br><span class="line">      // 没缓存，正常执行</span><br><span class="line">      xhr.open(&#x27;get&#x27;, url, true)</span><br><span class="line">      xhr.onreadystatechange = function() &#123;</span><br><span class="line">        if (this.readyState === 4) &#123;</span><br><span class="line">          if (</span><br><span class="line">            (this.status &gt;= 200 &amp;&amp; this.status &lt; 300) ||</span><br><span class="line">            this.status === 304</span><br><span class="line">          ) &#123;</span><br><span class="line">            let res = this.responseText</span><br><span class="line">            if (typeof successCallBack === &#x27;function&#x27;) &#123;</span><br><span class="line">              successCallBack(res)</span><br><span class="line">              _self.updataStatus(url, res) // 更新缓存，发布消息给订阅者</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      xhr.send(null)</span><br><span class="line">    &#125; else if (_self.cacheUrl[url] === 1) &#123;</span><br><span class="line">      // 有url，但还没缓存资源。整一个发布订阅?</span><br><span class="line">      </span><br><span class="line">    &#125; else &#123;</span><br><span class="line">      // 有缓存，直接拿</span><br><span class="line">      data = _self.cacheUrl[url]</span><br><span class="line">      successCallBack(data)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//  使用demo</span><br><span class="line">let cacheAjax = new XAjaxRequester()</span><br><span class="line">cacheAjax.get(&#x27;/url&#x27;, function(res) &#123;</span><br><span class="line">  /* 成功回调 */</span><br><span class="line">&#125;)</span><br><span class="line">cacheAjax.get(&#x27;/url&#x27;, function(res) &#123;</span><br><span class="line">  /* 成功回调 */</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="杂的知识点"><a href="#杂的知识点" class="headerlink" title="杂的知识点"></a>杂的知识点</h3><p>在ajax应用中，通常一个页面要同时发送多个请求，如果只有一个XMLHttpRequest对象，前面的请求还未完成，后面的就会把前面的覆盖 掉，如果每次都创建一个新的XMLHttpRequest对象，也会造成浪费。解决的办法就是创建一个XMLHttpRequset的对象池，如果池里有 空闲的对象，则使用此对象，否则将创建一个新的对象。见这篇<a href="ttps://blog.csdn.net/jiedushi/article/details/2531215">远古贴</a>。也有另一种方案是每次用完之后就delete这个变量再让变量 &#x3D; null</p>
+<h2 id="axios"><a href="#axios" class="headerlink" title="axios"></a>axios</h2><p>axios 是一个基于 Promise 用于浏览器和 nodejs 的 HTTP 客户端，本质上也是对原生 XHR 的封装，只不过它是 Promise 的实现版本，符合最新的 ES 规范</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">axios</span>(&#123;</span><br><span class="line">  <span class="attr">method</span>: <span class="string">&#x27;post&#x27;</span>,</span><br><span class="line">  <span class="attr">url</span>: <span class="string">&#x27;/user/12345&#x27;</span>,</span><br><span class="line">  <span class="attr">data</span>: &#123;</span><br><span class="line">    <span class="attr">firstName</span>: <span class="string">&#x27;Fred&#x27;</span>,</span><br><span class="line">    <span class="attr">lastName</span>: <span class="string">&#x27;Flintstone&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="keyword">function</span>(<span class="params">response</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(response)</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="keyword">function</span>(<span class="params">error</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(error)</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="fetch"><a href="#fetch" class="headerlink" title="fetch"></a>fetch</h2><p>fetch 能实现以前 XHR 对象能做的事情。还提供了 全局 fetch()方法，该方法提供了一种简单，合理的方式来跨网络异步获取资源。但是 fetch<strong>不是 ajax 的进一步封装，而是原生 js</strong>，没有使用 XMLHttpRequest 对象<br>简单的例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">fetch</span>(<span class="string">&#x27;http://example.com/movies.json&#x27;</span>)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="keyword">function</span>(<span class="params">response</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> response.<span class="title function_">json</span>()</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="keyword">function</span>(<span class="params">myJson</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(myJson)</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="fetch-url-init"><a href="#fetch-url-init" class="headerlink" title="fetch(url, init)"></a>fetch(url, init)</h3><h4 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h4><p>该方法第一个参数是 url&#x2F;一个 Request 对象，第二个参数（可选）是是用来自定义请求信息的<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/WindowOrWorkerGlobalScope/fetch">init 对象</a>，该对象有 method，headers（可以是一个 Headers 对象），body（可以是一个 Body 对象），cache 等可选的属性。</p>
+<h4 id="返回值"><a href="#返回值" class="headerlink" title="返回值"></a>返回值</h4><p>一个 Promise，resolve 时回传 Response 对象<br>例外：<br>AbortError：请求 abort 的情况<br>TypeError：请求的 url 有证书问题<br><strong>注意</strong>，最好使用符合<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/Security/CSP/CSP_policy_directives">内容安全策略 (CSP)</a>的链接而不是使用直接指向资源地址的方式来进行 Fetch 的请求</p>
+<h3 id="Headers-对象"><a href="#Headers-对象" class="headerlink" title="Headers 对象"></a>Headers 对象</h3><p>可以通过 Headers() 构造函数来创建一个你自己的 headers 对象</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myHeaders = <span class="keyword">new</span> <span class="title class_">Headers</span>(&#123;</span><br><span class="line">  <span class="string">&#x27;Content-Type&#x27;</span>: <span class="string">&#x27;text/plain&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;Content-Length&#x27;</span>: content.<span class="property">length</span>.<span class="title function_">toString</span>(),</span><br><span class="line">  <span class="string">&#x27;X-Custom-Header&#x27;</span>: <span class="string">&#x27;ProcessThisImmediately&#x27;</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>Headers.prototype.has(key 名)检测是否含有某个 key 名，返回布尔值；Header.prototype.get(key 名)&#x2F;getAll(key 名)获取 key 值</p>
+<h3 id="Response-对象"><a href="#Response-对象" class="headerlink" title="Response 对象"></a>Response 对象</h3><p>Response 实例是在 fetch() 处理完 promises 之后返回的<br>PS：其实 Headers 和 Response 的 new 下都能接受两个参数，第一个参数是数据体，第二个参数（可选）是 init 对象</p>
+<h4 id="常见属性"><a href="#常见属性" class="headerlink" title="常见属性"></a>常见属性</h4><ul>
+<li>Response.status：返回的状态码</li>
+<li>Response.statusText：返回的状态信息。eg，200 的时候是 OK</li>
+<li>Response.ok：检查 response 的状态是否在 200-299(包括 200,299)这个范围内.该属性返回一个 Boolean 值。eg.</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.<span class="title function_">then</span>(<span class="keyword">function</span>(<span class="params">response</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span>(response.<span class="property">ok</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> response.<span class="title function_">json</span>();</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;Network response was not ok.&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="Body"><a href="#Body" class="headerlink" title="Body"></a>Body</h3><p>请求和响应都能有一个 body 属性包含一个 Body 对象。body 也可以是<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/Fetch_API/Using_Fetch">很多种数据类型</a>，eg. <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/FormData">FormData</a></p>
+<blockquote>
+<p>FormData 提供了一种表示<strong>表单数据</strong>的<strong>键值对</strong>的构造方式。有很多简单实用的方法。见下面例题</p>
+</blockquote>
+<h4 id="Body-的方法"><a href="#Body-的方法" class="headerlink" title="Body 的方法"></a>Body 的方法</h4><p><strong>这些方法都能被 Request 和 Response 使用，用来转变数据类型</strong></p>
+<ul>
+<li>Body.json()。接收一个 Response 流，并将其读取完成。它返回一个 <strong>Promise</strong>，Promise 的解析 resolve 结果是将文本体解析为 JSON</li>
+<li>Body.formData()。将 Response 对象中的所承载的数据流读取并封装成为一个对象，该方法将返回一个 Promise 对象，该对象将产生一个 FormData 对象</li>
+</ul>
+<h3 id="兼容性检测"><a href="#兼容性检测" class="headerlink" title="兼容性检测"></a>兼容性检测</h3><p>可以通过检测 Headers, Request, Response 或 fetch()是否在 Window 或 Worker 域中。例如</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (self.<span class="property">fetch</span>) &#123;</span><br><span class="line">  <span class="comment">// run my fetch request here</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="comment">// do something with XMLHttpRequest?</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h3><p>实现一个提交文件不刷新页面的方案，给出关键代码<br>看<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/Fetch_API/Using_Fetch">MDN</a>有更多实用例子（eg. 发送带凭据的请求，上传 JSON 数据，上传文件&#x2F;多个文件，检测请求是否成功，自定义请求对象）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=<span class="string">&quot;file&quot;</span> id=<span class="string">&quot;upload&quot;</span>&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">&quot;btn&quot;</span>&gt;</span> upload <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;upload-btn&#x27;</span>).<span class="property">onclick</span> = <span class="title function_">funcion</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">var</span> formData = <span class="keyword">new</span> <span class="title class_">FormData</span>();</span><br><span class="line">  <span class="keyword">var</span> fileField = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&quot;input[type=&#x27;file&#x27;]&quot;</span>);</span><br><span class="line">  formData.<span class="title function_">append</span>(<span class="string">&#x27;file&#x27;</span>, fileField.<span class="property">files</span>[<span class="number">0</span>]);</span><br><span class="line"></span><br><span class="line">  <span class="title function_">fetch</span>(<span class="string">&#x27;https://example.com/profile/avatar&#x27;</span>, &#123;</span><br><span class="line">    <span class="attr">method</span>: <span class="string">&#x27;POST&#x27;</span>,</span><br><span class="line">    <span class="attr">body</span>: formData</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function"><span class="params">response</span> =&gt;</span> response.<span class="title function_">json</span>())</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="function"><span class="params">error</span> =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&#x27;Error:&#x27;</span>, error))</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function"><span class="params">response</span> =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Success:&#x27;</span>, response));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="WebSocket"><a href="#WebSocket" class="headerlink" title="WebSocket"></a><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/WebSocket">WebSocket</a></h2><p>Websocket 是一个全新的、独立的协议，基于 TCP 协议，与 http 协议兼容、却不会融入 http 协议。<br>由于HTTP通信只能由客户端发起，举例来说，我们想了解今天的天气，只能是客户端向服务器发出请求，服务器返回查询结果。HTTP 协议做不到服务器主动向客户端推送信息。要解决这种场景只能轮询，但是很浪费资源。<br>所以Websocket设计出来的目的就是要取代轮询（每隔一段时间浏览器对服务器发起请求，服务器返回新数据）和 Comet 技术。<br>WebSocket<strong>在单个 TCP 连接上进行全双工通讯的协议</strong>。WebSocket API 可在用户的浏览器和服务器之间进行双向通信。用户可以向服务器发送消息并接收事件驱动的响应，而无需轮询服务器。 它可以<strong>让多个用户连接到同一个实时服务器，并通过 API 进行通信并立即获得响应。</strong><br>它的最大特点就是，【<strong>服务器可以主动向客户端推送信息，客户端也可以主动向服务器发送信息，是真正的双向平等对话，属于服务器推送技术的一种</strong>】</p>
+<p>它<strong>允许用户和服务器之间的流连接，并允许即时信息交换</strong>。在聊天应用程序的示例中，通过套接字汇集消息，可以实时与一个或多个用户交换，具体取决于谁在服务器上“监听”（连接）。<br>WebSockets 适用于<strong>需要实时更新和即时信息交换</strong>的任何应用程序。一些示例包括但不限于：现场体育更新，股票行情，多人游戏，聊天应用，社交媒体等</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> socket=<span class="keyword">new</span> <span class="title class_">WebSocket</span>(<span class="string">&quot;/url&quot;</span>)；</span><br><span class="line">socket.<span class="title function_">send</span>(<span class="string">&quot;hello world&quot;</span>); <span class="comment">//  send() 方法来向服务器发送数据</span></span><br><span class="line">socket.<span class="property">onmessage</span>=<span class="keyword">function</span>(<span class="params">event</span>)&#123;  <span class="comment">// onmessage 事件来接收服务器返回的数据</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(event.<span class="property">data</span>);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(event.<span class="property">readyState</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>详见MDN及<a target="_blank" rel="noopener" href="https://www.ruanyifeng.com/blog/2017/05/websocket.html">阮一峰</a></p>
+<h1 id="跨域"><a href="#跨域" class="headerlink" title="跨域"></a>跨域</h1><p><strong>同源策略</strong>：当一个资源从与该资源本身所在服务器中不同域、协议、端口请求一个资源时，就是<strong>跨域</strong>。出于安全原因，浏览器限制从脚本内发起的跨域 HTTP 请求。XMLHttpRequest 和 Fetch 的请求都会失败（response.status &#x3D; 0）<br>引入这个同源策略主要是用来防止 CSRF 攻击（没有同源策略的情况下，A 网站可以被任意其他来源的 Ajax 访问到内容。如果你当前 A 网站还存在登录态，那么对方就可以通过 Ajax 获得你的任何信息。当然同源策略并不能完全阻止 CSRF)）</p>
+<p><strong>解决跨域方式</strong>如下：</p>
+<h2 id="JSONP"><a href="#JSONP" class="headerlink" title="JSONP"></a>JSONP</h2><p>JSONP 的原理很简单，就是利用 <code>&lt;script&gt;</code> 标签没有跨域限制的漏洞。<br>通过 <code>&lt;script&gt;</code> 标签指向一个需要访问的地址并提供一个回调函数来接收数据当需要通讯时。此时使服务器返回的是一段代码就可以了，例如下面的代码服务端可以返回一段 <code>jsonp(&#39;I am data&#39;)</code> 去调用本来就写在<code>&lt;script&gt;</code>中的函数</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;http://domain/api?param1=a&amp;param2=b&amp;callback=jsonp&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">function</span> <span class="title function_">jsonp</span>(<span class="params">data</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">console</span>.<span class="title function_">log</span>(data)</span></span><br><span class="line"><span class="language-javascript">  &#125;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h3><p>优点是操作方便，兼容性好<br>缺点：</p>
+<ul>
+<li>只限于 get 请求</li>
+<li>url 限制了参数大小</li>
+<li>错误处理机制不好，调用失败的时候不会返回各种 HTTP 状态码</li>
+<li>安全性。假如提供 jsonp 的服务存在页面注入漏洞，即它返回的 javascript 的内容被人控制的，结果是所有调用这个 jsonp 的网站都会存在漏洞，于是无法把危险控制在用一个域名下</li>
+</ul>
+<h3 id="回调函数名同名的解决方案"><a href="#回调函数名同名的解决方案" class="headerlink" title="回调函数名同名的解决方案"></a>回调函数名同名的解决方案</h3><p>在开发中可能会遇到多个 JSONP 请求的回调函数名是相同的，这时候就需要自己封装一个 JSONP，以下是简单实现:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">jsonp</span>(<span class="params">url, jsonpCallbackName, success</span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> script = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;script&#x27;</span>)</span><br><span class="line">  script.<span class="property">src</span> = url</span><br><span class="line">  script.<span class="property">async</span> = <span class="literal">true</span></span><br><span class="line">  script.<span class="property">type</span> = <span class="string">&#x27;text/javascript&#x27;</span></span><br><span class="line">  <span class="variable language_">window</span>[jsonpCallbackName] = <span class="keyword">function</span>(<span class="params">data</span>) &#123;</span><br><span class="line">    success &amp;&amp; <span class="title function_">success</span>(data)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="variable language_">document</span>.<span class="property">body</span>.<span class="title function_">appendChild</span>(script)</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">jsonp</span>(<span class="string">&#x27;&#x27;</span>, <span class="string">&#x27;callback&#x27;</span>, <span class="keyword">function</span>(<span class="params">value</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(value)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="CORS"><a href="#CORS" class="headerlink" title="CORS"></a><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Access_control_CORS">CORS</a></h2><ul>
+<li>CORS 需要浏览器和后端同时支持。IE 8 和 9 需要通过 XDomainRequest 来实现。</li>
+<li>浏览器会自动进行 CORS 通信，实现 CORS 通信的<strong>关键是后端</strong>。只要后端实现了 CORS，就实现了跨域。</li>
+<li>服务端设置 <code>Access-Control-Allow-Origin</code> 就可以开启 CORS。 该属性表示哪些域名可以访问资源，如果设置通配符则表示所有网站都可以访问资源。</li>
+</ul>
+<p>虽然设置 CORS 和前端没什么关系，但是通过这种方式解决跨域问题的话，会在发送请求时出现两种情况，分别为<strong>简单请求和预检请求</strong>。</p>
+<h3 id="简单请求"><a href="#简单请求" class="headerlink" title="简单请求"></a>简单请求</h3><p>有一些条件，eg. method 是 GET, HEAD, POST。详情见 MDN<br>简单请求的时候，服务看请求的 Orgin 字段（请求网站的 URL），看自己的 Access-Control-Allow-Origin 字段（值为*，表示该资源可以被任意外域访问，也可以是某个具体域名），比较两者是否相符决定定要不要给资源了</p>
+<h3 id="预检请求"><a href="#预检请求" class="headerlink" title="预检请求"></a>预检请求</h3><p>另外，规范要求，对那些可能对服务器数据产生副作用的 HTTP 请求方法（特别是 GET 以外的 HTTP 请求，或者搭配某些 MIME 类型的 POST 请求），<strong>浏览器必须首先使用 OPTIONS 方法发起一个预检请求（preflight request），从而获知服务器是否允许该跨域请求</strong></p>
+<p><strong>服务器确认允许之后，才发起实际的 HTTP 请求</strong>。 在预检请求的返回中，服务器端也可以通知客户端，是否需要携带身份凭证（包括 cookie 和 HTTP 认证相关数据）</p>
+<p><strong>如果发起请求时设置 WithCredentials 标志设置为 true，从而向服务器发送 cookie</strong>，但是如果服务器的响应中未携带<strong>Access-Control-Allow-Credentials: true，浏览器将不会把响应内容返回给请求的发送者</strong></p>
+<h3 id="附带身份凭证的请求"><a href="#附带身份凭证的请求" class="headerlink" title="附带身份凭证的请求"></a>附带身份凭证的请求</h3><p>Fetch 与 CORS 的一个有趣的特性是，可以基于 HTTP cookies 和 HTTP 认证信息发送身份凭证<br>服务器不得设置 Access-Control-Allow-Origin 的值为*，必须是某个具体的域名。<br>注意，简单 GET 请求不会被预检；如果此类带有身份凭证请求的响应中不包含该字段，这个响应将被忽略掉，并且浏览器也不会将相应内容返回给网页</p>
+<h2 id="document-domain"><a href="#document-domain" class="headerlink" title="document.domain"></a>document.domain</h2><p>该方式只能用于二级域名相同的情况下，比如 <code>a.test.com</code> 和 <code>b.test.com</code> 适用于该方式。<br>只需要给页面添加 <code>document.domain = &#39;test.com&#39;</code> 表示二级域名都相同就可以实现跨域</p>
+<h2 id="postMessage"><a href="#postMessage" class="headerlink" title="postMessage"></a>postMessage</h2><p>这种方式通常用于获取嵌入页面中的第三方页面数据。一个页面发送消息，另一个页面判断来源并接收消息</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 发送消息端</span></span><br><span class="line"><span class="variable language_">window</span>.<span class="property">parent</span>.<span class="title function_">postMessage</span>(<span class="string">&#x27;message&#x27;</span>, <span class="string">&#x27;http://test.com&#x27;</span>)</span><br><span class="line"><span class="comment">// 接收消息端</span></span><br><span class="line"><span class="keyword">var</span> mc = <span class="keyword">new</span> <span class="title class_">MessageChannel</span>()</span><br><span class="line">mc.<span class="title function_">addEventListener</span>(<span class="string">&#x27;message&#x27;</span>, <span class="function"><span class="params">event</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">var</span> origin = event.<span class="property">origin</span> || event.<span class="property">originalEvent</span>.<span class="property">origin</span></span><br><span class="line">  <span class="keyword">if</span> (origin === <span class="string">&#x27;http://test.com&#x27;</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;验证通过&#x27;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>参考资料<br>W3School<br>MDN<br><a target="_blank" rel="noopener" href="https://blog.nowcoder.net/yiizgo">呓语</a><br><a target="_blank" rel="noopener" href="https://github.com/poetries/">poetries</a><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/lanyueff/p/7771075.html">JSONP 原理及使用</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/10/31/%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92&%E8%B7%A8%E5%9F%9F/" data-id="clmniym7m0039bb8787trc6ti" data-title="前后端交互&amp;跨域" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/11/01/%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          异步编程
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/10/29/%E6%B5%8F%E8%A7%88%E5%99%A8/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">浏览器</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Kategorien</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Basic-knowledge/">Basic knowledge</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Engineering/">Engineering</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%8A%E7%BA%BF%E9%83%A8%E7%BD%B2/">上线部署</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%90%8E%E7%AB%AF/">后端</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Browser/" rel="tag">Browser</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Computer/" rel="tag">Computer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Data-structure/" rel="tag">Data structure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Interview/" rel="tag">Interview</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Network/" rel="tag">Network</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node/" rel="tag">Node</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/" rel="tag">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Operating-system/" rel="tag">Operating system</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Performance/" rel="tag">Performance</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/" rel="tag">Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web%E5%AE%89%E5%85%A8/" rel="tag">Web安全</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/" rel="tag">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%8A%E7%BA%BF%E9%83%A8%E7%BD%B2/" rel="tag">上线部署</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A1%86%E6%9E%B6/" rel="tag">框架</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" rel="tag">解决方案</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE%E5%B0%8F%E7%BB%93/" rel="tag">项目小结</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Browser/" style="font-size: 14px;">Browser</a> <a href="/tags/CSS/" style="font-size: 14px;">CSS</a> <a href="/tags/Computer/" style="font-size: 10px;">Computer</a> <a href="/tags/Data-structure/" style="font-size: 18px;">Data structure</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/Interview/" style="font-size: 10px;">Interview</a> <a href="/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/tags/Network/" style="font-size: 14px;">Network</a> <a href="/tags/Node/" style="font-size: 12px;">Node</a> <a href="/tags/Nodejs/" style="font-size: 12px;">Nodejs</a> <a href="/tags/Operating-system/" style="font-size: 10px;">Operating system</a> <a href="/tags/Performance/" style="font-size: 12px;">Performance</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/TypeScript/" style="font-size: 14px;">TypeScript</a> <a href="/tags/Web/" style="font-size: 10px;">Web</a> <a href="/tags/Web%E5%AE%89%E5%85%A8/" style="font-size: 10px;">Web安全</a> <a href="/tags/webpack/" style="font-size: 20px;">webpack</a> <a href="/tags/%E4%B8%8A%E7%BA%BF%E9%83%A8%E7%BD%B2/" style="font-size: 10px;">上线部署</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 10px;">工具</a> <a href="/tags/%E6%A1%86%E6%9E%B6/" style="font-size: 16px;">框架</a> <a href="/tags/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" style="font-size: 10px;">解决方案</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 10px;">设计模式</a> <a href="/tags/%E9%A1%B9%E7%9B%AE%E5%B0%8F%E7%BB%93/" style="font-size: 14px;">项目小结</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">April 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/04/30/Python%20Basic/">Python Basic Knowledge</a>
+          </li>
+        
+          <li>
+            <a href="/2021/04/17/%E8%A7%A3%E5%86%B3hexo%20g%E7%94%9F%E6%88%90index.html%E4%B8%BA%E7%A9%BA%E7%9A%84%E9%97%AE%E9%A2%98/">解决hexo g生成index.html为空的问题</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/09/TypeScript%E4%B8%AD%E7%9A%84%E5%86%85%E7%BD%AE%E5%B7%A5%E5%85%B7%E7%B1%BB%E5%9E%8B%E5%8F%8A%E5%85%B6%E5%AE%9E%E7%8E%B0/">TypeScript中的内置工具类型及其实现</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/07/TypeScript%E4%B8%AD%E7%9A%84%E7%B1%BB%E5%9E%8B%E7%BC%96%E7%A8%8B/">TypeScript中的类型编程</a>
+          </li>
+        
+          <li>
+            <a href="/2020/11/03/hope%20statistics%20puppeteer%E5%B7%A5%E5%85%B7%E5%B0%8F%E7%BB%93/">hope statistics puppeteer 工具小结</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 Jacleklm<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

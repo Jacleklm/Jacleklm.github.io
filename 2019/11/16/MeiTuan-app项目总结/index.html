@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>MeiTuan-app项目总结 | Jacleklm</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="缘起：前段时间面试SXF二面的时候发现自己项目经验有点少，一些组件实现思路也不清晰，决定恶补一波。该项目来源是慕课网上的《Vue全家桶+SSR+Koa2全栈开发美团网》，于近期学习完毕。 基础知识Koa2Koa2是基于Nodejs的web框架对Node.js的http进行了封装（封装了一个服务器），用 Promise + async 实现异步 （Koa1是用Generator，Express是用P">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MeiTuan-app项目总结">
+<meta property="og:url" content="http://example.com/2019/11/16/MeiTuan-app%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:site_name" content="Jacleklm">
+<meta property="og:description" content="缘起：前段时间面试SXF二面的时候发现自己项目经验有点少，一些组件实现思路也不清晰，决定恶补一波。该项目来源是慕课网上的《Vue全家桶+SSR+Koa2全栈开发美团网》，于近期学习完毕。 基础知识Koa2Koa2是基于Nodejs的web框架对Node.js的http进行了封装（封装了一个服务器），用 Promise + async 实现异步 （Koa1是用Generator，Express是用P">
+<meta property="og:locale">
+<meta property="og:image" content="http://example.com/img/%E7%BE%8E%E5%9B%A2%E7%BD%91/%E6%B4%8B%E8%91%B1%E5%9B%BE.png">
+<meta property="og:image" content="http://example.com/img/%E7%BE%8E%E5%9B%A2%E7%BD%91/%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png">
+<meta property="og:image" content="http://example.com/img/%E7%BE%8E%E5%9B%A2%E7%BD%91/nav1.png">
+<meta property="og:image" content="http://example.com/img/%E7%BE%8E%E5%9B%A2%E7%BD%91/nav2.png">
+<meta property="og:image" content="http://example.com/img/%E7%BE%8E%E5%9B%A2%E7%BD%91/menu.png">
+<meta property="og:image" content="http://example.com/img/%E7%BE%8E%E5%9B%A2%E7%BD%91/menu-data.png">
+<meta property="og:image" content="http://example.com/img/%E7%BE%8E%E5%9B%A2%E7%BD%91/%E5%88%86%E7%B1%BB.png">
+<meta property="article:published_time" content="2019-11-16T15:02:21.000Z">
+<meta property="article:modified_time" content="2023-09-17T14:00:22.867Z">
+<meta property="article:author" content="Jacleklm">
+<meta property="article:tag" content="项目小结">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/%E7%BE%8E%E5%9B%A2%E7%BD%91/%E6%B4%8B%E8%91%B1%E5%9B%BE.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Jacleklm" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Jacleklm</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Suche"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Suche"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-MeiTuan-app项目总结" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/11/16/MeiTuan-app%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%93/" class="article-date">
+  <time class="dt-published" datetime="2019-11-16T15:02:21.000Z" itemprop="datePublished">2019-11-16</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      MeiTuan-app项目总结
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>缘起：前段时间面试SXF二面的时候发现自己项目经验有点少，一些组件实现思路也不清晰，决定恶补一波。该项目来源是慕课网上的《Vue全家桶+SSR+Koa2全栈开发美团网》，于近期学习完毕。</p>
+<h1 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h1><h2 id="Koa2"><a href="#Koa2" class="headerlink" title="Koa2"></a><a target="_blank" rel="noopener" href="https://koa.bootcss.com/#introduction">Koa2</a></h2><p>Koa2是基于Nodejs的web框架<br>对Node.js的http进行了封装（封装了一个服务器），用 Promise + async 实现异步 （Koa1是用Generator，Express是用Promise）<br><strong>ctx</strong>是一个全局的信息对象，包含所有信息</p>
+<h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><p>全局安装koa、 koa-generator。用koa2 -e ${项目名} 来初始化项目<br>主配置文件是 &#x2F;app.js ， 接口都是写在 &#x2F;routers 文件夹中</p>
+<h3 id="中间件的原理"><a href="#中间件的原理" class="headerlink" title="中间件的原理"></a>中间件的原理</h3><p>每个Request和Response都要经过中间件，并且进和出中间件的执行顺序的是相反的，所以中间件就类似于洋葱的层<br><img src="/img/%E7%BE%8E%E5%9B%A2%E7%BD%91/%E6%B4%8B%E8%91%B1%E5%9B%BE.png"></p>
+<h2 id="Mongodb"><a href="#Mongodb" class="headerlink" title="Mongodb"></a>Mongodb</h2><h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><ul>
+<li>mongodb是非关系型数据库，mySQL是关系型数据库</li>
+<li>在mongodb中：database数据库，collection 数据表，一行的数据叫document，列叫filed</li>
+<li><a target="_blank" rel="noopener" href="http://www.mongoosejs.net/docs/guide.html">mongoose</a>是用来操作mongodb的，能使操作更简单；可视化的数据管理工具RoBo 3T</li>
+</ul>
+<h3 id="使用方法-1"><a href="#使用方法-1" class="headerlink" title="使用方法"></a>使用方法</h3><p>能在Koa2的项目中连接mongodb，然后写一些能操作数据库的接口</p>
+<h2 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h2><p>是一个<strong>快速读写</strong>的数据库，一般用来存session的数据库</p>
+<h2 id="Nuxt-js"><a href="#Nuxt-js" class="headerlink" title="Nuxt.js"></a><a target="_blank" rel="noopener" href="https://zh.nuxtjs.org/">Nuxt.js</a></h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>Nuxt.js是一个基于Vue的通用应用框架，基于Vue，包含Vue-router，支持Vuex、Vue SSR和vue-meta。SSR能解决Vue首屏时间长和SEO差的缺点；用Nuxt.js做Vue SSR很方便</p>
+<h3 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h3><p><img src="/img/%E7%BE%8E%E5%9B%A2%E7%BD%91/%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png"><br>重要的是写在Vuex的action中的<strong>nuxtServerInit</strong>和写在组件中的<strong>asyncData()&amp;fetch()</strong></p>
+<h3 id="项目目录"><a href="#项目目录" class="headerlink" title="项目目录"></a>项目目录</h3><p>&#x2F;layout 是放布局，或者说是页面的模板。把页面共同的组件放到这里，eg. footer，登录框<br>&#x2F;page 是页面的入口文件<br>&#x2F;components 只放组件<br>&#x2F;server 放服务器<br>&#x2F;store 放Vuex</p>
+<h3 id="路由"><a href="#路由" class="headerlink" title="路由"></a>路由</h3><p><code>&lt;nuxt-link&gt;</code>标签相当于<code>&lt;router-link&gt;</code>，用法是完全一样的；<code>&lt;nuxt /&gt;</code>相当于是<code>&lt;router-view&gt;</code>；page文件下的入口文件，其文件名就是页面路由地址</p>
+<h3 id="asyncData"><a href="#asyncData" class="headerlink" title="asyncData"></a><a target="_blank" rel="noopener" href="https://zh.nuxtjs.org/guide/async-data">asyncData</a></h3><h4 id="一般情况"><a href="#一般情况" class="headerlink" title="一般情况"></a>一般情况</h4><p>如果我们的组件需要获取异步数据，可以把mounted写成async mounted，然后在其中写axios.get()去获取数据</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="title function_">mounted</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> self = <span class="variable language_">this</span>;</span><br><span class="line">    <span class="comment">//  status是响应的状态码, data属性是响应的数据</span></span><br><span class="line">    <span class="keyword">let</span> &#123;</span><br><span class="line">      status,</span><br><span class="line">      <span class="attr">data</span>: &#123; list &#125;</span><br><span class="line">    &#125; = <span class="keyword">await</span> axios.<span class="title function_">get</span>(<span class="string">&quot;/city/list&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span> (status === <span class="number">200</span>) &#123;</span><br><span class="line">      self.<span class="property">list</span> = list;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>这种情况下，我们在页面的源码中是找不到异步数据的，是浏览器拿到服务器的响应的页面，加载，在加载的mounted阶段去获取。</p>
+<h4 id="SSR"><a href="#SSR" class="headerlink" title="SSR"></a><a target="_blank" rel="noopener" href="https://ssr.vuejs.org/zh/">SSR</a></h4><p>SSR是在服务端就完成页面所有操作（包括请求异步数据），然后渲染好，服务器再响应。<br>所以在组件中我们可以用asyncData的写法（一般用来组件获取数据<br>）。fetch() 一般用来拿到数据修改Vuex状态</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="title function_">asyncData</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> &#123;</span><br><span class="line">      status,</span><br><span class="line">      <span class="attr">data</span>: &#123; list &#125;</span><br><span class="line">    &#125; = <span class="keyword">await</span> axios.<span class="title function_">get</span>(<span class="string">&quot;http://localhost:3000/city/list&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span> (status === <span class="number">200</span>) &#123;</span><br><span class="line">      <span class="comment">// 这种return的写法就相当于把asyncData得到的list复制给data中的list</span></span><br><span class="line">      <span class="keyword">return</span> &#123;</span><br><span class="line">        list</span><br><span class="line">      &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p><strong>注意</strong> 由于asyncData方法是在组件<strong>初始化</strong>前被调用的，所以在方法内是没有办法通过<strong>this</strong>来引用组件的实例对象</p>
+<h3 id="Vuex"><a href="#Vuex" class="headerlink" title="Vuex"></a>Vuex</h3><p>由于Nuxt有更新，现在的写法见<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/4861099edbab">链接</a></p>
+<h4 id="nuxtServerInit"><a href="#nuxtServerInit" class="headerlink" title="nuxtServerInit"></a>nuxtServerInit</h4><p>一般是写在 &#x2F;store&#x2F;index.js 入口文件的actions中，用来获取异步数据并把数据添加到state中</p>
+<h1 id="项目小结"><a href="#项目小结" class="headerlink" title="项目小结"></a>项目小结</h1><h2 id="布局"><a href="#布局" class="headerlink" title="布局"></a>布局</h2><ul>
+<li>页面的header+body+footer的布局可以用Element UI提供的container布局。在Nuxt项目中，header和footer如果多个页面是一样的，可以写在 &#x2F;layout&#x2F;default.vue 中或者新建布局文件</li>
+<li>组件的布局用Element UI的layout布局-分栏间隔</li>
+</ul>
+<h2 id="组件实现"><a href="#组件实现" class="headerlink" title="组件实现"></a>组件实现</h2><h3 id="首页"><a href="#首页" class="headerlink" title="首页"></a>首页</h3><h4 id="登录状态组件-user-vue"><a href="#登录状态组件-user-vue" class="headerlink" title="登录状态组件 user.vue"></a>登录状态组件 user.vue</h4><ul>
+<li>需求：显示用户登录状态&#x2F;用户名</li>
+<li>思路：在接收请求时，服务器就通过请求带的cookie在Redis中找是否有这个用户，有就返回 user: 用户名 为响应；否则就是 user: ‘’</li>
+<li>实现：首先组件的DOM分为两部分，一部分v-if&#x3D;’username’，里面写this.username，这样有username这个数据的时候显示用户信息的状态；另一部分v-else，里面写立刻登录，就是没有用户信息的时候的状态。在组件的async mounted 去axios.get()一个写好的接口，这个接口能按上述逻辑去获取user（如果没有则 user: ‘’）</li>
+</ul>
+<p>这里的async mounted写法缺点是页面刷新的时候页面的用户名那里会闪一下才书来数据，如果认为不影响的话可以这么写。也可以用SSR，写成async Data()。写成async fetch的话，把state.user写成得到的user；然后DOM 里写$store.state.user</p>
+<p><strong>问：如果在Vue中，没有后台的话怎么实现</strong><br>先在Vuex中，设置state.user&#x3D;’’。在组件中导入mapState后就能直接用state.user。组件一部分v-if&#x3D;这个值，里面的用户也是这个值；组件另一部分写v-else，里面写立即登录</p>
+<h4 id="城市服务组件-geo-vue"><a href="#城市服务组件-geo-vue" class="headerlink" title="城市服务组件 geo.vue"></a>城市服务组件 geo.vue</h4><ul>
+<li>需求：第一次访问网站的时候显示定位是用户目前在的城市。若用户手动修改则x显示新城市</li>
+<li>思路：在浏览器向服务器请求首页资源的时候，服务器就解读IP地址找到city，加进首页中，把整个页面响应回去。用Vuex + SSR 就能实现</li>
+<li>实现：async fetch中去axios.get()一个接口，能接口能根据IP地址定位city。然后写进store.state中。DOM里写$store.state.city</li>
+</ul>
+<h4 id="nav-vue组件"><a href="#nav-vue组件" class="headerlink" title="nav.vue组件"></a>nav.vue组件</h4><ul>
+<li>需求：用简单的DOM实现下图<br><img src="/img/%E7%BE%8E%E5%9B%A2%E7%BD%91/nav1.png"><br><img src="/img/%E7%BE%8E%E5%9B%A2%E7%BD%91/nav2.png"></li>
+<li><strong>DOM的实现</strong>：用了一种障眼法。分为两部分：美团规则，网站导航这些是一部分；里面的展开内容自己是一部分。第一部分用 ul&gt;li 实现；第二部分用一个或多个 dl&gt;dt 实现</li>
+</ul>
+<h4 id="搜索框-search-vue组件"><a href="#搜索框-search-vue组件" class="headerlink" title="搜索框 search.vue组件"></a>搜索框 search.vue组件</h4><ul>
+<li>需求：不focus是普通状态；focus时出现下拉框，显示 热门搜索；输入内容的时候下拉框显示 搜索推荐</li>
+<li>实现：<ul>
+<li>DOM：input框，热门搜索，搜索推荐是兄弟节点。后两者是通过v-if显示</li>
+<li>事件:<ul>
+<li>@focus：<code>this.isFocus = true</code></li>
+<li>@blur（失去焦点）：<code> let self = this; setTimeout(function() &#123;self.isFocus = false;&#125;, 200);</code>  setTimeout是防止点击推荐内容的同时推荐内容会消失。</li>
+<li>@input：访问一个接口，这个接口能根据input的输入内容去返回一些数据。这些数据能v-for生成 搜索推荐</li>
+</ul>
+</li>
+<li>input的v-model&#x3D;’search’。v-if后面是跟计算属性，计算属性是返回 isFocus 和 search 这两个变量的判断</li>
+<li>热门搜索 的数据是直接在Vuex拿，Vuex在 nuxtServerInit 中 axios.get() 接口，并把数据commit到state中；推荐搜索的，是绑定搜索框的input事件，向后端接口获取数据&#x2F; search变量的watch</li>
+</ul>
+</li>
+</ul>
+<h4 id="菜单-menu-vue组件"><a href="#菜单-menu-vue组件" class="headerlink" title="菜单 menu.vue组件"></a>菜单 menu.vue组件</h4><ul>
+<li>需求：见下图。鼠标移动到左边的item会出现右边。移开别处则右边会消失；移到右边则不会消失<br><img src="/img/%E7%BE%8E%E5%9B%A2%E7%BD%91/menu.png"></li>
+<li>实现：<ul>
+<li><strong>DOM</strong>： 左边的部分是 dl&gt;dt（全部分类）&gt;dd（每个栏）；右边的部分是 div&gt;template&gt;h4+span 实现，右边的v-if&#x3D;’kind’</li>
+<li>事件<ul>
+<li><strong>左边item的@mouseenter</strong>：<code>this.kind =e.target.querySelector(&#39;i&#39;).classname</code>。e是函数参数（鼠标移动到的节点）</li>
+<li>左边的@mouseleave:  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> self = <span class="variable language_">this</span>; <span class="comment">// 这里用设置timer的方法，让鼠标移动到右框的时候就clearTimeout让右框不消失</span></span><br><span class="line">self.<span class="property">_timer</span> = <span class="built_in">setTimeout</span>(<span class="keyword">function</span>(<span class="params"></span>)&#123;self.<span class="property">kind</span> = <span class="string">&#x27;&#x27;</span>&#125;,<span class="number">150</span>)</span><br></pre></td></tr></table></figure></li>
+<li>右边的@mouseenter：<code>clearTimeout(this._timer)</code></li>
+<li>右边的@mouseleave：<code>this.kind=&#39;&#39;</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>数据结构：见下图。name是左边item的内容，eg. 美食；type用来绑定左边item的class属性（其实是为了便于显示前面的icon）；child是item对应的子栏（右边）<br><img src="/img/%E7%BE%8E%E5%9B%A2%E7%BD%91/menu-data.png"></li>
+<li>左边部分直接<code>v-for in $store.state.home.menu</code>生成；右边部分由两层v-for生成，第一层v-for一个计算属性，<strong>该属性</strong> <code>return this.$store.state.home.menu.filter(item =&gt; item.type===this.kind)[0]</code>。所以这个组件的数据也是Vuex在 nuxtServerInit 中 axios.get() 接口，并把数据commit到state中</li>
+</ul>
+<h4 id="城市组件-geo-vue"><a href="#城市组件-geo-vue" class="headerlink" title="城市组件 geo.vue"></a>城市组件 geo.vue</h4><p>功能：一开始是显示用户所在的城市；用户也可以在切换城市页面进行城市切换<br>实现：组件中读取Vuex的State的city<br>Vuex中在action中nuxtServerInit阶段就请求一个接口，这个接口根据IP地址找到城市，返回。Vuex得到城市后就保存在state.city中；<br>而切换城市页面调用的Vuex的mutations的changCity这个方法，会让state.city &#x3D; city 并localstorage.city &#x3D; city;<br>同时Vuex的state读取city是 if(localstorage.city) { city &#x3D; localstorage.city} 如果localstorage没有就读取ip地址的</p>
+<h3 id="注册页"><a href="#注册页" class="headerlink" title="注册页"></a>注册页</h3><h4 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h4><p>用户输入昵称和邮箱后，给注册者的邮箱法验证码；输入正确的验证码书和遍密码后，就能进行注册</p>
+<h4 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h4><ul>
+<li>样式：通过Element UI的 表单-表单验证 实现 样式 和 <strong>校验规则</strong>。eg. 验证前后两次输入的密码是否一致（这个是Element UI的表单验证-自定义校验规则）</li>
+<li>发送验证<br>点击发送验证码的按钮之后，绑定的函数会POST注册者的昵称和邮箱给一个接口。这个接口会用腾讯邮件提供的SMTP功能，给注册者的邮箱发送随机生成的验证码，并把验证码、过期时间、验证码和昵称的对应关系放进Redis中</li>
+<li>注册<br>点击注册的按钮之后，绑定的函数会POST昵称、用户名、密码（<strong>加密传输</strong>，用<br>crypto-js）和验证码给一个接口。这个接口先校验注册者的验证码和Redis中保存的是否一致，然后从数据库中看改昵称是否被注册等，都符合的话就对新用户信息进写库</li>
+</ul>
+<h3 id="登录页"><a href="#登录页" class="headerlink" title="登录页"></a>登录页</h3><p>用 passport 验证，据说有固定写法 </p>
+<h3 id="切换城市页"><a href="#切换城市页" class="headerlink" title="切换城市页"></a>切换城市页</h3><p>由于数据结构上的麻烦，我们这里点击城市后跳转到首页后，首页的geo.vue那里还是显示ip地址对应的城市。按理应该把Vuex中的city给改一下。</p>
+<h4 id="iselect-vue-组件"><a href="#iselect-vue-组件" class="headerlink" title="iselect.vue 组件"></a>iselect.vue 组件</h4><ul>
+<li>需求：按 省份+城市 进行下拉框选择；直接搜索</li>
+<li>DOM：Element UI的 选择器 和 输入框-远程搜索</li>
+<li>实现<ul>
+<li>省份 + 城市 下拉框选择：在mounted的时候请求得到省份数据，写进 province 变量中，v-for就能得到省份的下拉框；对省份下拉框v-model&#x3D;pvalue，对pvalue变量进行watch，有变化就请求城市数据写进 city 变量中</li>
+<li>直接搜索。input事件直接访问接口，最好用loadshd的debounce做延时处理</li>
+</ul>
+</li>
+</ul>
+<h4 id="按拼音选择的category-vue组件"><a href="#按拼音选择的category-vue组件" class="headerlink" title="按拼音选择的category.vue组件"></a>按拼音选择的category.vue组件</h4><ul>
+<li>需求：按拼音字母选择城市；点某个字母页面会move到该字母城市所在位置</li>
+<li>实现<ul>
+<li>DOM: dl&gt;dt&gt;dd</li>
+<li>点击字母实现页面滚动。把字母写成超链接<code>&lt;a :href=&quot;# item.id&quot;&gt;</code>，然后后面的栏都写id属性即可</li>
+<li>通过async mounted得到后端给我们的中国所有城市的数据后，我们怎么进行<strong>拼音分类</strong>？<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="title function_">mounted</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> self = <span class="variable language_">this</span>;</span><br><span class="line">  <span class="keyword">let</span> blocks = [];</span><br><span class="line">  <span class="keyword">let</span> &#123;</span><br><span class="line">    status,</span><br><span class="line">    <span class="attr">data</span>: &#123; city &#125;</span><br><span class="line">  &#125; = <span class="keyword">await</span> self.<span class="property">$axios</span>.<span class="title function_">get</span>(<span class="string">&quot;/geo/city&quot;</span>);</span><br><span class="line">  <span class="comment">// 对全国的城市做拼音处理并分类</span></span><br><span class="line">  <span class="keyword">if</span> (status === <span class="number">200</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> p;</span><br><span class="line">    <span class="keyword">let</span> c;</span><br><span class="line">    <span class="keyword">let</span> d = &#123;&#125;;</span><br><span class="line">    <span class="comment">// 拼音处理</span></span><br><span class="line">    city.<span class="title function_">forEach</span>(<span class="function"><span class="params">item</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="comment">// p 变量保存城市名拼音的首位</span></span><br><span class="line">      p = pyjs</span><br><span class="line">        .<span class="title function_">getFullChars</span>(item.<span class="property">name</span>)</span><br><span class="line">        .<span class="title function_">toLocaleLowerCase</span>()</span><br><span class="line">        .<span class="title function_">slice</span>(<span class="number">0</span>, <span class="number">1</span>);</span><br><span class="line">      <span class="comment">// c 变量保存城市名拼音的首位的 ASCII 码。大写的A-Z是65-90，小写的a-z是97-122。我们通过ASCII码进行排序</span></span><br><span class="line">      c = p.<span class="title function_">charCodeAt</span>(<span class="number">0</span>);</span><br><span class="line">      <span class="keyword">if</span> (c &gt; <span class="number">96</span> &amp;&amp; c &lt; <span class="number">123</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!d[p]) &#123;</span><br><span class="line">          d[p] = [];</span><br><span class="line">        &#125;</span><br><span class="line">        d[p].<span class="title function_">push</span>(item.<span class="property">name</span>);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="comment">// 整理成我们想要的数据结构</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> [k, v] <span class="keyword">of</span> <span class="title class_">Object</span>.<span class="title function_">entries</span>(d)) &#123;</span><br><span class="line">      blocks.<span class="title function_">push</span>(&#123;</span><br><span class="line">        <span class="attr">title</span>: k.<span class="title function_">toUpperCase</span>(),</span><br><span class="line">        <span class="attr">city</span>: v</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 排序</span></span><br><span class="line">    blocks.<span class="title function_">sort</span>(<span class="function">(<span class="params">a, b</span>) =&gt;</span> a.<span class="property">title</span>.<span class="title function_">charCodeAt</span>(<span class="number">0</span>) - b.<span class="property">title</span>.<span class="title function_">charCodeAt</span>(<span class="number">0</span>));</span><br><span class="line">    self.<span class="property">block</span> = blocks;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<code>for (let [k, v] of Object.entries(d)) &#123;  &#125;</code> 用来<strong>遍历对象，能获取对象的键和键值</strong></li>
+</ul>
+</li>
+</ul>
+<h3 id="产品列表页"><a href="#产品列表页" class="headerlink" title="产品列表页"></a>产品列表页</h3><h4 id="category-vue组件"><a href="#category-vue组件" class="headerlink" title="category.vue组件"></a>category.vue组件</h4><ul>
+<li>需求<br><img src="/img/%E7%BE%8E%E5%9B%A2%E7%BD%91/%E5%88%86%E7%B1%BB.png"></li>
+<li>实现<ul>
+<li>DOM：dl（分类）&gt;dt（全部）&gt;dd（item），item是另一个组件，能有下拉框</li>
+</ul>
+</li>
+</ul>
+<h4 id="map-vue-组件"><a href="#map-vue-组件" class="headerlink" title="map.vue 组件"></a>map.vue 组件</h4><ul>
+<li>需求：显示产品的地图位置</li>
+<li>实现：用高德开放平台的JS API。使用方法见代码、笔记和官方文档</li>
+</ul>
+<h3 id="详情页"><a href="#详情页" class="headerlink" title="详情页"></a>详情页</h3><p>页面的路由可以是&#x2F;detail&#x2F;:id<br>由其他页面跳转到详情页可以有<strong>登录拦截</strong>，实现对登录和没登录的使用者呈现不同页面。实现方法还是获取数据的时候（eg. async Data）的时候请求接口，由接口根据passport判断登录状态</p>
+<h3 id="购物车页面"><a href="#购物车页面" class="headerlink" title="购物车页面"></a>购物车页面</h3><p>用Element UI的 表格-多选，表格-自定义 和 计时器 实现。<br>纯手写实现的购物车见 &#x2F;mycart 页面 。两个注意点:</p>
+<ul>
+<li>checkbox的v-model&#x3D;item.choose（源数据的item可以没有choose这个属性）</li>
+<li>@click&#x3D;item.count++ 可以直接写在html中，方便获取具体的item.count</li>
+</ul>
+<h2 id="后端与数据库"><a href="#后端与数据库" class="headerlink" title="后端与数据库"></a>后端与数据库</h2><p>说实话，还是不太熟，只能大概看懂；数据库操作相关的接口也只能大概看懂</p>
+<h3 id="接口设计"><a href="#接口设计" class="headerlink" title="接口设计"></a>接口设计</h3><p>见笔记和代码吧，这部分只能大概看懂而已<br>其中一些接口（eg. 由ip地址定位，中国所有城市的数据）是访问作者写的一个接口实现的</p>
+<h2 id="一些样式"><a href="#一些样式" class="headerlink" title="一些样式"></a>一些样式</h2><h2 id="一些技巧"><a href="#一些技巧" class="headerlink" title="一些技巧"></a>一些技巧</h2><ul>
+<li>用lodash的debounce做函数延时执行的处理。第一个参数是要执行的函数，第二个参数是延迟的毫秒数。使用方法如下：<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> _ <span class="keyword">from</span> <span class="string">&quot;lodash&quot;</span>;</span><br><span class="line">...</span><br><span class="line"><span class="attr">method</span>: &#123;</span><br><span class="line">    <span class="attr">test</span>: _.<span class="title function_">debounce</span>(<span class="keyword">async</span> <span class="keyword">function</span>(<span class="params"></span>) &#123; ... &#125;, <span class="number">200</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><code>for (let [k, v] of Object.entries(d)) &#123;  &#125;</code> 用来<strong>遍历对象，能获取对象的键和键值</strong></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/11/16/MeiTuan-app%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%93/" data-id="clmniym71001cbb874123b8yh" data-title="MeiTuan-app项目总结" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE%E5%B0%8F%E7%BB%93/" rel="tag">项目小结</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/11/17/%E5%AE%9E%E7%8E%B0%E9%BC%A0%E6%A0%87%E6%8B%96%E6%8B%BDDOM/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          实现鼠标拖拽DOM + 页面视图总结
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/11/10/GoWhere%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%93/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">GoWhere项目总结</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Kategorien</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Basic-knowledge/">Basic knowledge</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Engineering/">Engineering</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%8A%E7%BA%BF%E9%83%A8%E7%BD%B2/">上线部署</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%90%8E%E7%AB%AF/">后端</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Browser/" rel="tag">Browser</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Computer/" rel="tag">Computer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Data-structure/" rel="tag">Data structure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Interview/" rel="tag">Interview</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Network/" rel="tag">Network</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node/" rel="tag">Node</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/" rel="tag">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Operating-system/" rel="tag">Operating system</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Performance/" rel="tag">Performance</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/" rel="tag">Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web%E5%AE%89%E5%85%A8/" rel="tag">Web安全</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/" rel="tag">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%8A%E7%BA%BF%E9%83%A8%E7%BD%B2/" rel="tag">上线部署</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A1%86%E6%9E%B6/" rel="tag">框架</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" rel="tag">解决方案</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE%E5%B0%8F%E7%BB%93/" rel="tag">项目小结</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Browser/" style="font-size: 14px;">Browser</a> <a href="/tags/CSS/" style="font-size: 14px;">CSS</a> <a href="/tags/Computer/" style="font-size: 10px;">Computer</a> <a href="/tags/Data-structure/" style="font-size: 18px;">Data structure</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/Interview/" style="font-size: 10px;">Interview</a> <a href="/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/tags/Network/" style="font-size: 14px;">Network</a> <a href="/tags/Node/" style="font-size: 12px;">Node</a> <a href="/tags/Nodejs/" style="font-size: 12px;">Nodejs</a> <a href="/tags/Operating-system/" style="font-size: 10px;">Operating system</a> <a href="/tags/Performance/" style="font-size: 12px;">Performance</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/TypeScript/" style="font-size: 14px;">TypeScript</a> <a href="/tags/Web/" style="font-size: 10px;">Web</a> <a href="/tags/Web%E5%AE%89%E5%85%A8/" style="font-size: 10px;">Web安全</a> <a href="/tags/webpack/" style="font-size: 20px;">webpack</a> <a href="/tags/%E4%B8%8A%E7%BA%BF%E9%83%A8%E7%BD%B2/" style="font-size: 10px;">上线部署</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 10px;">工具</a> <a href="/tags/%E6%A1%86%E6%9E%B6/" style="font-size: 16px;">框架</a> <a href="/tags/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" style="font-size: 10px;">解决方案</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 10px;">设计模式</a> <a href="/tags/%E9%A1%B9%E7%9B%AE%E5%B0%8F%E7%BB%93/" style="font-size: 14px;">项目小结</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">April 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/04/30/Python%20Basic/">Python Basic Knowledge</a>
+          </li>
+        
+          <li>
+            <a href="/2021/04/17/%E8%A7%A3%E5%86%B3hexo%20g%E7%94%9F%E6%88%90index.html%E4%B8%BA%E7%A9%BA%E7%9A%84%E9%97%AE%E9%A2%98/">解决hexo g生成index.html为空的问题</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/09/TypeScript%E4%B8%AD%E7%9A%84%E5%86%85%E7%BD%AE%E5%B7%A5%E5%85%B7%E7%B1%BB%E5%9E%8B%E5%8F%8A%E5%85%B6%E5%AE%9E%E7%8E%B0/">TypeScript中的内置工具类型及其实现</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/07/TypeScript%E4%B8%AD%E7%9A%84%E7%B1%BB%E5%9E%8B%E7%BC%96%E7%A8%8B/">TypeScript中的类型编程</a>
+          </li>
+        
+          <li>
+            <a href="/2020/11/03/hope%20statistics%20puppeteer%E5%B7%A5%E5%85%B7%E5%B0%8F%E7%BB%93/">hope statistics puppeteer 工具小结</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 Jacleklm<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

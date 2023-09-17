@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>博客项目上线部署总结 | Jacleklm</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="前言经过一番折腾之后项目终于上线了（喜极而泣，坑好多），博客项目部署在 JacleKlm.com，先写一篇文章记录下近期的折腾所得吧。 云服务器买的腾讯云服务器最便宜的那种，买域名，备案审批 云服务器中，更多-安全组-配置安全组-点连接，可以设置端口的开启及可以访问的人 LinuxLinux 是一个性能稳定的多用户网络操作系统，经常用来跑服务器，eg. Linux + Nginx + MySQL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="博客项目上线部署总结">
+<meta property="og:url" content="http://example.com/2020/02/27/%E5%8D%9A%E5%AE%A2%E9%A1%B9%E7%9B%AE%E4%B8%8A%E7%BA%BF%E9%83%A8%E7%BD%B2/index.html">
+<meta property="og:site_name" content="Jacleklm">
+<meta property="og:description" content="前言经过一番折腾之后项目终于上线了（喜极而泣，坑好多），博客项目部署在 JacleKlm.com，先写一篇文章记录下近期的折腾所得吧。 云服务器买的腾讯云服务器最便宜的那种，买域名，备案审批 云服务器中，更多-安全组-配置安全组-点连接，可以设置端口的开启及可以访问的人 LinuxLinux 是一个性能稳定的多用户网络操作系统，经常用来跑服务器，eg. Linux + Nginx + MySQL">
+<meta property="og:locale">
+<meta property="og:image" content="http://example.com/img/%E5%8D%9A%E5%AE%A2%E4%B8%8A%E7%BA%BF%E9%83%A8%E7%BD%B2/%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86.png">
+<meta property="og:image" content="http://example.com/img/%E5%8D%9A%E5%AE%A2%E4%B8%8A%E7%BA%BF%E9%83%A8%E7%BD%B2/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86.png">
+<meta property="article:published_time" content="2020-02-27T07:49:21.000Z">
+<meta property="article:modified_time" content="2023-09-17T14:00:22.877Z">
+<meta property="article:author" content="Jacleklm">
+<meta property="article:tag" content="上线部署">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/%E5%8D%9A%E5%AE%A2%E4%B8%8A%E7%BA%BF%E9%83%A8%E7%BD%B2/%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Jacleklm" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Jacleklm</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Suche"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Suche"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-博客项目上线部署" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/02/27/%E5%8D%9A%E5%AE%A2%E9%A1%B9%E7%9B%AE%E4%B8%8A%E7%BA%BF%E9%83%A8%E7%BD%B2/" class="article-date">
+  <time class="dt-published" datetime="2020-02-27T07:49:21.000Z" itemprop="datePublished">2020-02-27</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E4%B8%8A%E7%BA%BF%E9%83%A8%E7%BD%B2/">上线部署</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      博客项目上线部署总结
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>经过一番折腾之后项目终于上线了（喜极而泣，坑好多），博客项目部署在 <a target="_blank" rel="noopener" href="http://jacleklm.com/">JacleKlm.com</a>，先写一篇文章记录下近期的折腾所得吧。</p>
+<h1 id="云服务器"><a href="#云服务器" class="headerlink" title="云服务器"></a>云服务器</h1><p>买的<a target="_blank" rel="noopener" href="https://cloud.tencent.com/act/season">腾讯云服务器</a>最便宜的那种，买域名，备案审批</p>
+<p>云服务器中，更多-安全组-配置安全组-点连接，可以设置端口的开启及可以访问的人</p>
+<h1 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h1><p>Linux 是一个性能稳定的多用户网络操作系统，经常用来跑服务器，eg. Linux + Nginx + MySQL + Node.js</p>
+<h2 id="Linux-常见命令"><a href="#Linux-常见命令" class="headerlink" title="Linux 常见命令"></a>Linux 常见命令</h2><ul>
+<li>Vim（用来打开文件）<ul>
+<li>Vim 下，<code>i</code> 是进入编辑模式；<code>esc</code> 再<code>:wq</code> 是保存退出，<code>:q</code> 是退出，<code>:q!</code> 是强制退出；</li>
+<li>Vim 查找。在 normal 模式下按下 <code>/</code> 即可进入查找模式，输入要查找的字符串并按下回车。在查找模式中加入 <code>\c</code> 表示大小写不敏感查找，<code>\C</code> 表示大小写敏感查找，例如： <code>/foo\c</code></li>
+<li>Vim 翻页：<code>control+f</code>; <code>control+b</code></li>
+</ul>
+</li>
+<li>查看开启的端口号<ul>
+<li><code>netstat -tlnp</code></li>
+</ul>
+</li>
+<li>查看当前路径<ul>
+<li><code>pwd [-lp]</code></li>
+</ul>
+</li>
+<li>查看端口号 <code>show global variables like &#39;port&#39;;</code></li>
+<li>删除<ul>
+<li><code>rm -rf svn/</code> 将会删除当前目录下的 svn&#x2F; 文件夹及其下所有文件夹，包括文件</li>
+<li><code>rm -f /opt/test.txt</code> 将会强制删除 &#x2F;opt&#x2F;test.txt 这个文件</li>
+</ul>
+</li>
+<li>解压文件 <code>unzip react-blog.zip</code></li>
+<li>更换 node 版本</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/bin/</span><br><span class="line"><span class="comment">// 查看已有软连接：</span></span><br><span class="line">ll -all</span><br><span class="line"><span class="comment">// 删除旧node软连接</span></span><br><span class="line">rm -rf node</span><br><span class="line">rm -rf npm</span><br><span class="line">rm -rf cnpm</span><br><span class="line">cd ~</span><br><span class="line"><span class="comment">// 下载跟本地node版本相同的node</span></span><br><span class="line">wget <span class="attr">https</span>:<span class="comment">//nodejs.org/dist/v12.3.1/node-v12.3.1-linux-x64.tar.xz</span></span><br><span class="line"><span class="comment">// 解压安装包</span></span><br><span class="line">tar xvf node-v12<span class="number">.3</span><span class="number">.1</span>-linux-x64.<span class="property">tar</span>.<span class="property">xz</span></span><br><span class="line"><span class="comment">// 重建软连接</span></span><br><span class="line">ln -s /root/node-v12<span class="number">.3</span><span class="number">.1</span>-linux-x64/bin/node /usr/local/bin/node</span><br><span class="line">ln -s /root/node-v12<span class="number">.3</span><span class="number">.1</span>-linux-x64/bin/npm /usr/local/bin/npm</span><br><span class="line">sudo ln -s /root/node-v12<span class="number">.3</span><span class="number">.1</span>-linux-x64/bin/cnpm /usr/local/bin/cnpm</span><br></pre></td></tr></table></figure>
+
+<p>更多常见命令详见 <a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/80UEbeEfPBV2LMmRqJFT7w">让你牛 B 加身的前端必会 Linux 命令</a><br>更多 Linux 教程也可见 <a target="_blank" rel="noopener" href="https://www.runoob.com/linux/linux-tutorial.html">Linux 教程-菜鸟教程</a></p>
+<h2 id="安装-cnpm"><a href="#安装-cnpm" class="headerlink" title="安装 cnpm"></a>安装 cnpm</h2><ul>
+<li>Linux 安装 cnpm 后 <code>npm install -g cnpm --registry=https://registry.npm.taobao.org</code></li>
+<li>sudo 创建软连接 <code>sudo ln -s /root/node-v&lt;版本号&gt;-linux-x64/bin/cnpm /usr/local/bin/cnpm</code></li>
+</ul>
+<h2 id="从-Mac-本地拷贝文件到云服务器"><a href="#从-Mac-本地拷贝文件到云服务器" class="headerlink" title="从 Mac 本地拷贝文件到云服务器"></a>从 Mac 本地拷贝文件到云服务器</h2><h3 id="scp"><a href="#scp" class="headerlink" title="scp"></a>scp</h3><p>eg. 在本地命令行执行 <code>scp -r /Users/chenjunjia/React/react_blog/admin.zip root@xx.xx.xx.xx:/root/blog</code> ，再输入服务器密码即可</p>
+<h3 id="sftp"><a href="#sftp" class="headerlink" title="sftp"></a>sftp</h3><p>参见<a target="_blank" rel="noopener" href="https://blog.csdn.net/a419419/article/details/85050585">教程</a><br>eg. <code>Put React/react_blog/react-blog.zip /root/blog</code> 。注意这里的 <code>/User/chenjunjia/</code> 就被省略了（至少我的 Mac 中是这样）</p>
+<h1 id="Nginx"><a href="#Nginx" class="headerlink" title="Nginx"></a>Nginx</h1><p>Nginx 是一款轻量级的 HTTP 服务器，采用事件驱动的异步非阻塞处理方式框架，这让其具有极好的 IO 性能，时常用于服务端的反向代理和负载均衡</p>
+<p>目前本项目的部署其实没用到 Nginx</p>
+<h2 id="Nginx-常见命令"><a href="#Nginx-常见命令" class="headerlink" title="Nginx 常见命令"></a>Nginx 常见命令</h2><ul>
+<li>启动<ul>
+<li>直接法：<code>nignx</code> 。会没有任何返回信息，这是成功状态。此时用 <code>ps aux | grep nginx</code> 看 nginx 的启动信息</li>
+<li>用通用的 Linux 命令：<code>systemctl start nginx.service</code></li>
+</ul>
+</li>
+<li>关闭<ul>
+<li>最常用：<code>nginx -s quit</code></li>
+<li>不常用的关闭（关闭效果等级从轻到重）：<code>nginx -s stop</code>，<code>killall nginx</code>, <code>systemctl stop nginx.service</code></li>
+</ul>
+</li>
+<li>重启（修改 Nginx 文件后都要重启）<ul>
+<li><code>nginx -s reload</code></li>
+<li><code>systemctl restart nginx.service</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="Nginx-基础配置文件"><a href="#Nginx-基础配置文件" class="headerlink" title="Nginx 基础配置文件"></a>Nginx 基础配置文件</h2><p>配置文件 <code>/etc/nginx/nginx.config</code> ，用 vim 打开后看内容</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"># 运行用户，默认即是nginx，可以不进行设置</span><br><span class="line">user  nginx;</span><br><span class="line"># <span class="title class_">Nginx</span>进程，一般设置为和<span class="variable constant_">CPU</span>核数一样</span><br><span class="line">worker_processes  <span class="number">1</span>;</span><br><span class="line"># 错误日志存放目录</span><br><span class="line">error_log  /<span class="keyword">var</span>/log/nginx/error.<span class="property">log</span> warn;</span><br><span class="line"># 进程pid存放位置</span><br><span class="line">pid        /<span class="keyword">var</span>/run/nginx.<span class="property">pid</span>;</span><br><span class="line"></span><br><span class="line">events &#123;</span><br><span class="line">    worker_connections  <span class="number">1024</span>; # 单个后台进程的最大并发数</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">http &#123;</span><br><span class="line">    include       /etc/nginx/mime.<span class="property">types</span>;   # 文件扩展名与类型映射表</span><br><span class="line">    default_type  application/octet-stream;  # 默认文件类型</span><br><span class="line">    #设置日志模式</span><br><span class="line">    log_format  main  <span class="string">&#x27;$remote_addr - $remote_user [$time_local] &quot;$request&quot; &#x27;</span></span><br><span class="line">                      <span class="string">&#x27;$status $body_bytes_sent &quot;$http_referer&quot; &#x27;</span></span><br><span class="line">                      <span class="string">&#x27;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&#x27;</span>;</span><br><span class="line"></span><br><span class="line">    access_log  /<span class="keyword">var</span>/log/nginx/access.<span class="property">log</span>  main;   # nginx访问日志存放位置</span><br><span class="line"></span><br><span class="line">    sendfile        on;   # 开启高效传输模式</span><br><span class="line">    #tcp_nopush     on;    # 减少网络报文段的数量</span><br><span class="line"></span><br><span class="line">    keepalive_timeout  <span class="number">65</span>;  # 保持连接的时间，也叫超时时间</span><br><span class="line"></span><br><span class="line">    #gzip  on;  # 开启gzip压缩</span><br><span class="line"></span><br><span class="line">    include /etc/nginx/conf.<span class="property">d</span><span class="comment">/*.conf; #包含的子配置项位置和文件</span></span><br></pre></td></tr></table></figure>
+
+<p>用 vim 打开 include 的子配置项文件 <code>/etc/nginx/conf.d/default.config</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen       <span class="number">80</span>;   # 配置监听端口</span><br><span class="line">    server_name  localhost;  <span class="comment">//配置域名</span></span><br><span class="line"></span><br><span class="line">    #charset koi8-r;</span><br><span class="line">    #access_log  /<span class="keyword">var</span>/log/nginx/host.<span class="property">access</span>.<span class="property">log</span>  main;</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">        root   /usr/share/nginx/html;     # 服务默认启动目录</span><br><span class="line">        index  index.<span class="property">html</span> index.<span class="property">htm</span>;    # 默认访问文件</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    #error_page  <span class="number">404</span>              /<span class="number">404.</span>html;   # 配置<span class="number">404</span>页面</span><br><span class="line"></span><br><span class="line">    # redirect server error pages to the <span class="keyword">static</span> page /50x.<span class="property">html</span></span><br><span class="line">    #</span><br><span class="line">    error_page   <span class="number">500</span> <span class="number">502</span> <span class="number">503</span> <span class="number">504</span>  /50x.<span class="property">html</span>;   #错误状态码的显示页面。现在是这几种错误都是用现实这个html文件</span><br><span class="line">    location = /50x.<span class="property">html</span> &#123;</span><br><span class="line">        root   /usr/share/nginx/html;</span><br><span class="line">    &#125;</span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>cd 到 <code>/usr/share/nginx/html</code> 默认文件夹，对 index.html 默认文件编辑并保存，然后用 nginx 命令即能启动服务器。访问 ip 地址就能看到内容了</p>
+<p>同理编辑 <code>/usr/share/nginx/html/404.html</code> 是 404 时显示的页面；也可以让 404 指向其他页面：<code>error_page 404 http://github.com;</code></p>
+<h2 id="Nginx-实现访问控制"><a href="#Nginx-实现访问控制" class="headerlink" title="Nginx 实现访问控制"></a>Nginx 实现访问控制</h2><blockquote>
+<p>nginx 的指令是谁写在前面就谁先生效（如果有冲突）</p>
+</blockquote>
+<p>只允许某个主机进行访问</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">location / &#123; <span class="comment">// 这里的 / 是全部的意思</span></span><br><span class="line">        allow  xx.<span class="property">xx</span>.<span class="property">xx</span>.<span class="property">xx</span>;  <span class="comment">//  // 允许访问的ip</span></span><br><span class="line">        deny   all; <span class="comment">// 也可以是某个ip</span></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里的 <code>/</code> 是全部的意思；改成 <code>=/img</code> 则是网站下的 img 目录；也可以用正则，<code>~\.php$</code></p>
+<h2 id="Ngingx-设置虚拟机"><a href="#Ngingx-设置虚拟机" class="headerlink" title="Ngingx 设置虚拟机"></a>Ngingx 设置虚拟机</h2><p>通过设置虚拟主机，一台云服务器也能同时跑好几个 Web 服务器。配置虚拟主机可以基于端口号，基于 IP，基于域名。最常用的是基于域名设置虚拟机<br>都是改 <code>/etc/nginx/conf.d/default.config</code> 配置文件</p>
+<h3 id="基于端口号"><a href="#基于端口号" class="headerlink" title="基于端口号"></a>基于端口号</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">server&#123;</span><br><span class="line">        listen <span class="number">8001</span>;</span><br><span class="line">        server_name localhost; <span class="comment">// localhost:8001端口新开虚拟机</span></span><br><span class="line">        root /usr/share/nginx/html/html8001;</span><br><span class="line">        index index.<span class="property">html</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编辑 <code>/usr/share/nginx/html/html8001</code> 下的 index.html ，即可访问 8001 端口了</p>
+<h3 id="基于端-IP"><a href="#基于端-IP" class="headerlink" title="基于端 IP"></a>基于端 IP</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">server&#123;</span><br><span class="line">        listen <span class="number">80</span>;</span><br><span class="line">        server_name xx.<span class="property">xx</span>.<span class="property">xx</span>.<span class="property">xx</span>; <span class="comment">// 某新ip</span></span><br><span class="line">        root /usr/share/nginx/html/html8001;</span><br><span class="line">        index index.<span class="property">html</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="基于域名（最常用）"><a href="#基于域名（最常用）" class="headerlink" title="基于域名（最常用）"></a>基于域名（最常用）</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">server&#123;</span><br><span class="line">        listen <span class="number">80</span>;</span><br><span class="line">        server_name xxx.<span class="property">com</span>; <span class="comment">// 如果有多个域名就可以配多个</span></span><br><span class="line">        location / &#123;</span><br><span class="line">                root /usr/share/nginx/html/html8001;</span><br><span class="line">                index index.<span class="property">html</span>;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Nginx-实现反向代理"><a href="#Nginx-实现反向代理" class="headerlink" title="Nginx 实现反向代理"></a>Nginx 实现反向代理</h2><h3 id="反向代理"><a href="#反向代理" class="headerlink" title="反向代理"></a>反向代理</h3><p>正向代理（为客户端做代理）：普通的 proxy 代理，把我们不让访问的服务器的网页请求，代理到一个可以访问该网站的代理服务器上来，一般叫做 proxy 服务器，再转发给客户。eg. 翻墙（你没有权限，但是 proxy 服务器有权限）<br><img src="/img/%E5%8D%9A%E5%AE%A2%E4%B8%8A%E7%BA%BF%E9%83%A8%E7%BD%B2/%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86.png"><br>反向代理（为服务器做代理）：反向代理跟代理正好相反（需要说明的是，现在基本所有的大型网站的页面都是用了反向代理），客户端发送的请求，想要访问 server 服务器上的内容。发送的内容被发送到代理服务器上，这个代理服务器再把请求发送到自己设置好的内部服务器上，而用户真实想获得的内容就在这些设置好的服务器上。<br><img src="/img/%E5%8D%9A%E5%AE%A2%E4%B8%8A%E7%BA%BF%E9%83%A8%E7%BD%B2/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86.png"></p>
+<h3 id="反向代理的用途和好处"><a href="#反向代理的用途和好处" class="headerlink" title="反向代理的用途和好处"></a>反向代理的用途和好处</h3><ul>
+<li>安全性：正向代理的客户端能够在隐藏自身信息的同时访问任意网站，这个给网络安全代理了极大的威胁。因此，我们必须把服务器保护起来，使用反向代理客户端用户只能通过外来网来访问代理服务器，并且用户并不知道自己访问的真实服务器是那一台，可以很好的提供安全保护。</li>
+<li>功能性：反向代理的主要用途是为多个服务器提供负债均衡、缓存等功能。负载均衡就是一个网站的内容被部署在若干服务器上，可以把这些机子看成一个集群，那 Nginx 可以将接收到的客户端请求“均匀地”分配到这个集群中所有的服务器上，从而实现服务器压力的平均分配。</li>
+</ul>
+<h3 id="配置方法"><a href="#配置方法" class="headerlink" title="配置方法"></a>配置方法</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">server&#123; <span class="comment">// 访问 nginx2.jspang.com 反向代理到 jspang.com 这个网站。所以当我们访问nginx2.jspang.com的时候呈现的是jspang.com的内容</span></span><br><span class="line">        listen <span class="number">80</span>;</span><br><span class="line">        server_name nginx2.<span class="property">jspang</span>.<span class="property">com</span>;</span><br><span class="line">        location / &#123;</span><br><span class="line">               proxy_pass <span class="attr">http</span>:<span class="comment">//jspang.com;</span></span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Nginx-适配-PC-或移动设备"><a href="#Nginx-适配-PC-或移动设备" class="headerlink" title="Nginx 适配 PC 或移动设备"></a>Nginx 适配 PC 或移动设备</h2><p>大型网站，eg. 淘宝和京东的网站，根据 PC 端或移动端会有不同的站点，而不是用自适应布局。<br>用 Nginx 的 <code>$http_user_agent</code> 可以获取到客户端的 userAgent ，进而展示不同的页面给用户</p>
+<h1 id="Linux-中搭建-MYSQL"><a href="#Linux-中搭建-MYSQL" class="headerlink" title="Linux 中搭建 MYSQL"></a>Linux 中搭建 MYSQL</h1><p>安装，搜教程</p>
+<h2 id="Linux-操作数据库命令大全（结尾一定要带分号！）"><a href="#Linux-操作数据库命令大全（结尾一定要带分号！）" class="headerlink" title="Linux 操作数据库命令大全（结尾一定要带分号！）"></a>Linux 操作数据库命令大全（结尾一定要带分号！）</h2><p>参考自<a target="_blank" rel="noopener" href="https://www.cnblogs.com/xiaochaohuashengmi/archive/2011/10/18/2216279.html">博客 1</a>，<a target="_blank" rel="noopener" href="https://blog.csdn.net/stamhe/article/details/3924638">博客 2</a></p>
+<ul>
+<li>开启 mysql <code>service mysqld start</code>，<code>mysql -u root</code></li>
+<li>关闭 <code>mysql&gt; exit;</code></li>
+<li>进入 mysql 后，使用 SHOW 语句找出在服务器上当前存在什么数据库 <code>mysql&gt; SHOW DATABASES;</code></li>
+<li>创建一个数据库 test <code>mysql&gt; CREATE DATABASE test character set utf8;</code></li>
+<li>选择你所创建的数据库 <code>mysql&gt; USE test;</code></li>
+<li>使用 SHOW 语句看数据库有几个表 <code>mysql&gt; SHOW TABLES;</code></li>
+<li>创建一个表 <code>CREATE TABLE mytable (name VARCHAR(20), sex CHAR(1),birth DATE, birthaddr VARCHAR(20));</code><br>CREATE TABLE <code>type</code> (<br><code>id</code> int(10) unsigned NOT NULL auto_increment,<br><code>flag_deleted</code> enum(‘Y’,’N’) character set utf8 NOT NULL default ‘N’,<br><code>flag_type</code> int(5) NOT NULL default ‘0’,<br><code>type_name</code> varchar(50) character set utf8 NOT NULL default ‘’,<br>PRIMARY KEY (<code>id</code>)<br>) DEFAULT CHARSET&#x3D;utf8;</li>
+<li>显示表的结构 <code>mysql&gt; DESCRIBE mytable;</code></li>
+<li>用 SELECT 命令来查看表中的数据 <code>mysql&gt; select * from mytable;</code></li>
+<li>给表加入数据 <code>mysql&gt; insert into mytable values (′jacle′,′m′,′1996-02-04′,′china′);</code><br>insert into test values (2,’jacle2’);</li>
+<li>用文本方式将数据装入一个数据库。创建一个文本文件“mysql.txt”，每行包含一个记录，用定位符(tab)把值分开，并且以在 CREATE TABLE 语句中列出的列次序给出,例如<br>abccs f 1977-07-07 china 　<br>mary f 1978-12-12 usa<br>tom m 1970-09-02 usa<br>使用下面命令将文本文件“mytable.txt”装载到 mytable 表中:<br><code>mysql&gt; LOAD DATA LOCAL INFILE &quot;/data/mytable.txt” INTO TABLE mytable;</code></li>
+<li>修改表结构，更详见 <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/a6771d05ad59">博客 3</a>，其中添加字段是 <code>ALTER TABLE &lt;表名&gt; ADD &lt;字段名称&gt; &lt;字段定义&gt;</code></li>
+<li>删除表 <code>DROP TABLE table_name ;</code></li>
+<li>查看表的编码 <code>show create table &lt;表名&gt;;</code></li>
+<li>修改数据库成 utf8 的 <code>mysql&gt; alter database name character set utf8;</code></li>
+<li>修改表默认用 utf8 <code>mysql&gt; alter table type character set utf8;</code></li>
+<li>修改字段用 utf8 <code>mysql&gt; alter table type modify type_name varchar(50) CHARACTER SET utf8;</code></li>
+<li>更新数据 <code>UPDATE &lt;表名&gt; SET id=2 WHERE type_id=2;</code></li>
+</ul>
+<h2 id="一些-bug"><a href="#一些-bug" class="headerlink" title="一些 bug"></a>一些 bug</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/lkforce/article/details/79006838">mysql 的 char，varchar，text 类型的区别总结</a><br>Linux 中 mysql 表无法写入中文，解决方法是 varchar 类型建议用 utf-8</p>
+<h1 id="Linux-中搭建-Node-js-，npm-和-PM2"><a href="#Linux-中搭建-Node-js-，npm-和-PM2" class="headerlink" title="Linux 中搭建 Node.js ，npm 和 PM2"></a>Linux 中搭建 Node.js ，npm 和 PM2</h1><p>安装方法自行谷歌</p>
+<h2 id="pm2"><a href="#pm2" class="headerlink" title="pm2"></a>pm2</h2><p>pm2 是一个带有负载均衡功能的应用进程管理器，也可以用来做进程守护。<a target="_blank" rel="noopener" href="https://juejin.im/post/5be406705188256dbb5176f9">pm2 简易使用手册</a></p>
+<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><ul>
+<li>查看进程 <code>pm2 list</code></li>
+<li>停止所有 <code>pm2 stop all</code></li>
+<li>运行某个 node 文件 <code>pm2 start xxx.js</code></li>
+<li>运行项目 <code>pm2 start npm —- run start/dev</code></li>
+<li>重启 <code>pm2 restart XXX</code></li>
+<li>停止 <code>pm2 stop XXX</code></li>
+<li>删除 <code>pm2 delete XXX</code></li>
+<li>查看某个进程&#x2F;应用具体情况 <code>pm2 describe Travel</code></li>
+<li>查看进程&#x2F;应用的资源消耗情况 <code>pm2 monit</code></li>
+<li>查看所有日志 <code>pm2 logs (Travel)</code></li>
+<li>查看 7001 端口的进程 （PID 就是进程 id）<code>lsof -i:7001</code></li>
+<li>关闭进程 <code>kill -9 &lt;进程id&gt;</code></li>
+</ul>
+<h3 id="pm2-项目管理"><a href="#pm2-项目管理" class="headerlink" title="pm2 项目管理"></a>pm2 项目管理</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cd &lt;项目目录&gt;</span><br><span class="line"><span class="comment">// 在项目目录生成pm2配置文件：ecosystem.config.js。改该文件的name属性为自定义进程名字，script属性为react项目npm run start时执行的脚本（需要先npm run eject才会出现这个脚本）</span></span><br><span class="line">pm2 ecosystem</span><br><span class="line"><span class="comment">// 执行进程</span></span><br><span class="line">pm2 start ecosystem.<span class="property">config</span>.<span class="property">js</span></span><br><span class="line"><span class="comment">// 查看执行的进程，发现会有自定义名字的进程</span></span><br><span class="line">pm2 list</span><br></pre></td></tr></table></figure>
+
+<h1 id="部署流程"><a href="#部署流程" class="headerlink" title="部署流程"></a>部署流程</h1><blockquote>
+<p>每次更改项目后应该先 build，再用 pm2 start；测试的时候应该用 dev</p>
+</blockquote>
+<h2 id="前台"><a href="#前台" class="headerlink" title="前台"></a>前台</h2><p>对于博客项目，前台是 Next.js 项目，拷贝之后先 <code>build</code> ，然后再 <code>pm2 start npm — run start</code> 就可以了<br>http 默认是 80 端口，可以把前台项目改成 80 端口；其次，你还要在安全组开放相关的端口才能成功访问的（其实我没做这一步）</p>
+<h2 id="中台"><a href="#中台" class="headerlink" title="中台"></a>中台</h2><p>中台是 Egg.js 项目，直接 npm run start 就行（自带进程守护）。中台连接云服务器数据库方法暂时是把 <code>config.default.js</code> 改成下面如下配置，可以通过 IP 或者域名+端口号访问接口</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">config.<span class="property">cluter</span> = &#123;</span><br><span class="line">  <span class="attr">listen</span>: &#123;</span><br><span class="line">    <span class="attr">port</span>: <span class="number">8000</span>,</span><br><span class="line">    <span class="attr">hostname</span>: <span class="string">&#x27;0.0.0.0&#x27;</span> <span class="comment">// 其实就是localhost</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="后台"><a href="#后台" class="headerlink" title="后台"></a>后台</h2><p>后台是 React 项目，是直接用 pm2 进行管理直接 start</p>
+<h1 id="踩坑集合"><a href="#踩坑集合" class="headerlink" title="踩坑集合"></a>踩坑集合</h1><h2 id="跨域"><a href="#跨域" class="headerlink" title="跨域"></a>跨域</h2><ul>
+<li>前后台项目中请求应该以服务器 ip 地址为准，而不是 localhost</li>
+<li>数据中台的跨域设置是参考<a target="_blank" rel="noopener" href="https://github.com/eggjs/egg/issues/3160">该贴</a>，最后配置如下</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 如果只想让 domainWhiteList 的可以跨域，那就不用配置 origin</span></span><br><span class="line">config.<span class="property">security</span> = &#123;</span><br><span class="line">  <span class="attr">csrf</span>: &#123; <span class="attr">enable</span>: <span class="literal">false</span> &#125;,</span><br><span class="line">  <span class="attr">domainWhiteList</span>: [<span class="string">&#x27;*&#x27;</span>]</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 如果你要用 origin: &#x27;*&#x27; 又想带 withCredentials，配置改成这样</span></span><br><span class="line">config.<span class="property">cors</span> = &#123;</span><br><span class="line">  <span class="attr">credentials</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">origin</span>: <span class="function"><span class="params">ctx</span> =&gt;</span> ctx.<span class="title function_">get</span>(<span class="string">&#x27;origin&#x27;</span>),</span><br><span class="line">  <span class="attr">allowMethods</span>: <span class="string">&#x27;GET, HEAD, PUT, POST, DELETE, PATCH, OPTIONS&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="修改项目默认接口"><a href="#修改项目默认接口" class="headerlink" title="修改项目默认接口"></a>修改项目默认接口</h2><ul>
+<li>React 项目修改默认接口：<code>node_modules</code> 文件夹里的可以看到 <code>react-scripts</code> 文件夹，在 <code>start.js</code> 里可以找到修改端口的代码。直接搜索 <code>||</code></li>
+<li>Next 项目改默认端口是直接在<code>script</code>命令最后加 <code>-p &lt;端口号&gt;</code></li>
+</ul>
+<h2 id="React-项目-TypeError-ERR-INVALID-ARG-TYPE-The-“path”-argument-must-be-of-type-string-Received-type-undefined"><a href="#React-项目-TypeError-ERR-INVALID-ARG-TYPE-The-“path”-argument-must-be-of-type-string-Received-type-undefined" class="headerlink" title="React 项目 TypeError [ERR_INVALID_ARG_TYPE]: The “path” argument must be of type string. Received type undefined"></a>React 项目 TypeError [ERR_INVALID_ARG_TYPE]: The “path” argument must be of type string. Received type undefined</h2><p>react-scripts 版本问题，升级到 3.4.0。果然成功了！！！哭了！</p>
+<p>参考文章<br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/80UEbeEfPBV2LMmRqJFT7w">让你牛 B 加身的前端必会 Linux 命令-奇舞团</a><br><a target="_blank" rel="noopener" href="https://www.runoob.com/linux/linux-tutorial.html">Linux 教程-菜鸟教程</a><br><a target="_blank" rel="noopener" href="https://jspang.com/detailed?id=39">一个前端必会的 Nginx 免费教程-技术胖</a><br><a target="_blank" rel="noopener" href="https://juejin.im/post/5be406705188256dbb5176f9">pm2 简易使用手册</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2020/02/27/%E5%8D%9A%E5%AE%A2%E9%A1%B9%E7%9B%AE%E4%B8%8A%E7%BA%BF%E9%83%A8%E7%BD%B2/" data-id="clmniym7o003gbb87533e2sut" data-title="博客项目上线部署总结" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%B8%8A%E7%BA%BF%E9%83%A8%E7%BD%B2/" rel="tag">上线部署</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/03/08/%E6%B4%97%E7%89%8C%E7%AE%97%E6%B3%95/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          洗牌算法
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/02/04/React%E5%B0%8F%E7%BB%93/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">React基本原理 &amp; 一些特性 &amp; 性能优化</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Kategorien</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Basic-knowledge/">Basic knowledge</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Engineering/">Engineering</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%8A%E7%BA%BF%E9%83%A8%E7%BD%B2/">上线部署</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%90%8E%E7%AB%AF/">后端</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Browser/" rel="tag">Browser</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Computer/" rel="tag">Computer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Data-structure/" rel="tag">Data structure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Interview/" rel="tag">Interview</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Network/" rel="tag">Network</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node/" rel="tag">Node</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/" rel="tag">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Operating-system/" rel="tag">Operating system</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Performance/" rel="tag">Performance</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/" rel="tag">Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web%E5%AE%89%E5%85%A8/" rel="tag">Web安全</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/" rel="tag">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%8A%E7%BA%BF%E9%83%A8%E7%BD%B2/" rel="tag">上线部署</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A1%86%E6%9E%B6/" rel="tag">框架</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" rel="tag">解决方案</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE%E5%B0%8F%E7%BB%93/" rel="tag">项目小结</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Browser/" style="font-size: 14px;">Browser</a> <a href="/tags/CSS/" style="font-size: 14px;">CSS</a> <a href="/tags/Computer/" style="font-size: 10px;">Computer</a> <a href="/tags/Data-structure/" style="font-size: 18px;">Data structure</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/Interview/" style="font-size: 10px;">Interview</a> <a href="/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/tags/Network/" style="font-size: 14px;">Network</a> <a href="/tags/Node/" style="font-size: 12px;">Node</a> <a href="/tags/Nodejs/" style="font-size: 12px;">Nodejs</a> <a href="/tags/Operating-system/" style="font-size: 10px;">Operating system</a> <a href="/tags/Performance/" style="font-size: 12px;">Performance</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/TypeScript/" style="font-size: 14px;">TypeScript</a> <a href="/tags/Web/" style="font-size: 10px;">Web</a> <a href="/tags/Web%E5%AE%89%E5%85%A8/" style="font-size: 10px;">Web安全</a> <a href="/tags/webpack/" style="font-size: 20px;">webpack</a> <a href="/tags/%E4%B8%8A%E7%BA%BF%E9%83%A8%E7%BD%B2/" style="font-size: 10px;">上线部署</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 10px;">工具</a> <a href="/tags/%E6%A1%86%E6%9E%B6/" style="font-size: 16px;">框架</a> <a href="/tags/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" style="font-size: 10px;">解决方案</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 10px;">设计模式</a> <a href="/tags/%E9%A1%B9%E7%9B%AE%E5%B0%8F%E7%BB%93/" style="font-size: 14px;">项目小结</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">April 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/04/30/Python%20Basic/">Python Basic Knowledge</a>
+          </li>
+        
+          <li>
+            <a href="/2021/04/17/%E8%A7%A3%E5%86%B3hexo%20g%E7%94%9F%E6%88%90index.html%E4%B8%BA%E7%A9%BA%E7%9A%84%E9%97%AE%E9%A2%98/">解决hexo g生成index.html为空的问题</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/09/TypeScript%E4%B8%AD%E7%9A%84%E5%86%85%E7%BD%AE%E5%B7%A5%E5%85%B7%E7%B1%BB%E5%9E%8B%E5%8F%8A%E5%85%B6%E5%AE%9E%E7%8E%B0/">TypeScript中的内置工具类型及其实现</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/07/TypeScript%E4%B8%AD%E7%9A%84%E7%B1%BB%E5%9E%8B%E7%BC%96%E7%A8%8B/">TypeScript中的类型编程</a>
+          </li>
+        
+          <li>
+            <a href="/2020/11/03/hope%20statistics%20puppeteer%E5%B7%A5%E5%85%B7%E5%B0%8F%E7%BB%93/">hope statistics puppeteer 工具小结</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 Jacleklm<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

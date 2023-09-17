@@ -4,16 +4,19 @@
   <meta charset="utf-8">
   
   
-  <title>Archiv | Jacleklm</title>
+  <title>内存泄露和垃圾回收 | Jacleklm</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="FullStack Engineer in Narwal. Focus on Frontend.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Jacleklm">
-<meta property="og:url" content="http://example.com/archives/index.html">
+  <meta name="description" content="什么是内存泄露程序的运行需要内存。只要程序提出要求，操作系统就会给内存。进程应及时释放不再用到的内存。不再用到的内存，没有及时释放，就叫做内存泄漏（memory leak）大多数语言提供自动内存管理，减轻程序员的负担，这被称为垃圾回收机制（garbage collector） 垃圾回收引用计数思想：跟踪记录所有值被引用的次数（阮一峰说引用计数是最常使用的，红宝书说到 2008 年为止标记清除是最常">
+<meta property="og:type" content="article">
+<meta property="og:title" content="内存泄露和垃圾回收">
+<meta property="og:url" content="http://example.com/2019/11/26/%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2%E5%92%8C%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/index.html">
 <meta property="og:site_name" content="Jacleklm">
-<meta property="og:description" content="FullStack Engineer in Narwal. Focus on Frontend.">
+<meta property="og:description" content="什么是内存泄露程序的运行需要内存。只要程序提出要求，操作系统就会给内存。进程应及时释放不再用到的内存。不再用到的内存，没有及时释放，就叫做内存泄漏（memory leak）大多数语言提供自动内存管理，减轻程序员的负担，这被称为垃圾回收机制（garbage collector） 垃圾回收引用计数思想：跟踪记录所有值被引用的次数（阮一峰说引用计数是最常使用的，红宝书说到 2008 年为止标记清除是最常">
 <meta property="og:locale">
+<meta property="article:published_time" content="2019-11-26T08:50:21.000Z">
+<meta property="article:modified_time" content="2023-09-17T14:00:22.876Z">
 <meta property="article:author" content="Jacleklm">
+<meta property="article:tag" content="JavaScript">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/atom.xml" title="Jacleklm" type="application/atom+xml">
@@ -73,236 +76,95 @@
 </header>
 
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2022" class="archive-year">2022</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2022/04/30/Python%20Basic/" class="archive-article-date">
-  <time class="dt-published" datetime="2022-04-30T09:20:21.000Z" itemprop="datePublished">Apr 30</time>
+        <section id="main"><article id="post-内存泄露和垃圾回收" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/11/26/%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2%E5%92%8C%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/" class="article-date">
+  <time class="dt-published" datetime="2019-11-26T08:50:21.000Z" itemprop="datePublished">2019-11-26</time>
 </a>
-      
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2022/04/30/Python%20Basic/">Python Basic Knowledge</a>
+    <h1 class="p-name article-title" itemprop="headline name">
+      内存泄露和垃圾回收
     </h1>
   
 
-    </header>
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="什么是内存泄露"><a href="#什么是内存泄露" class="headerlink" title="什么是内存泄露"></a>什么是内存泄露</h2><p>程序的运行需要内存。只要程序提出要求，操作系统就会给内存。进程应及时释放不再用到的内存。<strong>不再用到的内存，没有及时释放</strong>，就叫做<strong>内存泄漏</strong>（memory leak）<br>大多数语言提供自动内存管理，减轻程序员的负担，这被称为<strong>垃圾回收机制</strong>（garbage collector）</p>
+<h2 id="垃圾回收"><a href="#垃圾回收" class="headerlink" title="垃圾回收"></a>垃圾回收</h2><h3 id="引用计数"><a href="#引用计数" class="headerlink" title="引用计数"></a>引用计数</h3><p><strong>思想：跟踪记录所有值被引用的次数</strong><br>（阮一峰说引用计数是最常使用的，红宝书说到 2008 年为止标记清除是最常用的）<br>JS 引擎有一张”引用表”，保存了内存里面所有的资源（通常是各种<strong>值</strong>，比如数组）的引用次数。<strong>如果一个值的引用次数是 0，就表示这个值不再用到了，因此可以将这块内存释放</strong><br>如果一个值不再需要了，引用数却不为 0，垃圾回收机制无法释放这块内存，从而导致内存泄漏</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>];</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;hello world&quot;</span>);</span><br><span class="line"></span><br><span class="line">arr = <span class="literal">null</span>;</span><br></pre></td></tr></table></figure>
+
+<p>上面代码中，数组[1, 2, 3, 4]是一个值，会占用内存。变量 arr 是仅有的对这个值的引用，因此引用次数为 1。尽管后面的代码没有用到 arr，它还是会持续占用内存<br>可以<strong>手动解除引用</strong>：让变量 &#x3D; null。则数值这个值就能被垃圾回收机制释放了</p>
+<h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><p><strong>循环引用的情况</strong>，eg. 对象 A 包含一个指向对象 B 的指针，而对象 B 中也包含一个指向 A 的指针。采用引用计数策略时，函数执行后，两个对象还将继续存在，因为<strong>它们的引用次数永远不会为 0</strong>。</p>
+<h3 id="标记清除"><a href="#标记清除" class="headerlink" title="标记清除"></a>标记清除</h3><p>思路：给当前不使用的值加上标记，然后再回收其内存<br>只有在环境中的变量及被环境中的变量引用的变量（闭包）标记</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">test</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">var</span> a = <span class="number">10</span>; <span class="comment">//被标记&quot;进入环境&quot;</span></span><br><span class="line">  <span class="keyword">var</span> b = <span class="string">&quot;hello&quot;</span>; <span class="comment">//被标记&quot;进入环境&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">test</span>(); <span class="comment">//执行完毕后之后，a和b又被标记&quot;离开环境&quot;，被回收</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="常见-JavaScript-内存泄露"><a href="#常见-JavaScript-内存泄露" class="headerlink" title="常见 JavaScript 内存泄露"></a>常见 JavaScript 内存泄露</h2><h3 id="意外的全局变量"><a href="#意外的全局变量" class="headerlink" title="意外的全局变量"></a>意外的全局变量</h3><p>eg. 如下代码，这种生命方式等于 <code>this.bar=.....</code>，函数独立调用的话 this 为 window，所以 bar 是全局变量</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">foo</span>(<span class="params">arg</span>) &#123;</span><br><span class="line">  bar = <span class="string">&quot;this is a hidden global variable&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>JavaScript 文件头部加上 ‘use strict’，可以避免此类错误发生</p>
+</blockquote>
+<p>但是其实我们自己设全局变量也是有风险的，因为全局变量被认为的不可回收的（标记清除机制无法清除，因为全局环境到最后才会销毁）。如果必须使用全局变量存储大量数据时，确保用完以后把它设置为 null</p>
+<h3 id="被遗忘的-setInterval-或回调函数"><a href="#被遗忘的-setInterval-或回调函数" class="headerlink" title="被遗忘的 setInterval 或回调函数"></a>被遗忘的 setInterval 或回调函数</h3><p>用完 setInterval 记得 clearInterval</p>
+<h3 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h3><p>不解释</p>
+<h2 id="内存泄漏的识别方法"><a href="#内存泄漏的识别方法" class="headerlink" title="内存泄漏的识别方法"></a>内存泄漏的识别方法</h2><h3 id="Chrome-浏览器"><a href="#Chrome-浏览器" class="headerlink" title="Chrome 浏览器"></a>Chrome 浏览器</h3><p>控制台-profiles</p>
+<h3 id="Node"><a href="#Node" class="headerlink" title="Node"></a>Node</h3><p>process.memoryUsage()，返回一个对象，包含了 Node 进程的内存占用信息</p>
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><ol>
+<li>找到问题后手动释放内存</li>
+<li>使用两种新的数据结构：WeakSet 和 WeakMap。它们对于值的引用都是不计入垃圾回收机制</li>
+</ol>
+<p>参考资料</p>
+<p>《Javascript 高级程序设计》</p>
+<p><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2017/04/memory-leak.html">阮一峰-JavaScript 内存泄漏教程</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/11/26/%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2%E5%92%8C%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/" data-id="clmniym7l0036bb87he3jce2t" data-title="内存泄露和垃圾回收" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
+
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/11/30/JS%E5%87%BD%E6%95%B0%E6%9F%AF%E9%87%8C%E5%8C%96/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          JS函数柯里化
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/11/25/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%85%BC%E5%AE%B9%E6%80%A7/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">浏览器兼容性</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-    
-    
-      
-        </div></section>
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2021" class="archive-year">2021</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2021/04/17/%E8%A7%A3%E5%86%B3hexo%20g%E7%94%9F%E6%88%90index.html%E4%B8%BA%E7%A9%BA%E7%9A%84%E9%97%AE%E9%A2%98/" class="archive-article-date">
-  <time class="dt-published" datetime="2021-04-17T12:33:46.000Z" itemprop="datePublished">Apr 17</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/04/17/%E8%A7%A3%E5%86%B3hexo%20g%E7%94%9F%E6%88%90index.html%E4%B8%BA%E7%A9%BA%E7%9A%84%E9%97%AE%E9%A2%98/">解决hexo g生成index.html为空的问题</a>
-    </h1>
-  
 
-    </header>
-  </div>
-</article>
-  
-    
-    
-      
-        </div></section>
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2020/12/09/TypeScript%E4%B8%AD%E7%9A%84%E5%86%85%E7%BD%AE%E5%B7%A5%E5%85%B7%E7%B1%BB%E5%9E%8B%E5%8F%8A%E5%85%B6%E5%AE%9E%E7%8E%B0/" class="archive-article-date">
-  <time class="dt-published" datetime="2020-12-09T09:25:21.000Z" itemprop="datePublished">Dec 9</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/09/TypeScript%E4%B8%AD%E7%9A%84%E5%86%85%E7%BD%AE%E5%B7%A5%E5%85%B7%E7%B1%BB%E5%9E%8B%E5%8F%8A%E5%85%B6%E5%AE%9E%E7%8E%B0/">TypeScript中的内置工具类型及其实现</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2020/12/07/TypeScript%E4%B8%AD%E7%9A%84%E7%B1%BB%E5%9E%8B%E7%BC%96%E7%A8%8B/" class="archive-article-date">
-  <time class="dt-published" datetime="2020-12-07T09:25:21.000Z" itemprop="datePublished">Dec 7</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/07/TypeScript%E4%B8%AD%E7%9A%84%E7%B1%BB%E5%9E%8B%E7%BC%96%E7%A8%8B/">TypeScript中的类型编程</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2020/11/03/hope%20statistics%20puppeteer%E5%B7%A5%E5%85%B7%E5%B0%8F%E7%BB%93/" class="archive-article-date">
-  <time class="dt-published" datetime="2020-11-03T15:04:21.000Z" itemprop="datePublished">Nov 3</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/11/03/hope%20statistics%20puppeteer%E5%B7%A5%E5%85%B7%E5%B0%8F%E7%BB%93/">hope statistics puppeteer 工具小结</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2020/11/03/%E7%94%A8%20node.js%20%E5%BC%80%E5%8F%91%E4%B8%80%E4%B8%AA%E5%8F%AF%E4%BA%A4%E4%BA%92%E7%9A%84%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%BA%94%E7%94%A8/" class="archive-article-date">
-  <time class="dt-published" datetime="2020-11-03T15:02:21.000Z" itemprop="datePublished">Nov 3</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/11/03/%E7%94%A8%20node.js%20%E5%BC%80%E5%8F%91%E4%B8%80%E4%B8%AA%E5%8F%AF%E4%BA%A4%E4%BA%92%E7%9A%84%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%BA%94%E7%94%A8/">用 node.js 开发一个可交互的命令行应用</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2020/07/15/%E3%80%8A%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BANode.js%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" class="archive-article-date">
-  <time class="dt-published" datetime="2020-07-15T15:02:21.000Z" itemprop="datePublished">Jul 15</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/07/15/%E3%80%8A%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BANode.js%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">《深入浅出Node.js》读书笔记</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2020/06/27/babel-plugin-import/" class="archive-article-date">
-  <time class="dt-published" datetime="2020-06-27T15:49:21.000Z" itemprop="datePublished">Jun 27</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/06/27/babel-plugin-import/">按需加载 &amp; 样式自动加载 —— babel-plugin-import</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2020/06/25/AST%E8%AF%A6%E8%A7%A3/" class="archive-article-date">
-  <time class="dt-published" datetime="2020-06-25T15:49:21.000Z" itemprop="datePublished">Jun 25</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/06/25/AST%E8%AF%A6%E8%A7%A3/">AST详解</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2020/05/27/%E6%B8%B2%E6%9F%93%E6%96%B9%E6%A1%88/" class="archive-article-date">
-  <time class="dt-published" datetime="2020-05-27T08:50:21.000Z" itemprop="datePublished">May 27</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/27/%E6%B8%B2%E6%9F%93%E6%96%B9%E6%A1%88/">渲染方案</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-
-  <nav id="page-nav">
-    
-    <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/7/">7</a><a class="extend next" rel="next" href="/archives/page/2/">weiter &raquo;</a>
-  </nav>
 
 </section>
         

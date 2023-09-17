@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>HTML | Jacleklm</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="HTML基础1、 Doctype作用？严格模式与混杂模式如何区分？它们有何意义?  作用：声明文件类型定义（DTD），位于文档中最前面，作用是为了告知浏览器应该用哪种文档类型规范来解析文档 定义 严格模式（标准模式)，浏览器按照W3C标准来解析 混杂模式，向后兼容的解析方法，浏览器用自己的方式解析代码   如何区分？用DTD来判断 有严格格式DTD——严格模式； 有URL的过渡DTD——严格模式，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTML">
+<meta property="og:url" content="http://example.com/2019/10/08/HTML/index.html">
+<meta property="og:site_name" content="Jacleklm">
+<meta property="og:description" content="HTML基础1、 Doctype作用？严格模式与混杂模式如何区分？它们有何意义?  作用：声明文件类型定义（DTD），位于文档中最前面，作用是为了告知浏览器应该用哪种文档类型规范来解析文档 定义 严格模式（标准模式)，浏览器按照W3C标准来解析 混杂模式，向后兼容的解析方法，浏览器用自己的方式解析代码   如何区分？用DTD来判断 有严格格式DTD——严格模式； 有URL的过渡DTD——严格模式，">
+<meta property="og:locale">
+<meta property="article:published_time" content="2019-10-08T09:20:21.000Z">
+<meta property="article:modified_time" content="2023-09-17T14:00:22.863Z">
+<meta property="article:author" content="Jacleklm">
+<meta property="article:tag" content="HTML">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Jacleklm" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Jacleklm</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Suche"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Suche"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-HTML" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/10/08/HTML/" class="article-date">
+  <time class="dt-published" datetime="2019-10-08T09:20:21.000Z" itemprop="datePublished">2019-10-08</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      HTML
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="HTML基础"><a href="#HTML基础" class="headerlink" title="HTML基础"></a>HTML基础</h3><p>1、 Doctype作用？严格模式与混杂模式如何区分？它们有何意义?</p>
+<ul>
+<li>作用：声明文件类型定义（DTD），位于文档中最前面，作用是为了告知浏览器应该用哪种文档类型规范来解析文档</li>
+<li>定义<ul>
+<li>严格模式（标准模式)，浏览器按照W3C标准来解析</li>
+<li>混杂模式，向后兼容的解析方法，浏览器用自己的方式解析代码</li>
+</ul>
+</li>
+<li>如何区分？<br>用DTD来判断<ul>
+<li>有严格格式DTD——严格模式；</li>
+<li>有URL的过渡DTD——严格模式，没有URL的过渡DTD——混杂模式；</li>
+<li>DTD不存在&#x2F;格式不对——混杂模式；</li>
+<li>HTML5没有严格和混杂之分</li>
+</ul>
+</li>
+<li>区分的意义<br>严格模式的排版和js运行模式以浏览器支持的最高标准运行。如果只存在严格模式，那么很多旧网站站点无法工作。</li>
+</ul>
+<p>2、 head中的meta：提供关于 HTML 文档的元数据(规定页面的描述、关键词、文档的作者、编码方式等)，属性有 http-equiv + content； name + content。<br>3、 无序列表ul，有序列表ol,表格table-tr-td<br>4、 表单form（action&#x3D;”定义在submit时候的动作” method&#x3D;”GET&#x2F;POST”）（一般在form正下方会接个fieldset标签和legend标签（定义标题））<br>表单元素：input（type&#x3D;”text&#x2F;radio&#x2F;submit…）,下拉列表select-option,大文本输入框textarea<br>HTML5新增表单元素：datalist，结合input、option使用，能实现输入框有下拉菜单效果。还有相对少用的keygen、output<br>5、 em来表示强调的文本，应该使用strong来表示重要文本(内容重要性)<br>6、 src和herf的区别<br>href指向网络资源位置，建立当前文档和资源的连接，一般用于超链接<br>src将所指向资源嵌入到当前文档标签中，在请求src资源时会将其指向的资源下载并应用到文档内，例如js脚本，img图片和frame等元素。当浏览器解析到该元素时，会暂停其他资源的下载和处理，直到将该资源加载、编译、执行完毕。这也是为什么将js脚本放在底部而不是头部。<br>7、 WEB标准以及W3C标准是什么?<br>标签闭合、标签小写、不乱嵌套、属性值用双引号、使用外链css和js、结构行为表现的分离<br>8、 语义化的理解</p>
+<ul>
+<li>用正确的标签做正确的事情！</li>
+<li>HTML语义化就是让页面的内容结构化，便于对浏览器、搜索引擎解析；</li>
+<li>在没有样式CSS情况下也以一种文档格式显示，并且是容易阅读的。</li>
+<li>搜索引擎的爬虫依赖于标记来确定上下文和各个关键字的权重，利于 SEO。</li>
+<li>使阅读源代码的人对网站更容易将网站分块，便于阅读维护理解</li>
+</ul>
+<p>9、 XHTML和HTML有什么区别?<br>XHTML 是更严谨更纯净的HTML版本</p>
+<ul>
+<li>一个是功能上的差别：主要是XHTML可兼容各大浏览器、手机以及PDA，并且浏览器也能快速正确地编译网页</li>
+<li>另外是书写习惯的差别：XHTML元素必须被正确地嵌套，闭合，区分大小写，文档必须拥有根元素</li>
+</ul>
+<p>10、行内元素有哪些？块级元素有哪些？ 空(void)元素有那些？行内元素和块级元素有什么区别？</p>
+<ul>
+<li>行内元素有：a b span strong img input select </li>
+<li>块级元素有：div ul ol li dl dt dd（都是列表类） h1 h2 h3 h4… p <strong>form</strong> <strong>hr</strong></li>
+<li>空元素：br hr（水平线） img input link meta （不需要闭标签）</li>
+<li>行内元素不可以设置宽高，不独占一行</li>
+<li>块级元素可以设置宽高，独占一行</li>
+</ul>
+<p>11、渐进增强和优雅降级<br>渐进增强：针对低版本浏览器进行构建页面，保证最基本的功能，然后再针对高级浏览器进行效果、交互等改进和追加功能达到更好的用户体验。<br>优雅降级：一开始就构建完整的功能，然后再针对低版本浏览器进行兼容。</p>
+<blockquote>
+<p>区别：优雅降级是从复杂的现状开始，并试图减少用户体验的供给，而渐进增强则是从一个非常基础的，能够起作用的版本开始，并不断扩充，以适应未来环境的需要。降级（功&gt; 能衰减）意味着往回看；而渐进增强则意味着朝前看，同时保证其根基处于安全地带</p>
+</blockquote>
+<p>12、a标签href不跳转<br>当页面中a标签不需要任何跳转时，从原理上来讲，可分如下两种方法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 标签属性href，使其指向空或不返回任何内容。如：</span></span><br><span class="line">&lt;a href=<span class="string">&quot;javascript:void(0);&quot;</span> &gt;点此无反应<span class="attr">javascript</span>:<span class="title function_">void</span>(<span class="number">0</span>)&lt;/a&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;javascript:;&quot;</span> &gt;</span>点此无反应javascript:<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span></span><br><span class="line"><span class="comment">// 标签事件onclick，阻止其默认行为。如：</span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;&quot;</span> <span class="attr">onclick</span>=<span class="string">&quot;return false;&quot;</span>&gt;</span>return false;<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#&quot;</span> <span class="attr">onclick</span>=<span class="string">&quot;return false;&quot;</span>&gt;</span>return false;<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span></span><br><span class="line"><span class="comment">// 注意：只有一个href=&quot;#&quot;是不可以的。</span></span><br></pre></td></tr></table></figure>
+<p>13、<code>ifame</code>标签：一个页面有多个window</p>
+<ul>
+<li>可以通过contentWindow和contentDocument两个API获取iframe的window对象和document对象</li>
+<li>通过window.self，window.parent，window.top这三个属性分别获取自身window对象，父级window对象，顶级window对象</li>
+</ul>
+<p>14、如果一个元素拥有ID属性,那么会创建同名的全局变量</p>
+<h3 id="HTML5"><a href="#HTML5" class="headerlink" title="HTML5"></a>HTML5</h3><p>1、html5有哪些新特性、移除了那些元素？</p>
+<ul>
+<li>HTML5 现在已经不是 SGML 的子集，主要是关于图像，位置，存储，多任务等功能的增加<ul>
+<li>新增元素<ul>
+<li>通过 JavaScript 来绘制2D图形的 canvas 画布标签</li>
+<li>使用 XML 描述 2D 图形的语言：SVG （好比HTML相对于文本）</li>
+<li>视频 video 和 音频 audio 元素</li>
+<li>语意化更好的内容元素，比如 article、footer、header、nav、section</li>
+</ul>
+</li>
+<li>API及功能<ul>
+<li>获取用户地理位置的 geolocationAPI</li>
+<li>draggable 属性可拖动</li>
+<li>Web存储。本地离线存储 localStorage 长期存储数据，浏览器关闭后数据不丢失；sessionStorage 的数据在浏览器关闭后自动删除</li>
+<li>应用程序缓存（Application Cache），通过创建 cache manifest 文件，可创建 web 应用的离线版本。</li>
+<li>新的技术webworker（是运行在后台的 JavaScript，位于外部文件中，不会影响页面的性能）、 websocket、</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>移除的元素：<ul>
+<li>纯表现的元素：basefont、big、center、font、 s、strike、tt、u</li>
+<li>对可用性产生负面影响的元素：frame、frameset、noframes</li>
+</ul>
+</li>
+<li>支持HTML5新标签：<ul>
+<li>IE8&#x2F;IE7&#x2F;IE6支持通过document.createElement方法产生的标签</li>
+<li>可以利用这一特性让这些浏览器支持HTML5新标签</li>
+<li>浏览器支持新标签后，还需要添加标签默认的样式</li>
+</ul>
+</li>
+<li>当然也可以直接使用成熟的框架、比如html5shim</li>
+</ul>
+<p>2、 HTML5 为什么只需要写 <code>!DOCTYPE HTML</code><br>HTML5 不基于SGML（不是SGML的子集），因此不需要对DTD进行引用，但是需要doctype来规范浏览器的行为<br>而HTML4.01基于SGML,所以需要对DTD进行引用，才能告知浏览器文档所使用的文档类型</p>
+<blockquote>
+<p>SGML：标准通用标记语言,国际上定义电子文件结构和内容描述的标准，一个庞大的标准，应用范围很广<br>XML：可扩展标识语言（eXtensible Markup Language），一种精简的SGML版本，一个用来定义其他语言的元语言</p>
+</blockquote>
+<p>3、HTML5的离线储存怎么使用及其原理</p>
+<ul>
+<li>功能：在用户没有网络连接时，可以正常访问站点，在用户与有网络连接时，更新用户机器上的缓存文件</li>
+<li>原理：基于一个新建的.appcache文件（缓存清单），浏览器打开的并有网络连接的时候，会通过这个清单进行资源缓存。之后离线就可以根据缓存显示页面</li>
+<li>使用：在head标签加manifest，指向一个.appcache文件，对该文件编写即可。文件内容分为三部分：CACHE MANIFEST（需要缓存的资源）；NETWORK（不缓存的资源）；FALLBACK（若无法建立因特网连接，就用某文件替代某个文件）。离线状态时，操作window.applicationCache进行需求实现</li>
+</ul>
+<p>4、cookies，sessionStorage 和 localStorage 的区别</p>
+<ul>
+<li>cookie是网站为了标示用户身份而储存在用户本地终端（Client Side）上的数据（通常经过加密）</li>
+<li>cookie数据始终在同源的http请求中携带（即使不需要），记会在浏览器和服务器间来回传递</li>
+<li>sessionStorage和localStorage不会自动把数据发给服务器，仅在本地保存</li>
+<li>存储大小：<ul>
+<li>cookie数据大小不能超过4k</li>
+<li>sessionStorage和localStorage虽然也有存储大小的限制，但比cookie大得多，可以达到5M或更大</li>
+</ul>
+</li>
+<li>有期时间：<ul>
+<li>localStorage 存储持久数据，浏览器关闭后数据不丢失除非主动删除数据</li>
+<li>sessionStorage 数据在当前浏览器窗口关闭后自动删除</li>
+<li>cookie 设置的cookie过期时间之前一直有效，即使窗口或浏览器关闭</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/10/08/HTML/" data-id="clmniym6n000jbb872i1q4n92" data-title="HTML" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/10/08/CSS%E7%9F%A5%E8%AF%86%E7%82%B9/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          CSS知识点
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/10/03/HTTPS/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">HTTPS</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Kategorien</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Basic-knowledge/">Basic knowledge</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Engineering/">Engineering</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%8A%E7%BA%BF%E9%83%A8%E7%BD%B2/">上线部署</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%90%8E%E7%AB%AF/">后端</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Browser/" rel="tag">Browser</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Computer/" rel="tag">Computer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Data-structure/" rel="tag">Data structure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Interview/" rel="tag">Interview</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Network/" rel="tag">Network</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node/" rel="tag">Node</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/" rel="tag">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Operating-system/" rel="tag">Operating system</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Performance/" rel="tag">Performance</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/" rel="tag">Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web%E5%AE%89%E5%85%A8/" rel="tag">Web安全</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/" rel="tag">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%8A%E7%BA%BF%E9%83%A8%E7%BD%B2/" rel="tag">上线部署</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A1%86%E6%9E%B6/" rel="tag">框架</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" rel="tag">解决方案</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE%E5%B0%8F%E7%BB%93/" rel="tag">项目小结</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Browser/" style="font-size: 14px;">Browser</a> <a href="/tags/CSS/" style="font-size: 14px;">CSS</a> <a href="/tags/Computer/" style="font-size: 10px;">Computer</a> <a href="/tags/Data-structure/" style="font-size: 18px;">Data structure</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/Interview/" style="font-size: 10px;">Interview</a> <a href="/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/tags/Network/" style="font-size: 14px;">Network</a> <a href="/tags/Node/" style="font-size: 12px;">Node</a> <a href="/tags/Nodejs/" style="font-size: 12px;">Nodejs</a> <a href="/tags/Operating-system/" style="font-size: 10px;">Operating system</a> <a href="/tags/Performance/" style="font-size: 12px;">Performance</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/TypeScript/" style="font-size: 14px;">TypeScript</a> <a href="/tags/Web/" style="font-size: 10px;">Web</a> <a href="/tags/Web%E5%AE%89%E5%85%A8/" style="font-size: 10px;">Web安全</a> <a href="/tags/webpack/" style="font-size: 20px;">webpack</a> <a href="/tags/%E4%B8%8A%E7%BA%BF%E9%83%A8%E7%BD%B2/" style="font-size: 10px;">上线部署</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 10px;">工具</a> <a href="/tags/%E6%A1%86%E6%9E%B6/" style="font-size: 16px;">框架</a> <a href="/tags/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" style="font-size: 10px;">解决方案</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 10px;">设计模式</a> <a href="/tags/%E9%A1%B9%E7%9B%AE%E5%B0%8F%E7%BB%93/" style="font-size: 14px;">项目小结</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">April 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/04/30/Python%20Basic/">Python Basic Knowledge</a>
+          </li>
+        
+          <li>
+            <a href="/2021/04/17/%E8%A7%A3%E5%86%B3hexo%20g%E7%94%9F%E6%88%90index.html%E4%B8%BA%E7%A9%BA%E7%9A%84%E9%97%AE%E9%A2%98/">解决hexo g生成index.html为空的问题</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/09/TypeScript%E4%B8%AD%E7%9A%84%E5%86%85%E7%BD%AE%E5%B7%A5%E5%85%B7%E7%B1%BB%E5%9E%8B%E5%8F%8A%E5%85%B6%E5%AE%9E%E7%8E%B0/">TypeScript中的内置工具类型及其实现</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/07/TypeScript%E4%B8%AD%E7%9A%84%E7%B1%BB%E5%9E%8B%E7%BC%96%E7%A8%8B/">TypeScript中的类型编程</a>
+          </li>
+        
+          <li>
+            <a href="/2020/11/03/hope%20statistics%20puppeteer%E5%B7%A5%E5%85%B7%E5%B0%8F%E7%BB%93/">hope statistics puppeteer 工具小结</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 Jacleklm<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

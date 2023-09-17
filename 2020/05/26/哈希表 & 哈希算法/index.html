@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>哈希表 &amp; 哈希算法 | Jacleklm</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="定义哈希表 (散列表)在线性表中，所有的数据都是顺序存储，当我们需要在线性表中查找某一数据时，当线性表过长，需要查找的数据排序比较靠后的话，就需要花费大量的时间，导致查找性能较差 所以我们可以把数据存在哈希表中，通过 key 去拿到数据。这个过程可以描述为：  拿到key(关键字) &gt; 关键字通过散列函数(哈希函数)计算出来的值则称为散列值（哈希值、Hash 值） &gt; 过散列值到**散">
+<meta property="og:type" content="article">
+<meta property="og:title" content="哈希表 &amp; 哈希算法">
+<meta property="og:url" content="http://example.com/2020/05/26/%E5%93%88%E5%B8%8C%E8%A1%A8%20&%20%E5%93%88%E5%B8%8C%E7%AE%97%E6%B3%95/index.html">
+<meta property="og:site_name" content="Jacleklm">
+<meta property="og:description" content="定义哈希表 (散列表)在线性表中，所有的数据都是顺序存储，当我们需要在线性表中查找某一数据时，当线性表过长，需要查找的数据排序比较靠后的话，就需要花费大量的时间，导致查找性能较差 所以我们可以把数据存在哈希表中，通过 key 去拿到数据。这个过程可以描述为：  拿到key(关键字) &gt; 关键字通过散列函数(哈希函数)计算出来的值则称为散列值（哈希值、Hash 值） &gt; 过散列值到**散">
+<meta property="og:locale">
+<meta property="og:image" content="http://example.com/img/%E5%93%88%E5%B8%8C%E5%87%BD%E6%95%B0/%E5%93%88%E5%B8%8C%E8%A1%A8.png">
+<meta property="article:published_time" content="2020-05-26T02:50:21.000Z">
+<meta property="article:modified_time" content="2023-09-17T14:00:22.878Z">
+<meta property="article:author" content="Jacleklm">
+<meta property="article:tag" content="Data structure">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/%E5%93%88%E5%B8%8C%E5%87%BD%E6%95%B0/%E5%93%88%E5%B8%8C%E8%A1%A8.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Jacleklm" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Jacleklm</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Suche"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Suche"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-哈希表 &amp; 哈希算法" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/05/26/%E5%93%88%E5%B8%8C%E8%A1%A8%20&%20%E5%93%88%E5%B8%8C%E7%AE%97%E6%B3%95/" class="article-date">
+  <time class="dt-published" datetime="2020-05-26T02:50:21.000Z" itemprop="datePublished">2020-05-26</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Basic-knowledge/">Basic knowledge</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      哈希表 &amp; 哈希算法
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h1><h2 id="哈希表-散列表"><a href="#哈希表-散列表" class="headerlink" title="哈希表 (散列表)"></a>哈希表 (散列表)</h2><p>在线性表中，所有的数据都是顺序存储，当我们需要在线性表中查找某一数据时，当线性表过长，需要查找的数据排序比较靠后的话，就需要花费大量的时间，导致查找性能较差</p>
+<p>所以我们可以把数据存在哈希表中，通过 key 去拿到数据。这个过程可以描述为：</p>
+<blockquote>
+<p>拿到key(关键字) &gt; 关键字通过散列函数(哈希函数)计算出来的值则称为散列值（哈希值、Hash 值） &gt; 过散列值到**散列表（哈希表、Hash 表)**中就可以获取检索值</p>
+</blockquote>
+<p>如下图：<br><img src="/img/%E5%93%88%E5%B8%8C%E5%87%BD%E6%95%B0/%E5%93%88%E5%B8%8C%E8%A1%A8.png"></p>
+<p>所以我们需要存的信息有：key，散列函数，散列表信息。所以，散列表是一种空间换时间的存储结构，是在算法中提升效率的一种比较常用的方式。</p>
+<p>散列函数的作用就是给定一个键值，然后返回值在表中的地址：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 散列表</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">HashTable</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> table = []</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">put</span> = <span class="keyword">function</span>(<span class="params">key, value</span>) &#123;&#125;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">get</span> = <span class="keyword">function</span>(<span class="params">key</span>) &#123;&#125;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">remove</span> = <span class="keyword">function</span>(<span class="params">key</span>) &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="哈希函数"><a href="#哈希函数" class="headerlink" title="哈希函数"></a>哈希函数</h2><p><strong>哈希函数（Hash Function），也称为散列函数或杂凑函数</strong>。哈希函数是一个公开函数，可以将任意长度的消息M映射成为一个长度较短且长度固定的值H（M），称H（M）为哈希值、散列值（Hash Value）、杂凑值或者消息摘要（Message Digest）。<strong>它是一种单向密码体制，即一个从明文到密文的不可逆映射，只有加密过程，没有解密过程</strong>。</p>
+<p>它的函数表达式为：<code>h = H(m)</code></p>
+<p>无论输入是什么数字格式、文件有多大，输出都是固定长度的比特串。eg. 以比特币使用Sh256算法，无论输入是什么数据文件，输出就是256bit。<br>每个bit就是一位0或者1，256bit就是256个0或者1二进制数字串，用16进制数字表示的话: 16等于2的4次方，所以每一位16进制数字可以代表4位bit，所以256位bit用16进制数字表示是256除以4等于64位。<br>于是我们通常看到的哈希值，是这样的：</p>
+<blockquote>
+<p>00740f40257a13bf03b40f54a9fe398c79a664bb21cfa2870ab07888b21eeba8</p>
+</blockquote>
+<h1 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h1><ul>
+<li>易压缩：对于任意大小的输入x，Hash值的长度很小，在实际应用中，函数H产生的Hash值其长度是固定的。</li>
+<li>易计算：对于任意给定的消息，计算其Hash值比较容易。</li>
+<li>单向性：对于给定的Hash值，要找到使得在计算上是不可行的，即求Hash的逆很困难。在给定某个哈希函数H和哈希值H（M）的情况下，得出M在计算上是不可行的。即从哈希输出无法倒推输入的原始数值。这是哈希函数安全性的基础。</li>
+<li>抗碰撞性：理想的Hash函数是无碰撞的，但在实际算法的设计中很难做到这一点。有两种抗碰撞性：一种是弱抗碰撞性，即对于给定的消息，要发现另一个消息，满足在计算上是不可行的；另一种是强抗碰撞性，即对于任意一对不同的消息，使得在计算上也是不可行的。</li>
+<li>高灵敏性：这是从比特位角度出发的，指的是1比特位的输入变化会造成1&#x2F;2的比特位发生变化。消息M的任何改变都会导致哈希值H（M）发生改变。即如果输入有微小不同，哈希运算后的输出一定不同。</li>
+</ul>
+<h1 id="哈希算法的要求"><a href="#哈希算法的要求" class="headerlink" title="哈希算法的要求"></a>哈希算法的要求</h1><p>一个可靠的哈希算法，应该满足：</p>
+<ul>
+<li>对于给定的数据M,很容易算出哈希值X&#x3D;F(M)；根据X很难反算出M</li>
+<li>很难找到M和N使得F(N)&#x3D;F(M)（这个可能是加密领域的，其实在储存领域，为了节省空间，key 值不同，通过散列函数计算出来的散列值（value）不一定不相同）</li>
+</ul>
+<p>哈希函数更多设计方法和冲突解决方法详见<a target="_blank" rel="noopener" href="https://github.com/sisterAn/JavaScript-Algorithms/issues/49">哈希表问题</a></p>
+<h1 id="一个简单的例子"><a href="#一个简单的例子" class="headerlink" title="一个简单的例子"></a>一个简单的例子</h1><p>一个初始值值对应一个唯一的结果值，根据结果还推算不出来初始值，这可以通过<strong>丢掉一部分信息</strong>的加密方式实现，称为“单向加密”，也叫哈希算法。一个简单的例子：取注册者注册的时间戳的后6位再乘6取后6位，勉勉强强可以算是一个哈希算法。</p>
+<h1 id="常见的哈希算法（加密领域）"><a href="#常见的哈希算法（加密领域）" class="headerlink" title="常见的哈希算法（加密领域）"></a>常见的哈希算法（加密领域）</h1><ul>
+<li>SHA-1算法</li>
+<li>SHA-2算法</li>
+<li>SHA-512算法</li>
+<li>SHA-3算法</li>
+<li>RIPEMD160算法</li>
+<li>…</li>
+</ul>
+<blockquote>
+<p>这些算法的过程大概包括：输入 &gt; 消息填充 &gt; 链接变量初始化 &gt; 处理主循环模块 &gt; 得出最终的Hash值</p>
+</blockquote>
+<p>算法的具体细节见<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/O0YGl4U14CNRX_t27khq8w">哈希算法</a></p>
+<p>参考资料<br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/O0YGl4U14CNRX_t27khq8w">哈希算法</a><br><a target="_blank" rel="noopener" href="https://github.com/sisterAn/JavaScript-Algorithms/issues/49">前端瓶子君</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2020/05/26/%E5%93%88%E5%B8%8C%E8%A1%A8%20&%20%E5%93%88%E5%B8%8C%E7%AE%97%E6%B3%95/" data-id="clmniym7r003sbb87cedffqaj" data-title="哈希表 &amp; 哈希算法" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Data-structure/" rel="tag">Data structure</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/05/27/%E6%B8%B2%E6%9F%93%E6%96%B9%E6%A1%88/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          渲染方案
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/05/23/React%20-%20Hook/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">React - Hook</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Kategorien</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Basic-knowledge/">Basic knowledge</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Engineering/">Engineering</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%8A%E7%BA%BF%E9%83%A8%E7%BD%B2/">上线部署</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%90%8E%E7%AB%AF/">后端</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Browser/" rel="tag">Browser</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Computer/" rel="tag">Computer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Data-structure/" rel="tag">Data structure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Interview/" rel="tag">Interview</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Network/" rel="tag">Network</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node/" rel="tag">Node</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/" rel="tag">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Operating-system/" rel="tag">Operating system</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Performance/" rel="tag">Performance</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/" rel="tag">Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web%E5%AE%89%E5%85%A8/" rel="tag">Web安全</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/" rel="tag">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%8A%E7%BA%BF%E9%83%A8%E7%BD%B2/" rel="tag">上线部署</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A1%86%E6%9E%B6/" rel="tag">框架</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" rel="tag">解决方案</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE%E5%B0%8F%E7%BB%93/" rel="tag">项目小结</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Browser/" style="font-size: 14px;">Browser</a> <a href="/tags/CSS/" style="font-size: 14px;">CSS</a> <a href="/tags/Computer/" style="font-size: 10px;">Computer</a> <a href="/tags/Data-structure/" style="font-size: 18px;">Data structure</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/Interview/" style="font-size: 10px;">Interview</a> <a href="/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/tags/Network/" style="font-size: 14px;">Network</a> <a href="/tags/Node/" style="font-size: 12px;">Node</a> <a href="/tags/Nodejs/" style="font-size: 12px;">Nodejs</a> <a href="/tags/Operating-system/" style="font-size: 10px;">Operating system</a> <a href="/tags/Performance/" style="font-size: 12px;">Performance</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/TypeScript/" style="font-size: 14px;">TypeScript</a> <a href="/tags/Web/" style="font-size: 10px;">Web</a> <a href="/tags/Web%E5%AE%89%E5%85%A8/" style="font-size: 10px;">Web安全</a> <a href="/tags/webpack/" style="font-size: 20px;">webpack</a> <a href="/tags/%E4%B8%8A%E7%BA%BF%E9%83%A8%E7%BD%B2/" style="font-size: 10px;">上线部署</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 10px;">工具</a> <a href="/tags/%E6%A1%86%E6%9E%B6/" style="font-size: 16px;">框架</a> <a href="/tags/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" style="font-size: 10px;">解决方案</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 10px;">设计模式</a> <a href="/tags/%E9%A1%B9%E7%9B%AE%E5%B0%8F%E7%BB%93/" style="font-size: 14px;">项目小结</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">April 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/04/30/Python%20Basic/">Python Basic Knowledge</a>
+          </li>
+        
+          <li>
+            <a href="/2021/04/17/%E8%A7%A3%E5%86%B3hexo%20g%E7%94%9F%E6%88%90index.html%E4%B8%BA%E7%A9%BA%E7%9A%84%E9%97%AE%E9%A2%98/">解决hexo g生成index.html为空的问题</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/09/TypeScript%E4%B8%AD%E7%9A%84%E5%86%85%E7%BD%AE%E5%B7%A5%E5%85%B7%E7%B1%BB%E5%9E%8B%E5%8F%8A%E5%85%B6%E5%AE%9E%E7%8E%B0/">TypeScript中的内置工具类型及其实现</a>
+          </li>
+        
+          <li>
+            <a href="/2020/12/07/TypeScript%E4%B8%AD%E7%9A%84%E7%B1%BB%E5%9E%8B%E7%BC%96%E7%A8%8B/">TypeScript中的类型编程</a>
+          </li>
+        
+          <li>
+            <a href="/2020/11/03/hope%20statistics%20puppeteer%E5%B7%A5%E5%85%B7%E5%B0%8F%E7%BB%93/">hope statistics puppeteer 工具小结</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 Jacleklm<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
